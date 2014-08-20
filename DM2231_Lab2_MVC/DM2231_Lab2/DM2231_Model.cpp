@@ -12,3 +12,4 @@ DM2231_Model::~DM2231_Model(void)
 void DM2231_Model::Update(void)
 {
 }
+

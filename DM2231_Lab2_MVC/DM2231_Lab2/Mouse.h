@@ -1,6 +1,4 @@
 #pragma once
-#include "Header.h"
-#include "vector3D.h"
 
 class CMouse
 {
@@ -12,9 +10,6 @@ public:
 	int last_x, last_y;
 	bool bLButtonDown,bRButtonDown;
 	bool bLButtonUp,bRButtonUp;
-
-	
-	Vector3D<int> MousePos;
 
 	void Init(void)
 	{
@@ -34,14 +29,13 @@ public:
 		{
 			this->last_x = new_x;
 			this->last_y = new_y;
-			cout<<"Weird Stuff"<<endl;
 		}
 		else
 		{
 			this->last_x = x;
 			this->last_y = y;
 		}
-		MousePos.Set(x,y);
+
 		this->x = new_x;
 		this->y = new_y;
 	}
@@ -54,10 +48,5 @@ public:
 	int GetDiff_Y(void)
 	{
 		return (y - last_y);
-	}
-	
-	void SetMouse(const int new_x, const int new_y)
-	{
-
 	}
 };

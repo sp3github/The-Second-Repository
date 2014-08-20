@@ -33,7 +33,6 @@ bool DM2231_Controller::Init(void)
 		theView->setFullScreen( false );
 	else
 		theView->setFullScreen( true );
-	
 	theModel->TestMap.LoadLevel(1);
 
 	return true;

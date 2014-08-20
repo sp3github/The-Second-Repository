@@ -90,29 +90,52 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ammo.cpp" />
     <ClCompile Include="DM2231_Controller.cpp" />
     <ClCompile Include="DM2231_Model.cpp" />
     <ClCompile Include="DM2231_View.cpp" />
-    <ClCompile Include="LoadResources.cpp" />
+<<<<<<< HEAD
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Health.cpp" />
+    <ClCompile Include="Items.cpp" />
+    <ClCompile Include="EntityFactory.cpp" />
+=======
+    <ClCompile Include="Entities.cpp" />
+>>>>>>> origin/master
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mouse.cpp" />
+<<<<<<< HEAD
+    <ClCompile Include="Slowdown.cpp" />
+=======
     <ClCompile Include="Ortho2D.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="State.cpp" />
+>>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ammo.h" />
     <ClInclude Include="DM2231_Controller.h" />
     <ClInclude Include="DM2231_Model.h" />
     <ClInclude Include="DM2231_View.h" />
+<<<<<<< HEAD
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Health.h" />
+    <ClInclude Include="Items.h" />
+    <ClInclude Include="EntityFactory.h" />
+    <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Slowdown.h" />
+=======
+    <ClInclude Include="Entities.h" />
     <ClInclude Include="Header.h" />
-    <ClInclude Include="LoadResources.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Ortho2D.h" />
     <ClInclude Include="PlayerInfo.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="State.h" />
-    <ClInclude Include="vector3D.h" />
+>>>>>>> origin/master
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
