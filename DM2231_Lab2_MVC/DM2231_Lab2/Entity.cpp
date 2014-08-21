@@ -27,3 +27,17 @@ void CEntity::SetPos(const int pos_x, const int pos_y)
 	this->pos_x = pos_x;
 	this->pos_y = pos_y;
 }
+
+void CEntity::update()
+{
+
+}
+void CEntity::render()
+{
+
+}
+
+bool CEntity::CollisionEvent()
+{
+	return false;
+}

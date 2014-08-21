@@ -19,7 +19,6 @@ public:
 
 private:
 	DM2231_Model* theModel;
-	CMouse theMouseInfo;
 
 	HDC hDC; // Private GDI Device Context
 	HGLRC hRC; // Permanent Rendering Context
@@ -36,6 +35,8 @@ private:
 
 	virtual LRESULT CALLBACK MsgProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 	static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
+
+	//RECT r;
 
 public:
 	// Check if the player wants to quit the game

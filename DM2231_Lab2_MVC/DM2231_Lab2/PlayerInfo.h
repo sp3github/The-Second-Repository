@@ -16,16 +16,6 @@ public:
 	// Initialise this class instance
 	void Init(void);
 
-	// Set position x of the player
-	void SetPos_x(int pos_x);
-
-	// Set position y of the player
-	void SetPos_y(int pos_y);
-
-	// Get position x of the player
-	int GetPos_x(void);
-	// Get position y of the player
-	int GetPos_y(void);
 
 	// Set Animation Invert status of the player
 	void SetAnimationInvert(bool heroAnimationInvert);

@@ -14,7 +14,11 @@ public:
 
 	void SetPos(const int pos_x, const int pos_y);
 
-	virtual void update() = 0;
-	virtual void render() = 0;
+	virtual void update();
+	virtual void render();
+
+	virtual bool CollisionEvent();
+	
+
 };
 

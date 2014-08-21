@@ -4,7 +4,7 @@ DM2231_View::DM2231_View(DM2231_Model* theModel)
 {
 	this->theModel = theModel;
 
-	theMouseInfo.Init();
+	theModel->theMouseInfo.Init();
 	m_iWindows_Width = 1; 
 	m_iWindows_Height = 1;
 
@@ -376,23 +376,41 @@ LRESULT CALLBACK DM2231_View::MsgProc( HWND hWnd, // Handle For This Window
 		}
 	case WM_MOUSEMOVE:
 		{
-			theMouseInfo.SetMousePos( LOWORD(lParam), HIWORD(lParam) );
-			int diffX = theMouseInfo.GetDiff_X();
-			int diffY = theMouseInfo.GetDiff_Y();
+			theModel->theMouseInfo.SetMousePos( LOWORD(lParam), HIWORD(lParam) );
+			int diffX = theModel->theMouseInfo.GetDiff_X();
+			int diffY = theModel->theMouseInfo.GetDiff_Y();
+			
+			RECT WindowRect;
+			GetWindowRect( hWnd, &WindowRect);
+			ClipCursor( &WindowRect );
+
+			//cout<<"x dif: "<<diffX<<" y dif: "<<diffY <<endl;
 
 			//camera->UpdateCamera( diffX, diffY);
 
 			//Checking mouse boundary
-			if  (theMouseInfo.x > m_iWindows_Width-20 || theMouseInfo.x < 20)
-			{
-				theMouseInfo.x = (m_iWindows_Width >> 1);
-				SetCursorPos( theMouseInfo.x, theMouseInfo.y );
-			}
-			if (theMouseInfo.y > m_iWindows_Height-20 || theMouseInfo.y < 20)
-			{
-				theMouseInfo.y = (m_iWindows_Height >> 1);
-				SetCursorPos( theMouseInfo.x, theMouseInfo.y );
-			}
+			//if  (theMouseInfo.x > m_iWindows_Width-20 )
+			//{
+			//	
+			//	cout<<"x: "<<LOWORD(lParam)<<" y: "<<theMouseInfo.y<<endl;
+			//	theMouseInfo.x = m_iWindows_Width-20;
+			//	SetCursorPos( theMouseInfo.x, theMouseInfo.y);
+			//}
+			//else if  (theMouseInfo.x < 20 )
+			//{
+			//	theMouseInfo.x = 20;
+			//	//SetCursorPos( theMouseInfo.x, theMouseInfo.y );
+			//}
+			//if (theMouseInfo.y > m_iWindows_Height-20)
+			//{
+			//	theMouseInfo.y = m_iWindows_Height-20;
+			//	//SetCursorPos( theMouseInfo.x, theMouseInfo.y );
+			//}
+			//else if (theMouseInfo.y < 20)
+			//{
+			//	theMouseInfo.y = 19;
+			//	//SetCursorPos( theMouseInfo.x, theMouseInfo.y );
+			//}
 		}
 	case WM_LBUTTONDOWN:
 		{
@@ -446,7 +464,7 @@ bool DM2231_View::toggleFullScreen(void)
 
 	KillGLWindow();						// Kill Our Current Window
 	// Recreate Our OpenGL Window
-	if (!CreateGLWindow("OpenGL GAME",640,480,16))
+	if (!CreateGLWindow("OpenGL GAME",1040,780,16))
 	{
 		return false;						// Quit If Window Was Not Created
 	}

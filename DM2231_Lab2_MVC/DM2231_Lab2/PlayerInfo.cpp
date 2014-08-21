@@ -3,6 +3,9 @@
 
 CPlayerInfo::CPlayerInfo(void)
 {
+	m_iTileSize = 24;
+	heroAnimationCounter = 0;
+	movementspeed = 5;
 }
 
 CPlayerInfo::~CPlayerInfo(void)
@@ -12,12 +15,6 @@ CPlayerInfo::~CPlayerInfo(void)
 // Initialise this class instance
 void CPlayerInfo::Init(void)
 {
-	m_iTileSize = 24;
-	hero_x = 100;
-	hero_y = 300;
-	heroAnimationCounter = 0;
-	heroAnimationInvert = false;
-	movementspeed = 5;
 }
 
 /****************************************************************************************************
@@ -57,33 +54,6 @@ void CPlayerInfo::RenderHero(void) {
 	glDisable( GL_TEXTURE_2D );
 	glPopMatrix();
 }
-
-// Set position x of the player
-void CPlayerInfo::SetPos_x(int pos_x)
-{
-	hero_x = pos_x;
-}
-
-// Set position y of the player
-void CPlayerInfo::SetPos_y(int pos_y)
-{
-	hero_y = pos_y;
-}
-
-
-// Get position x of the player
-int CPlayerInfo::GetPos_x(void)
-{
-	return hero_x;
-}
-
-// Get position y of the player
-int CPlayerInfo::GetPos_y(void)
-{
-	return hero_y;
-}
-
-
 
 // Set Animation Invert status of the player
 void CPlayerInfo::SetAnimationInvert(bool heroAnimationInvert)
