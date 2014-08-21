@@ -131,7 +131,7 @@ void CMap::LoadLevel(int level)
 	switch (level)
 	{
 	case 1:
-		Init(600, 800, 600, 800, TILE_SIZE);
+		Init(600, 800, 1200, 1600, TILE_SIZE);
 		LoadMap("Levels\\MapTest.csv");
 
 		break;
@@ -157,6 +157,8 @@ void CMap::RenderTileMap(void)
 			glTranslatef(k*TILE_SIZE-mapFineOffset_x, i*TILE_SIZE, 0);
 			glEnable( GL_TEXTURE_2D );
 			glEnable( GL_BLEND );
+
+
 			if(theScreenMap[i][k] == 0)
 				glColor3f(0,0,0);
 			else
