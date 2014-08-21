@@ -6,6 +6,7 @@ CPlayerInfo::CPlayerInfo(void)
 	m_iTileSize = 24;
 	heroAnimationCounter = 0;
 	movementspeed = 5;
+	HeroRotation = 0;
 }
 
 CPlayerInfo::~CPlayerInfo(void)
@@ -20,34 +21,25 @@ void CPlayerInfo::Init(void)
 /****************************************************************************************************
    Draw the hero
  ****************************************************************************************************/
-void CPlayerInfo::RenderHero(void) {
+void CPlayerInfo::render(void) {
 	glPushMatrix();
-	glTranslatef(hero_x, hero_y, 0);
+	glTranslatef(GetX(), GetY(), 0);
 	glEnable( GL_TEXTURE_2D );
 	glEnable( GL_BLEND );
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		if (heroAnimationInvert == false)
-		{	
-			glBindTexture(GL_TEXTURE_2D, HeroTexture[1].texID);
-			glBegin(GL_QUADS);
- 
-			glTexCoord2f(0.25 * heroAnimationCounter, 1); glVertex2f(0, 0);
-			glTexCoord2f(0.25 * heroAnimationCounter, 0); glVertex2f(0, m_iTileSize);
-			glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 0); glVertex2f(m_iTileSize, m_iTileSize);
-			glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 1); glVertex2f(m_iTileSize, 0);
-			glEnd();
-		}
-		else
-		{
-			glBindTexture(GL_TEXTURE_2D, HeroTexture[1].texID);
-			glBegin(GL_QUADS);
-			glTexCoord2f(0.25 * heroAnimationCounter + 0.24,1); glVertex2f(0,0);
-			glTexCoord2f(0.25 * heroAnimationCounter + 0.24,0); glVertex2f(0,m_iTileSize);
-			glTexCoord2f(0.25 * heroAnimationCounter,0); glVertex2f(m_iTileSize,m_iTileSize);
-			glTexCoord2f(0.25 * heroAnimationCounter,1); glVertex2f(m_iTileSize,0);
-			glEnd();
-		}
+	//glRotatef(HeroRotation,0,0,1);
+
+	glColor3f(1,0,0);
+	//glBindTexture(GL_TEXTURE_2D, HeroTexture[1].texID);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.25 * heroAnimationCounter, 1); glVertex2f(0, 0);
+	glTexCoord2f(0.25 * heroAnimationCounter, 0); glVertex2f(0, m_iTileSize);
+	glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 0); glVertex2f(m_iTileSize, m_iTileSize);
+	glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 1); glVertex2f(m_iTileSize, 0);
+	glEnd();
+
+
 
 	glEnd();
 	glDisable( GL_BLEND );
@@ -83,23 +75,60 @@ void CPlayerInfo::ConstrainHero(const int leftBorder, const int rightBorder,
 								  float timeDiff,
 								  int& mapOffset_x, int& mapOffset_y)
 {
-	if (hero_x < leftBorder)
+	if (GetX() < leftBorder)
 	{
-		hero_x = leftBorder;
+		Set_X(leftBorder);
 		mapOffset_x =  mapOffset_x - (int) (movementspeed * timeDiff);
 		if (mapOffset_x < 0)
 			mapOffset_x = 0;
 	}
-	else if (hero_x > rightBorder)
+	else if (GetX() > rightBorder)
 	{
-		hero_x = rightBorder;
+		Set_X(rightBorder);
 		mapOffset_x = mapOffset_x + (int)(movementspeed * timeDiff);
 		if (mapOffset_x > 800)	// This must be changed to soft-coded
 			mapOffset_x = 800;
 	}
 
-	if (hero_y < topBorder)
-		hero_y = topBorder;
-	else if (hero_y > bottomBorder)
-		hero_y = bottomBorder;
+	if (GetY() < topBorder)
+		Set_Y(topBorder);
+	else if (GetY() > bottomBorder)
+		Set_Y( bottomBorder);
+}
+
+void CPlayerInfo::moveMeUpDown(bool mode, float timeDiff, float movementspeed)
+{
+	// Check if the character is at a ladder. Return if not.
+	if (mode)
+	{
+		cout<<"UP WE GO"<<endl;
+		Set_Y( GetY() - (int) (movementspeed * timeDiff) );
+	}
+	else
+	{
+		cout<<"Down we go"<<endl;
+		Set_Y( GetY() + (int) (movementspeed * timeDiff) );
+	}
+}
+
+void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed)
+{
+	if (mode)
+	{
+		cout<<"Left we go"<<endl;
+ 		Set_X( GetX() - (int) (movementspeed * timeDiff) );
+		SetAnimationInvert( true );
+		SetAnimationCounter( GetAnimationCounter() - 1);
+		if (GetAnimationCounter()==0)
+			SetAnimationCounter( 3 );
+	}
+	else
+	{
+		cout<<"right we go"<<endl;
+		Set_X( GetX() + (int) (movementspeed * timeDiff) );
+		SetAnimationInvert( false );
+		SetAnimationCounter( GetAnimationCounter() + 1);
+		if (GetAnimationCounter() > 3)
+			SetAnimationCounter( 0 );
+	}
 }

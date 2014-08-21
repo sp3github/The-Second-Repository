@@ -10,9 +10,9 @@ CEntityFactory::~CEntityFactory(void)
 {
 }
 
-CItems* CEntityFactory::Create(ItemsID id)
+CEntity* CEntityFactory::Create(Entity id)
 {
-	CItems* theNewItems = NULL;
+	CEntity* theNewItems = NULL;
 
 	switch(id)
 	{
@@ -31,8 +31,14 @@ CItems* CEntityFactory::Create(ItemsID id)
 			theNewItems = new CSlowdown;
 		}
 		break;
+	case PLAYER:
+		{
+			theNewItems = new CPlayerInfo;
+		}
+		break;
 	default:
 		{
+
 		}
 		break;
 	}

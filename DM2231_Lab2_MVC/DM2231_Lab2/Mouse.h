@@ -14,7 +14,7 @@ public:
 	bool bLButtonUp,bRButtonUp;
 
 	
-	Vector3D<int> MousePos;
+	Vector3D<float> MousePos;
 
 	void Init(void)
 	{

@@ -13,6 +13,8 @@ public:
 	int GetY(void);
 
 	void SetPos(const int pos_x, const int pos_y);
+	void Set_Y(int pos_y);
+	void Set_X(int pos_x);
 
 	virtual void update();
 	virtual void render();

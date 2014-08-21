@@ -34,7 +34,14 @@ bool DM2231_Controller::Init(void)
 		theView->setFullScreen( true );
 	
 	theModel->TestMap.LoadLevel(1);
+	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(PLAYER));
+	theModel->ArrayofEntities.back()->SetPos(400,300);
+	//theModel->theHero.SetPos(400,300);
 
+	theModel->theHeroEntity = &theModel->ArrayofEntities.back();
+	*theModel->theHeroEntity = theModel->theHero;
+	//theModel->theHero = theModel->theHeroEntity;
+	
 	return true;
 }
 
@@ -51,6 +58,7 @@ BOOL DM2231_Controller::RunMainLoop(void)
 	{
 		return false;									// Quit If Window Was Not Created
 	}
+
 
 
 	while(!done) // Loop That Runs While done=FALSE
@@ -71,6 +79,7 @@ BOOL DM2231_Controller::RunMainLoop(void)
 		{
 			if (ProcessInput())
 			{
+				theModel->Update();
 				theView->Draw();
 			}
 			else
@@ -106,7 +115,24 @@ bool DM2231_Controller::ProcessInput(void)
 
 	if (theView->GetKeys('w'))
 	{
-		
+		//theModel->theHero.moveMeUpDown(true, 1.0f, theModel->theHero.movementspeed);
+	}
+	if (theView->GetKeys('s'))
+	{
+		//theModel->theHero.moveMeUpDown(false, 1.0f, theModel->theHero.movementspeed);
+	}
+	if (theView->GetKeys('a'))
+	{
+		//theModel->theHero.moveMeLeftRight(true,1.0f,theModel->theHero.movementspeed);
+	}
+	if (theView->GetKeys('d'))
+	{
+		//theModel->theHero.moveMeLeftRight(false,1.0f,theModel->theHero.movementspeed);
+	}
+	if(theView->LMKeyDown)
+	{
+		cout<<"FIRE"<<endl;
+		theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
 	}
 
 	return true;

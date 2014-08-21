@@ -3,8 +3,8 @@
 
 CEntity::CEntity(void)
 {
-	pos_x = 0;
-	pos_y = 0;
+	pos_x = 10;
+	pos_y = 10;
 }
 
 
@@ -40,4 +40,14 @@ void CEntity::render()
 bool CEntity::CollisionEvent()
 {
 	return false;
+}
+
+void CEntity::Set_Y(int pos_y)
+{
+	this->pos_y = pos_y;
+}
+
+void CEntity::Set_X(int pos_x)
+{
+	this->pos_x = pos_x;
 }

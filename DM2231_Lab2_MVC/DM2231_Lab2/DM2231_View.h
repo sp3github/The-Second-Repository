@@ -49,4 +49,6 @@ public:
 	void setFullScreen(bool m_bFullScreen);
 
 	bool GetKeys(char s);
+
+	bool LMKeyDown;
 };

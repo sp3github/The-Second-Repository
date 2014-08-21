@@ -19,6 +19,8 @@ DM2231_View::DM2231_View(DM2231_Model* theModel)
 	{
 		keys[i] = false;
 	}
+
+	LMKeyDown = false;
 }
 
 DM2231_View::~DM2231_View(void)
@@ -34,7 +36,9 @@ BOOL DM2231_View::Draw(void)
 
 	theModel->theOrtho2DSetUp.SetHUD(true);
 
+
 	theModel->TestMap.RenderTileMap();
+	theModel->theHero->render();
 
 	//glTranslatef(-1.5f,0.0f,-6.0f); // Move Left 1.5 Units And Into The Screen 6.0
 	//glRotatef(rtri,0.0f,1.0f,0.0f); // Rotate The Triangle On The Y axis ( NEW )
@@ -383,38 +387,12 @@ LRESULT CALLBACK DM2231_View::MsgProc( HWND hWnd, // Handle For This Window
 			RECT WindowRect;
 			GetWindowRect( hWnd, &WindowRect);
 			ClipCursor( &WindowRect );
-
-			//cout<<"x dif: "<<diffX<<" y dif: "<<diffY <<endl;
-
-			//camera->UpdateCamera( diffX, diffY);
-
-			//Checking mouse boundary
-			//if  (theMouseInfo.x > m_iWindows_Width-20 )
-			//{
-			//	
-			//	cout<<"x: "<<LOWORD(lParam)<<" y: "<<theMouseInfo.y<<endl;
-			//	theMouseInfo.x = m_iWindows_Width-20;
-			//	SetCursorPos( theMouseInfo.x, theMouseInfo.y);
-			//}
-			//else if  (theMouseInfo.x < 20 )
-			//{
-			//	theMouseInfo.x = 20;
-			//	//SetCursorPos( theMouseInfo.x, theMouseInfo.y );
-			//}
-			//if (theMouseInfo.y > m_iWindows_Height-20)
-			//{
-			//	theMouseInfo.y = m_iWindows_Height-20;
-			//	//SetCursorPos( theMouseInfo.x, theMouseInfo.y );
-			//}
-			//else if (theMouseInfo.y < 20)
-			//{
-			//	theMouseInfo.y = 19;
-			//	//SetCursorPos( theMouseInfo.x, theMouseInfo.y );
-			//}
+			return 1;
 		}
 	case WM_LBUTTONDOWN:
 		{
-
+			LMKeyDown = true;
+			return 1;
 		}
 	}
 

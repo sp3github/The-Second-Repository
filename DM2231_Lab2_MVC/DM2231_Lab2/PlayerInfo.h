@@ -1,17 +1,19 @@
 #pragma once
 #include "Header.h"
+#include "Entity.h"
 
-
-class CPlayerInfo
+class CPlayerInfo : public CEntity
 {
 public:
 	CPlayerInfo(void);
 	~CPlayerInfo(void);
 
+	float HeroRotation;
+
 	TextureImage HeroTexture[3];
 
 	// Render the Hero onto the screen
-	void RenderHero(void);
+	void render(void);
 
 	// Initialise this class instance
 	void Init(void);
@@ -35,11 +37,10 @@ public:
 	int m_iTileSize;
 	int movementspeed;
 
-private:
-	
+	void moveMeUpDown(bool mode, float timeDiff, float movementspeed);
+	void moveMeLeftRight(bool mode, float timeDiff, float movementspeed);
 
-	// Hero's information
-	int hero_x, hero_y;
+private:
 
 	bool heroAnimationInvert;
 	int heroAnimationCounter;
