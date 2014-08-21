@@ -36,7 +36,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <ProjectFileVersion>10.0.40219.1</ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
@@ -90,27 +90,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ammo.cpp" />
     <ClCompile Include="DM2231_Controller.cpp" />
     <ClCompile Include="DM2231_Model.cpp" />
     <ClCompile Include="DM2231_View.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityFactory.cpp" />
+    <ClCompile Include="Health.cpp" />
+    <ClCompile Include="Items.cpp" />
     <ClCompile Include="LoadResources.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Ortho2D.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
+    <ClCompile Include="Slowdown.cpp" />
     <ClCompile Include="State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ammo.h" />
     <ClInclude Include="DM2231_Controller.h" />
     <ClInclude Include="DM2231_Model.h" />
     <ClInclude Include="DM2231_View.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityFactory.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="Health.h" />
+    <ClInclude Include="Items.h" />
     <ClInclude Include="LoadResources.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Ortho2D.h" />
     <ClInclude Include="PlayerInfo.h" />
+    <ClInclude Include="Slowdown.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="vector3D.h" />
   </ItemGroup>

@@ -16,7 +16,6 @@ DM2231_Controller::DM2231_Controller(DM2231_Model* theModel, DM2231_View* theVie
 {
 	this->theModel = theModel;
 	this->theView = theView;
-
 	Init();
 }
 
