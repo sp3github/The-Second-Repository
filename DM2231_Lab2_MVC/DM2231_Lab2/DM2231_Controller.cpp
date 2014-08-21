@@ -35,6 +35,15 @@ bool DM2231_Controller::Init(void)
 	
 	theModel->TestMap.LoadLevel(1);
 
+	if (!theTexture->LoadTGA(&theTexture->menuTexture[0],"Menu.tga"))
+		return false;
+	if (!theTexture->LoadTGA(&theTexture->levelTexture[0], "Level.tga"))
+		return false;
+	if (!theTexture->LoadTGA(&theTexture->scoreTexture[0], "Score.tga"))
+		return false;
+	if (!theTexture->LoadTGA(&theTexture->subpageTexture[0], "Subpage.tga"))
+		return false;
+
 	return true;
 }
 

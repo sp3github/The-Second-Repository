@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Header.h"
+#include "loadTGA.h"
 #include "DM2231_Model.h"
 #include "Mouse.h"
 

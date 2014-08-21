@@ -100,6 +100,7 @@
     <ClCompile Include="Health.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="LoadResources.cpp" />
+    <ClCompile Include="loadTGA.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mouse.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="Health.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="LoadResources.h" />
+    <ClInclude Include="loadTGA.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Ortho2D.h" />
