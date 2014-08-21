@@ -1,5 +1,5 @@
 #pragma once
-#include <irrKlang.h>
+#include "../irrKlang/irrKlang.h"
 
 using namespace irrklang;
 
@@ -32,19 +32,19 @@ public:
 		Sound engine
 	*/
 	ISoundEngine* theSoundEngine;
-	ISound Menu;
-	ISound Subpage;
-	ISound Level;
-	ISound Pistol;
-	ISound Shotgun;
-	ISound Uzi;
-	ISound Reload;
-	ISound Explosion;
-	ISound Health;
-	ISound Ammo;
-	ISound Slowdown;
-	ISound Score;
-	ISound Zombie;
+	ISound* Menu;
+	ISound* Subpage;
+	ISound* Level;
+	ISound* Pistol;
+	ISound* Shotgun;
+	ISound* Uzi;
+	ISound* Reload;
+	ISound* Explosion;
+	ISound* Health;
+	ISound* Ammo;
+	ISound* Slowdown;
+	ISound* Score;
+	ISound* Zombie;
 
 	/*
 		Function to initialise all the sound
@@ -55,7 +55,4 @@ public:
 		Function to play the sound
 	*/
 	void PlaySound (SoundType Sounds);
-
-
 };
-
