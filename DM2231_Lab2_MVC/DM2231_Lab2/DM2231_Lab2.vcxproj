@@ -109,6 +109,7 @@
     <ClCompile Include="Slowdown.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ammo.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Slowdown.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="vector3D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
