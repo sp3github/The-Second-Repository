@@ -4,6 +4,7 @@
 
 #include "DM2231_Model.h"
 #include "DM2231_View.h"
+#include "loadTGA.h"
 
 class DM2231_Controller
 {
@@ -24,6 +25,9 @@ public:
 
 	// Handle to the view
 	DM2231_View* theView;
+
+	// Handle to the texture
+	loadTGA* theTexture;
 
 protected:
 	HWND handle;                                            // window handle to map window to controller

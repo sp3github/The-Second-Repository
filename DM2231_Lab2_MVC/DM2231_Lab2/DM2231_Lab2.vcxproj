@@ -63,10 +63,11 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;irrklang.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -99,13 +100,16 @@
     <ClCompile Include="Health.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="LoadResources.cpp" />
+    <ClCompile Include="loadTGA.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Ortho2D.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
     <ClCompile Include="Slowdown.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ammo.h" />
@@ -118,12 +122,15 @@
     <ClInclude Include="Health.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="LoadResources.h" />
+    <ClInclude Include="loadTGA.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Ortho2D.h" />
     <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="Slowdown.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="vector3D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
