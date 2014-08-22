@@ -85,6 +85,7 @@ void CPlayerInfo::ConstrainHero(const int leftBorder, const int rightBorder,
 		mapOffset_x =  mapOffset_x - (int) (movementspeed * timeDiff);
 		if (mapOffset_x < 0)
 			mapOffset_x = 0;
+		//cout<<"MAPOFFSET_X "<<mapOffset_x<<endl;
 	}
 	else if (GetX() > rightBorder)
 	{
@@ -92,12 +93,25 @@ void CPlayerInfo::ConstrainHero(const int leftBorder, const int rightBorder,
 		mapOffset_x = mapOffset_x + (int)(movementspeed * timeDiff);
 		if (mapOffset_x > 800)	// This must be changed to soft-coded
 			mapOffset_x = 800;
+		//cout<<"MAPOFFSET_X "<<mapOffset_x<<endl;
 	}
 
 	if (GetY() < topBorder)
+	{
 		Set_Y(topBorder);
+		mapOffset_y =  mapOffset_y - (int) (movementspeed * timeDiff);
+		if (mapOffset_y < 0)
+			mapOffset_y = 0;
+		cout<<"MAPOFFSET_Y "<<mapOffset_y<<endl;
+	}
 	else if (GetY() > bottomBorder)
+	{
 		Set_Y( bottomBorder);
+		mapOffset_y = mapOffset_y + (int)(movementspeed * timeDiff);
+		if (mapOffset_y > 600)	// This must be changed to soft-coded
+			mapOffset_y = 600;
+		cout<<"MAPOFFSET_Y "<<mapOffset_y<<endl;
+	}
 }
 
 void CPlayerInfo::moveMeUpDown(bool mode, float timeDiff, float movementspeed)
@@ -105,21 +119,20 @@ void CPlayerInfo::moveMeUpDown(bool mode, float timeDiff, float movementspeed)
 	// Check if the character is at a ladder. Return if not.
 	if (mode)
 	{
-		cout<<"UP WE GO"<<endl;
 		Set_Y( GetY() - (int) (movementspeed * timeDiff) );
 	}
 	else
 	{
-		cout<<"Down we go"<<endl;
 		Set_Y( GetY() + (int) (movementspeed * timeDiff) );
 	}
+	cout<<"My Y Pos is: "<<GetY()<<endl;
 }
 
 void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed)
 {
 	if (mode)
 	{
-		cout<<"Left we go"<<endl;
+		
  		Set_X( GetX() - (int) (movementspeed * timeDiff) );
 		SetAnimationInvert( true );
 		SetAnimationCounter( GetAnimationCounter() - 1);
@@ -128,11 +141,17 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 	}
 	else
 	{
-		cout<<"right we go"<<endl;
+		
 		Set_X( GetX() + (int) (movementspeed * timeDiff) );
 		SetAnimationInvert( false );
 		SetAnimationCounter( GetAnimationCounter() + 1);
 		if (GetAnimationCounter() > 3)
 			SetAnimationCounter( 0 );
 	}
+	cout<<"My X Pos is: "<<GetX()<<endl;
+}
+
+void CPlayerInfo::update()
+{
+
 }

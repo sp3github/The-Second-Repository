@@ -14,7 +14,7 @@ public:
 
 	// Render the Hero onto the screen
 	void render(void);
-
+	void update();
 	// Initialise this class instance
 	void Init(void);
 

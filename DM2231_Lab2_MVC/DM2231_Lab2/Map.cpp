@@ -11,6 +11,9 @@ CMap::CMap(void)
 , theNumOfTiles_MapWidth(0)
 , theTileSize(0)
 {
+	mapOffset_x = 0, mapOffset_y = 0;
+	tileOffset_x = 0, tileOffset_y = 0;
+	mapFineOffset_x = 0, mapFineOffset_y = 0;
 	theScreenMap.clear();
 }
 
@@ -132,7 +135,7 @@ void CMap::LoadLevel(int level)
 	{
 	case 1:
 		Init(600, 800, 1200, 1600, TILE_SIZE);
-		LoadMap("Levels\\MapTest.csv");
+		LoadMap("Levels\\MapDesign2.csv");
 
 		break;
 	default:
@@ -144,39 +147,40 @@ void CMap::LoadLevel(int level)
 void CMap::RenderTileMap(void)
 {
 	mapFineOffset_x = mapOffset_x % TILE_SIZE;
+	mapFineOffset_y = mapOffset_y % TILE_SIZE;
 
 	glPushMatrix();
 	for(int i = 0; i < getNumOfTiles_ScreenHeight(); i ++)
 	{
-		for(int k = 0; k < getNumOfTiles_ScreenWidth(); k ++)
+		for(int k = 0; k < getNumOfTiles_ScreenWidth()+1; k ++)
 		{
 			// If we have reached the right side of the Map, then do not display the extra column of tiles.
-			if ( (tileOffset_x+k) >= getNumOfTiles_MapWidth() )
+			if ( (tileOffset_x + k) >= getNumOfTiles_MapWidth() )
+				break;
+			if( (tileOffset_y + i) >= getNumOfTiles_MapHeight())
+				break;
+			if( (tileOffset_y + i) <= 0)
 				break;
 			glPushMatrix();
-			glTranslatef(k*TILE_SIZE-mapFineOffset_x, i*TILE_SIZE, 0);
+			glTranslatef(k*TILE_SIZE-mapFineOffset_x, i*TILE_SIZE - mapFineOffset_y, 0);
 			glEnable( GL_TEXTURE_2D );
 			glEnable( GL_BLEND );
-
-
-			if(theScreenMap[i][k] == 0)
-				glColor3f(0,0,0);
-			else
-				glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-			//if (theScreenMap[i][tileOffset_x + k] == 1)
-				//glBindTexture(GL_TEXTURE_2D, TileMapTexture[theScreenMap[i][tileOffset_x + k]].texID);
-			//else if (theScreenMap[i][tileOffset_x + k] == 2)
-				//glBindTexture(GL_TEXTURE_2D, TileMapTexture[theScreenMap[i][tileOffset_x + k]].texID);
+			if (theScreenMap[tileOffset_y + i][tileOffset_x + k] == 0)
+				glColor3f(0,0,0);
+			//	glBindTexture(GL_TEXTURE_2D, TileMapTexture[theMap->theScreenMap[i][tileOffset_x + k]].texID);
+			//else if (theMap->theScreenMap[i][tileOffset_x + k] == 2)
+			//	glBindTexture(GL_TEXTURE_2D, TileMapTexture[theMap->theScreenMap[i][tileOffset_x + k]].texID);
 			//else
-				//glBindTexture(GL_TEXTURE_2D, TileMapTexture[0].texID);
+			//	glBindTexture(GL_TEXTURE_2D, TileMapTexture[0].texID);
 
 			glBegin(GL_QUADS);
-			glTexCoord2f(0,1); glVertex2f(0,0);
-			glTexCoord2f(0,0); glVertex2f(0,TILE_SIZE);
-			glTexCoord2f(1,0); glVertex2f(TILE_SIZE,TILE_SIZE);
-			glTexCoord2f(1,1); glVertex2f(TILE_SIZE,0);
+				glTexCoord2f(0,1); glVertex2f(0,0);
+				glTexCoord2f(0,0); glVertex2f(0,TILE_SIZE);
+				glTexCoord2f(1,0); glVertex2f(TILE_SIZE,TILE_SIZE);
+				glTexCoord2f(1,1); glVertex2f(TILE_SIZE,0);
 			glEnd();
 			glDisable( GL_BLEND );
 			glDisable( GL_TEXTURE_2D );
@@ -192,4 +196,8 @@ void CMap::Update()
 	tileOffset_x = (int) (mapOffset_x / TILE_SIZE);
 	if (tileOffset_x+getNumOfTiles_ScreenWidth() > getNumOfTiles_MapWidth())
 		tileOffset_x = getNumOfTiles_MapWidth() - getNumOfTiles_ScreenWidth();
+
+	tileOffset_y = (int) (mapOffset_y / TILE_SIZE);
+	if (tileOffset_y+getNumOfTiles_ScreenHeight() > getNumOfTiles_MapHeight())
+		tileOffset_y = getNumOfTiles_MapHeight() - getNumOfTiles_ScreenHeight();
 }

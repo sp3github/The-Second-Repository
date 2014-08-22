@@ -35,7 +35,7 @@ bool DM2231_Controller::Init(void)
 
 	theModel->TestMap.LoadLevel(1);
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(PLAYER));
-	theModel->ArrayofEntities.back()->SetPos(400,300);
+	theModel->ArrayofEntities.back()->SetPos(100,300);
 
 	theModel->theHeroEntity = theModel->ArrayofEntities.back();
 	theModel->theHero = (dynamic_cast<CPlayerInfo*>(theModel->theHeroEntity));
