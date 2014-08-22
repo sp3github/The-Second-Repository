@@ -2,6 +2,7 @@
 
 DM2231_Model::DM2231_Model(void)
 {
+
 }
 
 DM2231_Model::~DM2231_Model(void)
@@ -11,18 +12,18 @@ DM2231_Model::~DM2231_Model(void)
 // Update the model
 void DM2231_Model::Update(void)
 {
+
+	theHero->HeroRotation = AnglefromHerotoMouse();
+}
+
+float DM2231_Model::AnglefromHerotoMouse()
+{
 	Vector3D<float> MouseVector(theMouseInfo.MousePos);
-	//Vector3D<float> HeroVector(theHero.GetX(),theHero.GetY());
+	Vector3D<float> HeroVector(theHero->GetX(), theHero->GetY());
+	Vector3D<float> TheAdded(MouseVector + HeroVector);
 
-	for(auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
-	{
-		CEntity *go = (*it);
-		cout<<"ENTITY X:"<<go->GetX()<<" Y: "<<go->GetY()<<endl;
-	}
+	float deltaY = MouseVector.y - HeroVector.y;
+	float deltaX = MouseVector.x - HeroVector.x;
 
-	//float difVec = MouseVector.Dot(HeroVector);
-	//float Scalar = difVec / MouseVector.Magnitude() * HeroVector.Magnitude();
-	//theHero.HeroRotation = acos(Scalar); 
-
-	//cout<<"The Rotation"<<theHero.HeroRotation<<endl;
+	return atan2(deltaY, deltaX) * 180 / PI;
 }

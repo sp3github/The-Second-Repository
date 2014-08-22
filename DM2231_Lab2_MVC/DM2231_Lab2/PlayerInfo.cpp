@@ -24,6 +24,10 @@ void CPlayerInfo::Init(void)
 void CPlayerInfo::render(void) {
 	glPushMatrix();
 	glTranslatef(GetX(), GetY(), 0);
+	glTranslatef(m_iTileSize/2, m_iTileSize/2,0);
+	glRotatef(HeroRotation,0,0,1);
+	glTranslatef(-m_iTileSize / 2, -m_iTileSize / 2, 0);
+	//glTranslatef(-20, -20,0);
 	glEnable( GL_TEXTURE_2D );
 	glEnable( GL_BLEND );
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);

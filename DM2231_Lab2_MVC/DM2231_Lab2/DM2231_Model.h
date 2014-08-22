@@ -7,6 +7,7 @@
 #include "EntityFactory.h"
 #include <vector>
 #include "PlayerInfo.h"
+#define PI 3.1415f
 
 class DM2231_Model
 {
@@ -23,7 +24,7 @@ public:
 	CEntityFactory theEntityFactory;
 
 	CPlayerInfo * theHero;
-	CEntity ** theHeroEntity;
+	CEntity * theHeroEntity;
 
-
+	float AnglefromHerotoMouse();
 };

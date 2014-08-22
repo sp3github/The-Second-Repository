@@ -32,15 +32,15 @@ bool DM2231_Controller::Init(void)
 		theView->setFullScreen( false );
 	else
 		theView->setFullScreen( true );
-	
+
 	theModel->TestMap.LoadLevel(1);
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(PLAYER));
 	theModel->ArrayofEntities.back()->SetPos(400,300);
-	//theModel->theHero.SetPos(400,300);
 
-	theModel->theHeroEntity = &theModel->ArrayofEntities.back();
-	*theModel->theHeroEntity = theModel->theHero;
-	//theModel->theHero = theModel->theHeroEntity;
+	theModel->theHeroEntity = theModel->ArrayofEntities.back();
+	theModel->theHero = (dynamic_cast<CPlayerInfo*>(theModel->theHeroEntity));
+
+
 	
 	return true;
 }
@@ -115,19 +115,19 @@ bool DM2231_Controller::ProcessInput(void)
 
 	if (theView->GetKeys('w'))
 	{
-		//theModel->theHero.moveMeUpDown(true, 1.0f, theModel->theHero.movementspeed);
+		theModel->theHero->moveMeUpDown(true, 1.0f, theModel->theHero->movementspeed);
 	}
 	if (theView->GetKeys('s'))
 	{
-		//theModel->theHero.moveMeUpDown(false, 1.0f, theModel->theHero.movementspeed);
+		theModel->theHero->moveMeUpDown(false, 1.0f, theModel->theHero->movementspeed);
 	}
 	if (theView->GetKeys('a'))
 	{
-		//theModel->theHero.moveMeLeftRight(true,1.0f,theModel->theHero.movementspeed);
+		theModel->theHero->moveMeLeftRight(true,1.0f,theModel->theHero->movementspeed);
 	}
 	if (theView->GetKeys('d'))
 	{
-		//theModel->theHero.moveMeLeftRight(false,1.0f,theModel->theHero.movementspeed);
+		theModel->theHero->moveMeLeftRight(false, 1.0f, theModel->theHero->movementspeed);
 	}
 	if(theView->LMKeyDown)
 	{
