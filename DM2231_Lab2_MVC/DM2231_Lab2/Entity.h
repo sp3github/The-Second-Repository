@@ -1,4 +1,5 @@
 #pragma once
+#include "Header.h"
 
 class CEntity
 {
@@ -15,6 +16,9 @@ public:
 	void SetPos(const int pos_x, const int pos_y);
 	void Set_Y(int pos_y);
 	void Set_X(int pos_x);
+
+	int movementspeed;
+	int tile_size;
 
 	virtual void update();
 	virtual void render();

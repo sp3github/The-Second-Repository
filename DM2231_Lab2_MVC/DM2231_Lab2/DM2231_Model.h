@@ -7,6 +7,7 @@
 #include "EntityFactory.h"
 #include <vector>
 #include "PlayerInfo.h"
+#include "Collision.h"
 #define PI 3.1415f
 
 class DM2231_Model
@@ -25,6 +26,9 @@ public:
 
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
+
+	//Collision theCollision(TestMap);
+	Collision theCollision;
 
 	float AnglefromHerotoMouse();
 };

@@ -8,4 +8,6 @@ class CHealth	:
 public:
 	CHealth(void);
 	~CHealth(void);
+
+	void render();
 };

@@ -1,8 +1,7 @@
 #include "DM2231_Model.h"
 
-DM2231_Model::DM2231_Model(void)
+DM2231_Model::DM2231_Model(void):theCollision(TestMap)
 {
-
 }
 
 DM2231_Model::~DM2231_Model(void)
@@ -17,6 +16,18 @@ void DM2231_Model::Update(void)
 	
 	theHero->ConstrainHero(20, /*(TestMap.getNumOfTiles_ScreenWidth() * TILE_SIZE) - 20*/ 300, 20, (TestMap.getNumOfTiles_ScreenHeight() * TILE_SIZE) - 20, 1.0f, TestMap.mapOffset_x, TestMap.mapOffset_y);
 	TestMap.Update();
+
+	for(auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+	{
+		CEntity * go = (*it);
+
+		for(auto i = ArrayofEntities.begin(); i != ArrayofEntities.end(); i++)
+		{
+			CEntity * other = (*i);
+			if(go != other)
+				cout<<theCollision.CheckCollision(*go,*other,false,false,false,false)<<endl;
+		}
+	}
 }
 
 float DM2231_Model::AnglefromHerotoMouse()

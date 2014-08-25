@@ -5,6 +5,8 @@ CEntity::CEntity(void)
 {
 	pos_x = 10;
 	pos_y = 10;
+	movementspeed = 0;
+	tile_size = 24;
 }
 
 
