@@ -1,4 +1,6 @@
+#pragma once
 #include "DM2231_Controller.h"
+#include "Entity.h"
 
 #include <windows.h>		// Header File For Windows
 #include <gl\gl.h>			// Header File For The OpenGL32 Library
@@ -41,7 +43,7 @@ bool DM2231_Controller::Init(void)
 	theModel->theHero = (dynamic_cast<CPlayerInfo*>(theModel->theHeroEntity));
 
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
-	theModel->ArrayofEntities.back()->SetPos(100,300);
+	theModel->ArrayofEntities.back()->SetPos(200,200);
 	
 	if (!theTexture->LoadTGA(&theTexture->menuTexture[0],"Menu.tga"))
 		return false;
@@ -124,24 +126,28 @@ bool DM2231_Controller::ProcessInput(void)
 
 	if (theView->GetKeys('w'))
 	{
-		theModel->theHero->moveMeUpDown(true, 1.0f, theModel->theHero->movementspeed);
+		if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,true))
+			theModel->theHero->moveMeUpDown(true, 1.0f, theModel->theHero->movementspeed);
 	}
 	if (theView->GetKeys('s'))
 	{
-		theModel->theHero->moveMeUpDown(false, 1.0f, theModel->theHero->movementspeed);
+		if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,true))
+			theModel->theHero->moveMeUpDown(false, 1.0f, theModel->theHero->movementspeed);
 	}
 	if (theView->GetKeys('a'))
 	{
-		theModel->theHero->moveMeLeftRight(true,1.0f,theModel->theHero->movementspeed);
+		if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,false,true))
+			theModel->theHero->moveMeLeftRight(true,1.0f,theModel->theHero->movementspeed);
 	}
 	if (theView->GetKeys('d'))
 	{
-		theModel->theHero->moveMeLeftRight(false, 1.0f, theModel->theHero->movementspeed);
+		if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,false,false,true))
+			theModel->theHero->moveMeLeftRight(false, 1.0f, theModel->theHero->movementspeed);
 	}
 	if(theView->LMKeyDown)
 	{
-		cout<<"FIRE"<<endl;
-		theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
+		//if(theModel->theCollision.CheckCollision(theModel->theHeroEntity))
+			//theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
 	}
 
 	return true;

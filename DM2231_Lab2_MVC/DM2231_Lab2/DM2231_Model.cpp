@@ -25,7 +25,7 @@ void DM2231_Model::Update(void)
 		{
 			CEntity * other = (*i);
 			if(go != other)
-				cout<<theCollision.CheckCollision(*go,*other,false,false,false,false)<<endl;
+				theCollision.CheckCollision(go,other,false,false,false,false);
 		}
 	}
 }
