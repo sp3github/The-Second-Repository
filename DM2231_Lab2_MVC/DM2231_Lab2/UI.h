@@ -1,8 +1,11 @@
 #pragma once
-#include "DM2231_Controller.h"
+#include "loadTGA.h"
+#include "../gl/freeglut.h"
 
 class UI
 {
+private:
+	void *font_style;
 public:
 	enum StateType{
 	PAUSE = 0,
@@ -24,6 +27,8 @@ public:
 	int DetermineState(int choice);
 
 	void Click(void);
+
+	void printw (float x, float y, float z, char* format, ...);
 
 	loadTGA* theTexture;
 };

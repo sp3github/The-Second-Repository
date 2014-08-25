@@ -35,7 +35,6 @@ public:
 					   int& mapOffset_x, int& mapOffset_y);
 
 	int m_iTileSize;
-	int movementspeed;
 
 	void moveMeUpDown(bool mode, float timeDiff, float movementspeed);
 	void moveMeLeftRight(bool mode, float timeDiff, float movementspeed);

@@ -38,9 +38,9 @@ BOOL DM2231_View::Draw(void)
 
 
 	theModel->TestMap.RenderTileMap();
-	theModel->theHero->render();
 
-	for( auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
+	
+	for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
 	{
 		(*it)->render();
 	}

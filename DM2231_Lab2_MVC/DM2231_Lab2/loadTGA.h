@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Header.h"
 
 class loadTGA
@@ -15,4 +14,3 @@ public:
 	loadTGA(void);
 	~loadTGA(void);
 };
-

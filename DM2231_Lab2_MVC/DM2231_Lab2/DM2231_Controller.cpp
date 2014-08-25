@@ -39,6 +39,9 @@ bool DM2231_Controller::Init(void)
 
 	theModel->theHeroEntity = theModel->ArrayofEntities.back();
 	theModel->theHero = (dynamic_cast<CPlayerInfo*>(theModel->theHeroEntity));
+
+	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
+	theModel->ArrayofEntities.back()->SetPos(100,300);
 	
 	if (!theTexture->LoadTGA(&theTexture->menuTexture[0],"Menu.tga"))
 		return false;
