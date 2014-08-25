@@ -40,6 +40,11 @@ BOOL DM2231_View::Draw(void)
 	theModel->TestMap.RenderTileMap();
 	theModel->theHero->render();
 
+	for( auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
+	{
+		(*it)->render();
+	}
+
 	//glTranslatef(-1.5f,0.0f,-6.0f); // Move Left 1.5 Units And Into The Screen 6.0
 	//glRotatef(rtri,0.0f,1.0f,0.0f); // Rotate The Triangle On The Y axis ( NEW )
 	//glBegin(GL_TRIANGLES); // Start Drawing A Triangle
