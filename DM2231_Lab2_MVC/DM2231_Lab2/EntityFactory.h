@@ -12,6 +12,7 @@ typedef int Entity;
 #define AMMO 1
 #define SLOWDOWN 2
 #define PLAYER 3
+#define BULLET 4
 
 class CEntityFactory
 {

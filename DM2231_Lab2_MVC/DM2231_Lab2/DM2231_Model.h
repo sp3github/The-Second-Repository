@@ -8,6 +8,7 @@
 #include <vector>
 #include "PlayerInfo.h"
 #include "Collision.h"
+#include "Gun.h"
 #define PI 3.1415f
 
 class DM2231_Model
@@ -26,6 +27,8 @@ public:
 
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
+
+	CGun theGun;
 
 	//Collision theCollision(TestMap);
 	Collision theCollision;

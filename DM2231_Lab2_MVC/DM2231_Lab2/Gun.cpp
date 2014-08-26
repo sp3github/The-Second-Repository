@@ -79,10 +79,27 @@ void CGun::Update()
 
 void CGun::Show()
 {
-
+	int tile_size = 24;
+	glEnable(GL_TEXTURE_2D);
+	glPushMatrix();
+	glTranslatef(300,100, 0);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glScalef(3,3,3);
+	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
+	glPushMatrix();
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 1); glVertex2f(0, 0);
+	glTexCoord2f(0, 0); glVertex2f(0, tile_size);
+	glTexCoord2f(1, 0); glVertex2f(tile_size, tile_size);
+	glTexCoord2f(1, 1); glVertex2f(tile_size, 0);
+	glEnd();
+	glPopMatrix();
+	glPopMatrix();
+	cout << "OKOKOK" << endl;
 }
 
-bool CGun::Fire(Vector3D<float> Direction, Vector3D<float> camDirection)
+bool CGun::Fire(/*Vector3D<float> Direction, Vector3D<float> camDirection*/)
 {
 	if (isreload)
 		return false;
@@ -92,7 +109,7 @@ bool CGun::Fire(Vector3D<float> Direction, Vector3D<float> camDirection)
 		{
 			if (bulletsInMag > 0)
 			{
-				if (isaim)
+				/*if (isaim)
 				{
 					Direction.x = camDirection.x + ((float)(rand()%3 - 1) / aimPrecision);	
 					Direction.y = camDirection.y + ((float)(rand()%3 - 1) / aimPrecision);	
@@ -103,8 +120,8 @@ bool CGun::Fire(Vector3D<float> Direction, Vector3D<float> camDirection)
 					Direction.x = camDirection.x + ((float)(rand()%3 - 1) / Precision);	
 					Direction.y = camDirection.y + ((float)(rand()%3 - 1) / Precision);	
 					Direction.z = camDirection.z + ((float)(rand()%3 - 1) / Precision);	
-				}
-
+				}*/
+				//cout << "success" << endl;
 				isfired = true;
 				lastShot = 0;
 				bulletsInMag--;

@@ -43,8 +43,6 @@ void CPlayerInfo::render(void) {
 	glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 1); glVertex2f(m_iTileSize, 0);
 	glEnd();
 
-
-
 	glEnd();
 	glDisable( GL_BLEND );
 	glDisable( GL_TEXTURE_2D );

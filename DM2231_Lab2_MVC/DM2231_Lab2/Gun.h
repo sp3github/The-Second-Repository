@@ -1,6 +1,12 @@
 #pragma once
-#include "Define.h"
+#include "vector3D.h"
 #include <vector>
+#include <string>
+#include "Header.h"
+
+#include <iostream>
+using namespace std;
+
 
 #ifndef CGUN_H
 #define CGUN_H
@@ -33,8 +39,6 @@ private:
 	unsigned int curmode;
 
 	std::string name;
-	int Rof;
-	//int Ammo;
 	
 public:
 	CGun();
@@ -45,7 +49,7 @@ public:
 	void Show();
 
 	//firing 
-	bool Fire(Vector3D<float> Direction, Vector3D<float>camDirection);
+	bool Fire(/*Vector3D<float> Direction, Vector3D<float>camDirection*/);
 	void stopFire();
 	//reloading
 	void Reload();
