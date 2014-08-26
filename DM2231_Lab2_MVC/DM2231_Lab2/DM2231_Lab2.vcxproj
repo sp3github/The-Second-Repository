@@ -98,6 +98,7 @@
     <ClCompile Include="DM2231_View.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityFactory.cpp" />
+    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Health.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="LoadResources.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="DM2231_View.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityFactory.h" />
+    <ClInclude Include="Gun.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Health.h" />
     <ClInclude Include="Items.h" />

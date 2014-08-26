@@ -36,10 +36,11 @@ BOOL DM2231_View::Draw(void)
 
 	theModel->theOrtho2DSetUp.SetHUD(true);
 
-
 	theModel->TestMap.RenderTileMap();
 
-	
+
+
+	theModel->theGun.Show();
 	for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
 	{
 		(*it)->render();
@@ -47,7 +48,44 @@ BOOL DM2231_View::Draw(void)
 
 
 
+	
+	//glTranslatef(-1.5f,0.0f,-6.0f); // Move Left 1.5 Units And Into The Screen 6.0
+	//glRotatef(rtri,0.0f,1.0f,0.0f); // Rotate The Triangle On The Y axis ( NEW )
+	//glBegin(GL_TRIANGLES); // Start Drawing A Triangle
+	//	glColor3f(1.0f,0.0f,0.0f); // Set Top Point Of Triangle To Red
+	//	glVertex3f( 0.0f, 1.0f, 0.0f); // First Point Of The Triangle
+	//	glColor3f(0.0f,1.0f,0.0f); // Set Left Point Of Triangle To Green
+	//	glVertex3f(-1.0f,-1.0f, 0.0f); // Second Point Of The Triangle
+	//	glColor3f(0.0f,0.0f,1.0f); // Set Right Point Of Triangle To Blue
+	//	glVertex3f( 1.0f,-1.0f, 0.0f); // Third Point Of The Triangle
+	//glEnd(); // Done Drawing The Triangle
+
+	//glLoadIdentity(); // Reset The Current Modelview Matrix
+	//glTranslatef(1.5f,0.0f,-6.0f); // Move Right 1.5 Units And Into The Screen 6.0
+	//glRotatef(rquad,1.0f,0.0f,0.0f); // Rotate The Quad On The X axis ( NEW )
+	//glColor3f(0.5f,0.5f,1.0f); // Set The Color To Blue One Time Only
+
+	//glBegin(GL_QUADS); // Draw A Quad
+	//	glVertex3f(-1.0f, 1.0f, 0.0f); // Top Left
+	//	glVertex3f( 1.0f, 1.0f, 0.0f); // Top Right
+	//	glVertex3f( 1.0f,-1.0f, 0.0f); // Bottom Right
+	//	glVertex3f(-1.0f,-1.0f, 0.0f); // Bottom Left
+	//glEnd(); // Done Drawing The Quad
+
+	//rtri+=0.2f; // Increase The Rotation Variable For The Triangle ( NEW )
+	//rquad-=0.15f; // Decrease The Rotation Variable For The Quad ( NEW )
+	theModel->theOrtho2DSetUp.SetHUD(false);
+
+
 	SwapBuffers(hDC); // Swap Buffers (Double Buffering)
+
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,0);	glVertex2f(0,0.25);
+	glTexCoord2f(1,0);	glVertex2f(0.25,0.25);
+	glTexCoord2f(1,1);	glVertex2f(0.25,0);
+	glTexCoord2f(0,1);	glVertex2f(0,0);
+	glEnd();
+	
 
 	return TRUE; // Keep Going
 }

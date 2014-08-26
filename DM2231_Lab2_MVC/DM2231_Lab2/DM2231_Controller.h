@@ -5,8 +5,9 @@
 #include "DM2231_Model.h"
 #include "DM2231_View.h"
 #include "loadTGA.h"
+#include "Gun.h"
 
-class DM2231_Controller
+class DM2231_Controller : public CGun 
 {
 public:
 	DM2231_Controller(DM2231_Model* theModel, DM2231_View* theView);
