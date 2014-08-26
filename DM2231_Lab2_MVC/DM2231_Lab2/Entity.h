@@ -26,8 +26,8 @@ public:
 	int movementspeed;
 	int tile_size;
 
-	virtual void update();
-	virtual void render();
+	virtual void update() = 0;
+	virtual void render(int mapOffset_x, int mapOffset_y) = 0;
 
 	virtual bool CollisionEvent(CEntity &other);
 	

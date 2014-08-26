@@ -43,7 +43,7 @@ BOOL DM2231_View::Draw(void)
 	theModel->theGun.Show();
 	for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
 	{
-		(*it)->render();
+		(*it)->render(theModel->TestMap.mapOffset_x,theModel->TestMap.mapOffset_y);
 	}
 
 

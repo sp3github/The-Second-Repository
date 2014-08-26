@@ -13,7 +13,7 @@ public:
 	TextureImage HeroTexture[3];
 
 	// Render the Hero onto the screen
-	void render(void);
+	void render(int mapOffset_x, int mapOffset_y);
 	void update();
 	// Initialise this class instance
 	void Init(void);
@@ -40,6 +40,10 @@ public:
 	void moveMeLeftRight(bool mode, float timeDiff, float movementspeed);
 
 	bool CollisionEvent(CEntity &other);
+
+	int hp;
+	int ammo;
+	bool slow;
 
 private:
 

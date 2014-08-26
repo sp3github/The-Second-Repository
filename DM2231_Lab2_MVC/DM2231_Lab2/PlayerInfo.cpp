@@ -8,6 +8,10 @@ CPlayerInfo::CPlayerInfo(void)
 	movementspeed = 5;
 	HeroRotation = 0;
 	tile_size = 24;
+
+	hp = 0;
+	ammo = 0;
+	slow = false;
 }
 
 CPlayerInfo::~CPlayerInfo(void)
@@ -22,7 +26,7 @@ void CPlayerInfo::Init(void)
 /****************************************************************************************************
    Draw the hero
  ****************************************************************************************************/
-void CPlayerInfo::render(void) {
+void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
 	glPushMatrix();
 	glTranslatef(GetX(), GetY(), 0);
 	glTranslatef(m_iTileSize/2, m_iTileSize/2,0);
@@ -156,7 +160,29 @@ bool CPlayerInfo::CollisionEvent(CEntity &other)
 	switch(other.ID)
 	{
 	case HEALTH:
+		{
+			this->hp += 10;
 
+			if(this->hp > 100)
+			{
+				this->hp = 100;
+			}
+		}
+		break;
+	case AMMO:
+		{
+			this->ammo += 6;
+
+			if(this->ammo > 36)
+			{
+				this->ammo = 36;
+			}
+		}
+		break;
+	case SLOWDOWN:
+		{
+			this->slow = true;
+		}
 		break;
 	}
 	return false;
