@@ -28,7 +28,7 @@ void CPlayerInfo::Init(void)
  ****************************************************************************************************/
 void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
 	glPushMatrix();
-	glTranslatef(GetX(), GetY(), 0);
+	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
 	glTranslatef(m_iTileSize/2, m_iTileSize/2,0);
 	glRotatef(HeroRotation,0,0,1);
 	glTranslatef(-m_iTileSize / 2, -m_iTileSize / 2, 0);
