@@ -39,6 +39,8 @@ public:
 	void moveMeUpDown(bool mode, float timeDiff, float movementspeed);
 	void moveMeLeftRight(bool mode, float timeDiff, float movementspeed);
 
+	bool CollisionEvent(CEntity &other);
+
 private:
 
 	bool heroAnimationInvert;

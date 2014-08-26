@@ -35,28 +35,10 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 	Atile_top_y =  go->GetY() ; 
 	Atile_bottom_y = go->GetY() + go->tile_size;
 
+	//Check against other entities.
 	if(other == NULL)
 	{
-	}
-	else
-	{
-		Btile_left_x = other->GetX();
-		Btile_right_x = other->GetX() + other->tile_size; 
-		Btile_top_y =  other->GetY() ; 
-		Btile_bottom_y = other->GetY()+ other->tile_size;
-
-		if(Atile_bottom_y <= Btile_top_y && Atile_top_y >= Btile_bottom_y && Atile_right_x <= Btile_left_x && Atile_left_x >= Btile_right_x)
-		{
-			//COLLIDED
-			cout<<"COLLIDED"<<endl;
-			return false;
-		}
-	}
-
-	
-
-
-	//Now check if move against wall
+		//Now check if move against wall
 	if(m_bCheckUpwards)
 		return WallCollision( Atile_left_x, Atile_right_x, Atile_top_y - go->movementspeed, Atile_bottom_y - go->movementspeed);
 	if(m_bCheckDownwards)
@@ -65,6 +47,29 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 		return WallCollision( Atile_left_x - go->movementspeed, Atile_right_x - go->movementspeed, Atile_top_y, Atile_bottom_y);
 	if(m_bCheckRight)
 		return WallCollision( Atile_left_x + go->movementspeed, Atile_right_x + go->movementspeed, Atile_top_y, Atile_bottom_y);
+	}
+	else
+	{
+		Btile_left_x = other->GetX();
+		Btile_right_x = other->GetX() + other->tile_size; 
+		Btile_top_y =  other->GetY() ; 
+		Btile_bottom_y = other->GetY()+ other->tile_size;
+
+
+		if(!(Btile_left_x > Atile_right_x
+			|| Btile_right_x < Atile_right_x
+			|| Btile_top_y > Atile_bottom_y
+			|| Btile_bottom_y < Atile_top_y ))
+		{
+			cout<<"COLLIDED"<<endl;
+			return true;
+		}
+	}
+
+	
+
+
+
 }
 
 bool Collision::WallCollision(int left, int right, int top, int bottom)

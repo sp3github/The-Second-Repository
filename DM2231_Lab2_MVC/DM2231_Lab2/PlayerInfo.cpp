@@ -152,3 +152,14 @@ void CPlayerInfo::update()
 {
 
 }
+
+bool CPlayerInfo::CollisionEvent(CEntity &other)
+{
+	switch(other.ID)
+	{
+	case HEALTH:
+
+		break;
+	}
+	return false;
+}

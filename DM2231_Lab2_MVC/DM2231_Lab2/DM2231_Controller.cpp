@@ -146,6 +146,7 @@ bool DM2231_Controller::ProcessInput(void)
 	}
 	if(theView->LMKeyDown)
 	{
+
 		//if(theModel->theCollision.CheckCollision(theModel->theHeroEntity))
 			//theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
 	}

@@ -7,11 +7,6 @@
 #include "Slowdown.h"
 #include "PlayerInfo.h"
 
-typedef int Entity;
-#define HEALTH 0
-#define AMMO 1
-#define SLOWDOWN 2
-#define PLAYER 3
 
 class CEntityFactory
 {

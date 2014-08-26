@@ -1,6 +1,12 @@
 #pragma once
 #include "Header.h"
 
+typedef int Entity;
+#define HEALTH 0
+#define AMMO 1
+#define SLOWDOWN 2
+#define PLAYER 3
+
 class CEntity
 {
 private:
@@ -23,8 +29,8 @@ public:
 	virtual void update();
 	virtual void render();
 
-	virtual bool CollisionEvent();
+	virtual bool CollisionEvent(CEntity &other);
 	
-
+	Entity ID;
 };
 

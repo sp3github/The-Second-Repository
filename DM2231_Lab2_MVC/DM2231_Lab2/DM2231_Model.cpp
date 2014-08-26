@@ -27,6 +27,7 @@ void DM2231_Model::Update(void)
 			if(go != other)
 				theCollision.CheckCollision(go,other,false,false,false,false);
 		}
+		go->update();
 	}
 }
 

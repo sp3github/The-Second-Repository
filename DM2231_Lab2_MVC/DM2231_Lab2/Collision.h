@@ -17,6 +17,7 @@ public:
 
 
 	bool WallCollision(int left, int right, int top, int bottom);
+
 	bool Collider(int x, int y);
 };
 
