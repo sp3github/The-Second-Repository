@@ -41,4 +41,5 @@ public:
 	float AnglefromHerotoMouse();
 
 	State theState;
+	void ConstrainHero();
 };

@@ -66,43 +66,64 @@ int CPlayerInfo::GetAnimationCounter(void)
 }
 
 // Constrain the position of the Hero to within the border
-void CPlayerInfo::ConstrainHero(const int leftBorder, const int rightBorder, 
-								  const int topBorder, const int bottomBorder, 
-								  float timeDiff,
-								  int& mapOffset_x, int& mapOffset_y)
+void CPlayerInfo::ConstrainHero( const int leftBorder, const int rightBorder, const int topBorder, const int bottomBorder, const int LsoftBorder, const int RsoftBorder, const int TsoftBorder, const int BsoftBorder, float timeDiff, int& mapOffset_x, int& mapOffset_y, int mapheight, int mapwidth)
 {
-	if (GetX() < leftBorder)
-	{
+	if (GetX() < leftBorder) 
+	{ 
 		Set_X(leftBorder);
-		mapOffset_x =  mapOffset_x - (int) (movementspeed * timeDiff);
-		if (mapOffset_x < 0)
-			mapOffset_x = 0;
-		//cout<<"MAPOFFSET_X "<<mapOffset_x<<endl;
-	}
-	else if (GetX() > rightBorder)
+		mapOffset_x = mapOffset_x - (int) (movementspeed * timeDiff);
+		if (mapOffset_x < 0) mapOffset_x = 0;
+	} 
+	else if(GetX()<LsoftBorder&&mapOffset_x>0)
+	{ 
+		Set_X(LsoftBorder);
+		mapOffset_x = mapOffset_x - (int) (movementspeed * timeDiff); 
+		if (mapOffset_x < 0) 
+			mapOffset_x = 0; 
+	} 
+	else if
+		(GetX() > rightBorder) 
+	{ 
+		Set_X(rightBorder) ; 
+		mapOffset_x = mapOffset_x + (int) (movementspeed * timeDiff); 
+		if (mapOffset_x > mapwidth) // This must be changed to soft-coded 
+			mapOffset_x = mapwidth ; 
+	} 
+	else if(GetX()>RsoftBorder&&mapOffset_x<mapwidth) 
 	{
-		Set_X(rightBorder);
-		mapOffset_x = mapOffset_x + (int)(movementspeed * timeDiff);
-		if (mapOffset_x > 800)	// This must be changed to soft-coded
-			mapOffset_x = 800;
-		//cout<<"MAPOFFSET_X "<<mapOffset_x<<endl;
+		Set_X(RsoftBorder);
+		mapOffset_x = mapOffset_x + (int) (movementspeed * timeDiff); 
+		if (mapOffset_x > mapwidth) 
+			mapOffset_x = mapwidth; 
 	}
 
-	if (GetY() < topBorder)
+	if (GetY() < topBorder) 
+	{ 
+		Set_Y(leftBorder);
+		mapOffset_y = mapOffset_y - (int) (movementspeed * timeDiff);
+		if (mapOffset_y < 0) mapOffset_y = 0;
+	} 
+	else if(GetY()<TsoftBorder&&mapOffset_y>0)
+	{ 
+		Set_Y(TsoftBorder);
+		mapOffset_y = mapOffset_y - (int) (movementspeed * timeDiff); 
+		if (mapOffset_y < 0) 
+			mapOffset_y = 0; 
+	} 
+	else if
+		(GetY() > bottomBorder) 
+	{ 
+		Set_Y(bottomBorder) ; 
+		mapOffset_y = mapOffset_y + (int) (movementspeed * timeDiff); 
+		if (mapOffset_y > mapheight) // This must be changed to soft-coded 
+			mapOffset_y = mapheight ; 
+	} 
+	else if(GetY()>BsoftBorder&&mapOffset_y< mapheight) 
 	{
-		Set_Y(topBorder);
-		mapOffset_y =  mapOffset_y - (int) (movementspeed * timeDiff);
-		if (mapOffset_y < 0)
-			mapOffset_y = 0;
-		cout<<"MAPOFFSET_Y "<<mapOffset_y<<endl;
-	}
-	else if (GetY() > bottomBorder)
-	{
-		Set_Y( bottomBorder);
-		mapOffset_y = mapOffset_y + (int)(movementspeed * timeDiff);
-		if (mapOffset_y > 600)	// This must be changed to soft-coded
-			mapOffset_y = 600;
-		cout<<"MAPOFFSET_Y "<<mapOffset_y<<endl;
+		Set_Y(BsoftBorder);
+		mapOffset_y = mapOffset_y + (int) (movementspeed * timeDiff); 
+		if (mapOffset_y > mapheight) 
+			mapOffset_y = mapheight; 
 	}
 }
 
