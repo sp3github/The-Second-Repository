@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Ortho2D.h"
 #include "Mouse.h"
+#include "UI.h"
 #include <stdio.h>
 #include "EntityFactory.h"
 #include <vector>
@@ -10,8 +11,12 @@
 #include "Collision.h"
 #include "Gun.h"
 #include "Bullet.h"
+
 #include "Zombies.h"
 #include "Obstacle.h"
+
+
+#include "State.h"
 
 #define PI 3.1415f
 
@@ -25,12 +30,14 @@ public:
 	CMap TestMap;
 	Ortho2D theOrtho2DSetUp;
 	CMouse theMouseInfo;
+	UI theUI;
 
 	vector<CEntity*> ArrayofEntities;
 	CEntityFactory theEntityFactory;
 
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
+	Bullet theBullet;
 
 	CObstacle * theObstacle;
 
@@ -40,4 +47,7 @@ public:
 	Collision theCollision;
 
 	float AnglefromHerotoMouse();
+
+	State theState;
+	void ConstrainHero();
 };

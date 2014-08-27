@@ -1,6 +1,9 @@
 #pragma once
 #include "Entity.h"
 
+#include <vector>
+
+
 class Bullet : public CEntity
 {
 private:
@@ -10,6 +13,9 @@ private:
 	float velX;
 	float velY;
 
+	float sx;
+	float sy;
+
 
 public:
 	Bullet(void);
@@ -18,7 +24,11 @@ public:
 	void FireBullet(float x, float y);
 	void Tick();
 
+
 	void render();
 	void update();
+
+	void Draw();
+
 };
 

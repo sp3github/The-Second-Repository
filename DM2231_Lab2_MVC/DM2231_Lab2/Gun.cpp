@@ -96,7 +96,6 @@ void CGun::Show()
 	glEnd();
 	glPopMatrix();
 	glPopMatrix();
-	cout << "OKOKOK" << endl;
 }
 
 bool CGun::Fire(/*Vector3D<float> Direction, Vector3D<float> camDirection*/)

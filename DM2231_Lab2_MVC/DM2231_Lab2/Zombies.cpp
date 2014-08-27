@@ -19,21 +19,6 @@ CZombies::~CZombies(void)
 {
 }
 
-//Overloaded Constructor
-//CZombies::CZombies( unsigned int w, unsigned int a, unsigned int d, int h, int st, float spd)
-//{
-//	walk = w;
-//	attack = a;
-//	die = d;
-//	health = h;
-//	moneysteal = st;
-//	speed = spd;
-//
-//	iswalk = true;
-//	isattack = false;
-//	isdead = false;
-//}
-
 bool CZombies::ChangeState(const int newState)
 {
 	return false;
@@ -76,7 +61,7 @@ void CZombies::Update()
 void CZombies::update(int herox, int heroy)
 {
 	Vector3D<float> HeroPos (herox,heroy);
-	Vector3D<float> ZombiePos(herox, heroy);
+	Vector3D<float> ZombiePos(GetX(), GetY());
 
 	Vector3D<float> theDiff(HeroPos - ZombiePos);
 
@@ -86,10 +71,13 @@ void CZombies::update(int herox, int heroy)
 	pos.Set(GetX(),GetY());
 	pos += vel;
 
+	Set_X(pos.x);
+	Set_Y(pos.y);
+
 }
 
 
-void CZombies::render()
+void CZombies::render(int mapOffset_x, int mapOffset_y)
 {	
 
 //	if (i < 10){
@@ -98,10 +86,9 @@ void CZombies::render()
 		//int y = rand()% 300;
 
 		//cout << "ZOMBIE" << endl;
-		int tile_size = 24;
 		//Zombies
 		glPushMatrix();
-		glTranslatef(GetX(), GetY(), 0);
+		glTranslatef(GetX() - mapOffset_x, GetY() -mapOffset_y, 0);
 		glEnable(GL_TEXTURE_2D);		
 		glColor3f(0,1,0);
 		glBegin(GL_QUADS);
@@ -161,4 +148,3 @@ void CZombies::drawzombie(int x, int y)
 		
 	
 }
-

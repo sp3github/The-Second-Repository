@@ -3,10 +3,15 @@
 
 CPlayerInfo::CPlayerInfo(void)
 {
-	m_iTileSize = 24;
 	heroAnimationCounter = 0;
 	movementspeed = 5;
 	HeroRotation = 0;
+
+	tile_size = 24;
+
+	hp = 0;
+	ammo = 0;
+	slow = false;
 }
 
 CPlayerInfo::~CPlayerInfo(void)
@@ -21,12 +26,12 @@ void CPlayerInfo::Init(void)
 /****************************************************************************************************
    Draw the hero
  ****************************************************************************************************/
-void CPlayerInfo::render(void) {
+void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
 	glPushMatrix();
 	glTranslatef(GetX(), GetY(), 0);
-	glTranslatef(m_iTileSize/2, m_iTileSize/2,0);
+	glTranslatef(tile_size/2, tile_size/2,0);
 	glRotatef(HeroRotation,0,0,1);
-	glTranslatef(-m_iTileSize / 2, -m_iTileSize / 2, 0);
+	glTranslatef(-tile_size / 2, -tile_size / 2, 0);
 	//glTranslatef(-20, -20,0);
 	glEnable( GL_TEXTURE_2D );
 	glEnable( GL_BLEND );
@@ -51,17 +56,6 @@ void CPlayerInfo::render(void) {
 
 }
 
-// Set Animation Invert status of the player
-void CPlayerInfo::SetAnimationInvert(bool heroAnimationInvert)
-{
-	this->heroAnimationInvert = heroAnimationInvert;
-}
-// Get Animation Invert status of the player
-bool CPlayerInfo::GetAnimationInvert(void)
-{
-	return heroAnimationInvert;
-}
-
 // Set Animation Counter of the player
 void CPlayerInfo::SetAnimationCounter(int heroAnimationCounter)
 {
@@ -74,27 +68,37 @@ int CPlayerInfo::GetAnimationCounter(void)
 }
 
 // Constrain the position of the Hero to within the border
-void CPlayerInfo::ConstrainHero(const int leftBorder, const int rightBorder, 
-								  const int topBorder, const int bottomBorder, 
-								  float timeDiff,
-								  int& mapOffset_x, int& mapOffset_y)
+void CPlayerInfo::ConstrainHero( const int leftBorder, const int rightBorder, const int topBorder, const int bottomBorder, const int LsoftBorder, const int RsoftBorder, const int TsoftBorder, const int BsoftBorder, float timeDiff, int& mapOffset_x, int& mapOffset_y, int mapheight, int mapwidth)
 {
-	if (GetX() < leftBorder)
-	{
+	if (GetX() < leftBorder) 
+	{ 
 		Set_X(leftBorder);
-		mapOffset_x =  mapOffset_x - (int) (movementspeed * timeDiff);
-		if (mapOffset_x < 0)
-			mapOffset_x = 0;
-		//cout<<"MAPOFFSET_X "<<mapOffset_x<<endl;
-	}
-	else if (GetX() > rightBorder)
+		mapOffset_x = mapOffset_x - (int) (movementspeed * timeDiff);
+		if (mapOffset_x < 0) mapOffset_x = 0;
+	} 
+	else if(GetX()<LsoftBorder&&mapOffset_x>0)
+	{ 
+		Set_X(LsoftBorder);
+		mapOffset_x = mapOffset_x - (int) (movementspeed * timeDiff); 
+		if (mapOffset_x < 0) 
+			mapOffset_x = 0; 
+	} 
+	else if
+		(GetX() > rightBorder) 
+	{ 
+		Set_X(rightBorder) ; 
+		mapOffset_x = mapOffset_x + (int) (movementspeed * timeDiff); 
+		if (mapOffset_x > mapwidth) // This must be changed to soft-coded 
+			mapOffset_x = mapwidth ; 
+	} 
+	else if(GetX()>RsoftBorder&&mapOffset_x<mapwidth) 
 	{
-		Set_X(rightBorder);
-		mapOffset_x = mapOffset_x + (int)(movementspeed * timeDiff);
-		if (mapOffset_x > 800)	// This must be changed to soft-coded
-			mapOffset_x = 800;
-		//cout<<"MAPOFFSET_X "<<mapOffset_x<<endl;
+		Set_X(RsoftBorder);
+		mapOffset_x = mapOffset_x + (int) (movementspeed * timeDiff); 
+		if (mapOffset_x > mapwidth) 
+			mapOffset_x = mapwidth; 
 	}
+
 
 	if (GetY() < topBorder)
 	{
@@ -111,6 +115,34 @@ void CPlayerInfo::ConstrainHero(const int leftBorder, const int rightBorder,
 		if (mapOffset_y > 600)	// This must be changed to soft-coded
 			mapOffset_y = 600;
 		cout<<"MAPOFFSET_Y "<<mapOffset_y<<endl;
+	}
+	if (GetY() < topBorder) 
+	{ 
+		Set_Y(leftBorder);
+		mapOffset_y = mapOffset_y - (int) (movementspeed * timeDiff);
+		if (mapOffset_y < 0) mapOffset_y = 0;
+	} 
+	else if(GetY()<TsoftBorder&&mapOffset_y>0)
+	{ 
+		Set_Y(TsoftBorder);
+		mapOffset_y = mapOffset_y - (int) (movementspeed * timeDiff); 
+		if (mapOffset_y < 0) 
+			mapOffset_y = 0; 
+	} 
+	else if
+		(GetY() > bottomBorder) 
+	{ 
+		Set_Y(bottomBorder) ; 
+		mapOffset_y = mapOffset_y + (int) (movementspeed * timeDiff); 
+		if (mapOffset_y > mapheight) // This must be changed to soft-coded 
+			mapOffset_y = mapheight ; 
+	} 
+	else if(GetY()>BsoftBorder&&mapOffset_y< mapheight) 
+	{
+		Set_Y(BsoftBorder);
+		mapOffset_y = mapOffset_y + (int) (movementspeed * timeDiff); 
+		if (mapOffset_y > mapheight) 
+			mapOffset_y = mapheight; 
 	}
 }
 
@@ -134,7 +166,6 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 	{
 		
  		Set_X( GetX() - (int) (movementspeed * timeDiff) );
-		SetAnimationInvert( true );
 		SetAnimationCounter( GetAnimationCounter() - 1);
 		if (GetAnimationCounter()==0)
 			SetAnimationCounter( 3 );
@@ -143,7 +174,6 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 	{
 		
 		Set_X( GetX() + (int) (movementspeed * timeDiff) );
-		SetAnimationInvert( false );
 		SetAnimationCounter( GetAnimationCounter() + 1);
 		if (GetAnimationCounter() > 3)
 			SetAnimationCounter( 0 );
@@ -153,5 +183,40 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 
 void CPlayerInfo::update()
 {
+	return;
+}
+
+bool CPlayerInfo::CollisionEvent(CEntity &other)
+{
+	switch(other.ID)
+	{
+	case HEALTH:
+		{
+			this->hp += 10;
+
+			if(this->hp > 100)
+			{
+				this->hp = 100;
+			}
+		}
+		break;
+	case AMMO:
+		{
+			this->ammo += 6;
+
+			if(this->ammo > 36)
+			{
+				this->ammo = 36;
+			}
+		}
+		break;
+	case SLOWDOWN:
+		{
+			this->slow = true;
+		}
+		break;
+	}
+	return false;
+
 
 }

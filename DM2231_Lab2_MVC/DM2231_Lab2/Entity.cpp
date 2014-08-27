@@ -32,12 +32,19 @@ void CEntity::SetPos(const int pos_x, const int pos_y)
 
 void CEntity::update()
 {
-
+	
 }
-void CEntity::render()
+
+void CEntity::update(int herox, int heroy)
 {
 
 }
+
+void CEntity::render(int mapOffset_x, int mapOffset_y)
+{
+
+}
+
 
 bool CEntity::CollisionEvent()
 {
@@ -52,4 +59,7 @@ void CEntity::Set_Y(int pos_y)
 void CEntity::Set_X(int pos_x)
 {
 	this->pos_x = pos_x;
+
 }
+
+

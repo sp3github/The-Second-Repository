@@ -1,3 +1,4 @@
+//<<<<<<< HEAD
 #pragma once
 #include "vector3D.h"
 #include "Header.h"
@@ -27,7 +28,6 @@ private:
 	const int hero_x;
 	const int hero_y;
 
-	//int EnemyArray[];
 public:
 	CZombies(void);
 	~CZombies(void);
@@ -43,9 +43,7 @@ public:
 	bool isDead();
 	
 	void update(int herox, int heroy);
-	void render();
+	void render(int mapOffset_x, int mapOffset_y);
 	void drawzombie(int x, int y);
 	int i;
-
-
 };

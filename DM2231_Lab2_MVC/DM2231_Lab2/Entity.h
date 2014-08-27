@@ -1,6 +1,17 @@
 #pragma once
 #include "Header.h"
 
+
+
+enum Entity{
+ HEALTH = 0,
+ AMMO ,
+ SLOWDOWN ,
+ PLAYER ,
+ ZOMBIE,
+ OBSTACLE
+};
+
 class CEntity
 {
 private:
@@ -21,10 +32,12 @@ public:
 	int tile_size;
 
 	virtual void update();
-	virtual void render();
+	virtual void update(int herox, int heroy);
+	virtual void render(int mapOffset_x, int mapOffset_y);
 
 	virtual bool CollisionEvent();
 	
+	Entity ID;
 
 };
 

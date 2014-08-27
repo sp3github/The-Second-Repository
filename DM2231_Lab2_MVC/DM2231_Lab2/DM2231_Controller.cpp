@@ -4,6 +4,7 @@
 #include <gl\gl.h>			// Header File For The OpenGL32 Library
 #include <gl\glu.h>			// Header File For The GLu32 Library
 
+
 HDC			hDC=NULL;		// Private GDI Device Context
 HGLRC		hRC=NULL;		// Permanent Rendering Context
 HWND		hWnd=NULL;		// Holds Our Window Handle
@@ -14,6 +15,7 @@ DM2231_Controller::DM2231_Controller(DM2231_Model* theModel, DM2231_View* theVie
 , theView(NULL)
 , m_bContinueLoop(false)
 {
+
 	this->theModel = theModel;
 	this->theView = theView;
 	Init();
@@ -33,15 +35,18 @@ bool DM2231_Controller::Init(void)
 	else
 		theView->setFullScreen( true );
 
+
 	theModel->TestMap.LoadLevel(1);
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(PLAYER));
 	theModel->ArrayofEntities.back()->SetPos(100,200);
 
+	
 	theModel->theHeroEntity = theModel->ArrayofEntities.back();
 	theModel->theHero = (dynamic_cast<CPlayerInfo*>(theModel->theHeroEntity));
 
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
 	theModel->ArrayofEntities.back()->SetPos(100,300);
+
 
 	for(int i = 0; i < 5; i++)
 	{
@@ -51,15 +56,10 @@ bool DM2231_Controller::Init(void)
 
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(OBSTACLE));
 	theModel->ArrayofEntities.back()->SetPos(400,150);
+
 	
-	if (!theTexture->LoadTGA(&theTexture->menuTexture[0],"Menu.tga"))
-		return false;
-	if (!theTexture->LoadTGA(&theTexture->levelTexture[0], "Level.tga"))
-		return false;
-	if (!theTexture->LoadTGA(&theTexture->scoreTexture[0], "Score.tga"))
-		return false;
-	if (!theTexture->LoadTGA(&theTexture->subpageTexture[0], "Subpage.tga"))
-		return false;
+	
+
 	return true;
 }
 
@@ -131,27 +131,88 @@ bool DM2231_Controller::ProcessInput(void)
 		}
 	}
 
-	if (theView->GetKeys('w'))
+	switch (theModel->theState.theState)
 	{
-		theModel->theHero->moveMeUpDown(true, 1.0f, theModel->theHero->movementspeed);
+	case (theModel->theState.states::level):
+		{
+			if (theView->GetKeys('w'))
+			{
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,true))
+					theModel->theHero->moveMeUpDown(true, 1.0f, theModel->theHero->movementspeed);
+			}
+			if (theView->GetKeys('s'))
+			{
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,true))
+					theModel->theHero->moveMeUpDown(false, 1.0f, theModel->theHero->movementspeed);
+			}
+			if (theView->GetKeys('a'))
+			{
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,false,true))
+					theModel->theHero->moveMeLeftRight(true,1.0f,theModel->theHero->movementspeed);
+			}
+			if (theView->GetKeys('d'))
+			{
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,false,false,true))
+					theModel->theHero->moveMeLeftRight(false, 1.0f, theModel->theHero->movementspeed);
+			}
+			if(theView->LMKeyDown)
+			{
+				cout<<"FIRE"<<endl;
+				theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
+				theModel->theBullet.Draw();
+				//theModel->theBullet.FireBullet();
+			}
+			break;
+		}
+	case (theModel->theState.states::menu):
+		{
+			if(theView->LMKeyDown)
+			{
+				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 220 && theModel->theMouseInfo.MousePos.y <= 260)
+				{
+					theModel->theState.theState = theModel->theState.level;
+				}
+				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 270 && theModel->theMouseInfo.MousePos.y <= 310)
+				{
+					m_bContinueLoop=false;
+					return false;
+				}
+				theView->LMKeyDown = false;
+			}
+			break;
+		}
+	case (theModel->theState.states::shop) :
+	{
+
+											   break;
+
 	}
-	if (theView->GetKeys('s'))
+	case (theModel->theState.states::bet) :
 	{
-		theModel->theHero->moveMeUpDown(false, 1.0f, theModel->theHero->movementspeed);
+
+											  break;
 	}
-	if (theView->GetKeys('a'))
+	case (theModel->theState.states::message) :
 	{
-		theModel->theHero->moveMeLeftRight(true,1.0f,theModel->theHero->movementspeed);
+
+												  break;
+
 	}
-	if (theView->GetKeys('d'))
+	case (theModel->theState.states::credit) :
 	{
-		theModel->theHero->moveMeLeftRight(false, 1.0f, theModel->theHero->movementspeed);
+
+												 break;
+
 	}
-	if(theView->LMKeyDown)
+	case (theModel->theState.states::win) :
 	{
-		cout<<"FIRE"<<endl;
-		theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
-		//theModel->theBullet.FireBullet(theModel->theHero->GetX(),theModel->theHero->GetY());
+
+											  break;
+	}
+	case (theModel->theState.states::defeat) :
+	{
+												 break;
+	}
 
 	}
 

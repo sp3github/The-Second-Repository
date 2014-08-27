@@ -9,13 +9,6 @@
 #include "Zombies.h"
 #include "Obstacle.h"
 
-typedef int Entity;
-#define HEALTH 0
-#define AMMO 1
-#define SLOWDOWN 2
-#define PLAYER 3
-#define ZOMBIE 4
-#define OBSTACLE 5
 
 class CEntityFactory
 {
