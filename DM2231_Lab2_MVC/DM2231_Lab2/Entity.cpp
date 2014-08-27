@@ -54,3 +54,8 @@ void CEntity::Set_X(int pos_x)
 {
 	this->pos_x = pos_x;
 }
+
+void CEntity::update(int herox, int heroy)
+{
+	return;
+}
