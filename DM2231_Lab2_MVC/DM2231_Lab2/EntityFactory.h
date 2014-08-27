@@ -7,7 +7,6 @@
 #include "Slowdown.h"
 #include "PlayerInfo.h"
 
-
 class CEntityFactory
 {
 public:

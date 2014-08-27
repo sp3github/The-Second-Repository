@@ -48,7 +48,11 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 	if(m_bCheckRight)
 		return WallCollision( Atile_left_x + go->movementspeed, Atile_right_x + go->movementspeed, Atile_top_y, Atile_bottom_y);
 	}
+<<<<<<< HEAD
 	else if(go->ID == Entity::PLAYER)
+=======
+	else
+>>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
 	{
 		Btile_left_x = other->GetX();
 		Btile_right_x = other->GetX() + other->tile_size; 
@@ -61,10 +65,22 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 			|| Btile_top_y > Atile_bottom_y
 			|| Btile_bottom_y < Atile_top_y ))
 		{
+<<<<<<< HEAD
 			//go->CollisionEvent();
 			return true;
 		}
 	}
+=======
+			cout<<"COLLIDED"<<endl;
+			return true;
+		}
+	}
+
+	
+
+
+
+>>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
 }
 
 bool Collision::WallCollision(int left, int right, int top, int bottom)
