@@ -9,5 +9,6 @@ public:
 	CHealth(void);
 	~CHealth(void);
 
-	void render();
+	void update();
+	void render(int mapOffset_x, int mapOffset_y);
 };

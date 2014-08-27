@@ -3,10 +3,15 @@
 
 CPlayerInfo::CPlayerInfo(void)
 {
-	m_iTileSize = 24;
 	heroAnimationCounter = 0;
 	movementspeed = 5;
 	HeroRotation = 0;
+	tile_size = 24;
+
+	hp = 0;
+	ammo = 0;
+	slow = false;
+
 }
 
 CPlayerInfo::~CPlayerInfo(void)
@@ -21,12 +26,12 @@ void CPlayerInfo::Init(void)
 /****************************************************************************************************
    Draw the hero
  ****************************************************************************************************/
-void CPlayerInfo::render(void) {
+void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
 	glPushMatrix();
 	glTranslatef(GetX(), GetY(), 0);
-	glTranslatef(m_iTileSize/2, m_iTileSize/2,0);
+	glTranslatef(tile_size/2, tile_size/2,0);
 	glRotatef(HeroRotation,0,0,1);
-	glTranslatef(-m_iTileSize / 2, -m_iTileSize / 2, 0);
+	glTranslatef(-tile_size / 2, -tile_size / 2, 0);
 	//glTranslatef(-20, -20,0);
 	glEnable( GL_TEXTURE_2D );
 	glEnable( GL_BLEND );
@@ -38,26 +43,15 @@ void CPlayerInfo::render(void) {
 	//glBindTexture(GL_TEXTURE_2D, HeroTexture[1].texID);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.25 * heroAnimationCounter, 1); glVertex2f(0, 0);
-	glTexCoord2f(0.25 * heroAnimationCounter, 0); glVertex2f(0, m_iTileSize);
-	glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 0); glVertex2f(m_iTileSize, m_iTileSize);
-	glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 1); glVertex2f(m_iTileSize, 0);
+	glTexCoord2f(0.25 * heroAnimationCounter, 0); glVertex2f(0, tile_size);
+	glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 0); glVertex2f(tile_size, tile_size);
+	glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 1); glVertex2f(tile_size, 0);
 	glEnd();
 
 	glEnd();
 	glDisable( GL_BLEND );
 	glDisable( GL_TEXTURE_2D );
 	glPopMatrix();
-}
-
-// Set Animation Invert status of the player
-void CPlayerInfo::SetAnimationInvert(bool heroAnimationInvert)
-{
-	this->heroAnimationInvert = heroAnimationInvert;
-}
-// Get Animation Invert status of the player
-bool CPlayerInfo::GetAnimationInvert(void)
-{
-	return heroAnimationInvert;
 }
 
 // Set Animation Counter of the player
@@ -132,7 +126,6 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 	{
 		
  		Set_X( GetX() - (int) (movementspeed * timeDiff) );
-		SetAnimationInvert( true );
 		SetAnimationCounter( GetAnimationCounter() - 1);
 		if (GetAnimationCounter()==0)
 			SetAnimationCounter( 3 );
@@ -141,7 +134,6 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 	{
 		
 		Set_X( GetX() + (int) (movementspeed * timeDiff) );
-		SetAnimationInvert( false );
 		SetAnimationCounter( GetAnimationCounter() + 1);
 		if (GetAnimationCounter() > 3)
 			SetAnimationCounter( 0 );
@@ -151,5 +143,38 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 
 void CPlayerInfo::update()
 {
+}
+
+bool CPlayerInfo::CollisionEvent(CEntity &other)
+{
+	switch(other.ID)
+	{
+	case HEALTH:
+		{
+			this->hp += 10;
+
+			if(this->hp > 100)
+			{
+				this->hp = 100;
+			}
+		}
+		break;
+	case AMMO:
+		{
+			this->ammo += 6;
+
+			if(this->ammo > 36)
+			{
+				this->ammo = 36;
+			}
+		}
+		break;
+	case SLOWDOWN:
+		{
+			this->slow = true;
+		}
+		break;
+	}
+	return false;
 
 }

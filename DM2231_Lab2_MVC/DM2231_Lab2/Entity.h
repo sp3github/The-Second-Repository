@@ -1,6 +1,7 @@
 #pragma once
 #include "Header.h"
 
+<<<<<<< HEAD
 enum Entity{
  HEALTH = 0,
  AMMO ,
@@ -9,6 +10,16 @@ enum Entity{
 };
 
 
+=======
+enum Entity
+{
+HEALTH = 0,
+AMMO ,
+SLOWDOWN ,
+PLAYER ,
+};
+
+>>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
 class CEntity
 {
 private:
@@ -29,9 +40,9 @@ public:
 	int tile_size;
 
 	virtual void update();
-	virtual void render();
+	virtual void render(int mapOffset_x, int mapOffset_y);
 
-	virtual bool CollisionEvent();
+	virtual bool CollisionEvent(CEntity &other);
 	
 	Entity ID;
 };
