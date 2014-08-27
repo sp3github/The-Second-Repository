@@ -45,7 +45,8 @@ BOOL DM2231_View::Draw(void)
 		}
 	case (theModel->theState.states::level):
 		{
-			theModel->theGun.Show();
+
+			theModel->TestMap.RenderTileMap();
 			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
 			{
 				(*it)->render();

@@ -126,19 +126,23 @@ bool DM2231_Controller::ProcessInput(void)
 		{
 			if (theView->GetKeys('w'))
 			{
-				theModel->theHero->moveMeUpDown(true, 1.0f, theModel->theHero->movementspeed);
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,true))
+					theModel->theHero->moveMeUpDown(true, 1.0f, theModel->theHero->movementspeed);
 			}
 			if (theView->GetKeys('s'))
 			{
-				theModel->theHero->moveMeUpDown(false, 1.0f, theModel->theHero->movementspeed);
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,true))
+					theModel->theHero->moveMeUpDown(false, 1.0f, theModel->theHero->movementspeed);
 			}
 			if (theView->GetKeys('a'))
 			{
-				theModel->theHero->moveMeLeftRight(true,1.0f,theModel->theHero->movementspeed);
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,false,true))
+					theModel->theHero->moveMeLeftRight(true,1.0f,theModel->theHero->movementspeed);
 			}
 			if (theView->GetKeys('d'))
 			{
-				theModel->theHero->moveMeLeftRight(false, 1.0f, theModel->theHero->movementspeed);
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,false,false,true))
+					theModel->theHero->moveMeLeftRight(false, 1.0f, theModel->theHero->movementspeed);
 			}
 			if(theView->LMKeyDown)
 			{

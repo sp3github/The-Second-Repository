@@ -30,7 +30,7 @@ void DM2231_Model::Update(void)
 		{
 			CEntity * other = (*i);
 			if(go != other)
-				theCollision.CheckCollision(*go,*other,false,false,false,false);
+				theCollision.CheckCollision(go,other,false,false,false,false);
 		}
 	}
 }
