@@ -1,11 +1,13 @@
 #pragma once
 #include "Header.h"
 
-typedef int Entity;
-#define HEALTH 0
-#define AMMO 1
-#define SLOWDOWN 2
-#define PLAYER 3
+enum Entity
+{
+HEALTH = 0,
+AMMO ,
+SLOWDOWN ,
+PLAYER ,
+};
 
 class CEntity
 {
@@ -26,8 +28,8 @@ public:
 	int movementspeed;
 	int tile_size;
 
-	virtual void update() = 0;
-	virtual void render(int mapOffset_x, int mapOffset_y) = 0;
+	virtual void update();
+	virtual void render(int mapOffset_x, int mapOffset_y);
 
 	virtual bool CollisionEvent(CEntity &other);
 	
