@@ -57,7 +57,7 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 
 
 		if(!(Btile_left_x > Atile_right_x
-			|| Btile_right_x < Atile_right_x
+			|| Btile_right_x < Atile_left_x
 			|| Btile_top_y > Atile_bottom_y
 			|| Btile_bottom_y < Atile_top_y ))
 		{
