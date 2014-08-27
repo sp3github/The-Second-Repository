@@ -6,6 +6,7 @@
 #include "Ammo.h"
 #include "Slowdown.h"
 #include "PlayerInfo.h"
+#include "bullet.h"
 
 class CEntityFactory
 {

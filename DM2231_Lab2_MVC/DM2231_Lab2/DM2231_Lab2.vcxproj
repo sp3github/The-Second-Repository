@@ -93,14 +93,14 @@
   <ItemGroup>
     <ClCompile Include="Ammo.cpp" />
     <ClCompile Include="Bet.cpp" />
-    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DM2231_Controller.cpp" />
     <ClCompile Include="DM2231_Model.cpp" />
     <ClCompile Include="DM2231_View.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityFactory.cpp" />
-    <ClCompile Include="Gun.cpp" />
+    <ClCompile Include="gun.cpp" />
     <ClCompile Include="Health.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="LoadResources.cpp" />
@@ -108,25 +108,25 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="MVCtime.cpp" />
     <ClCompile Include="Ortho2D.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
     <ClCompile Include="Slowdown.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="State.cpp" />
-    <ClCompile Include="Time.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ammo.h" />
     <ClInclude Include="Bet.h" />
-    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="bullet.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="DM2231_Controller.h" />
     <ClInclude Include="DM2231_Model.h" />
     <ClInclude Include="DM2231_View.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityFactory.h" />
-    <ClInclude Include="Gun.h" />
+    <ClInclude Include="gun.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Health.h" />
     <ClInclude Include="Items.h" />
@@ -134,12 +134,12 @@
     <ClInclude Include="loadTGA.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="MVCtime.h" />
     <ClInclude Include="Ortho2D.h" />
     <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="Slowdown.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="State.h" />
-    <ClInclude Include="Time.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="vector3D.h" />
   </ItemGroup>

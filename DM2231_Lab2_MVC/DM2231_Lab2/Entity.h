@@ -8,6 +8,7 @@ enum Entity{
  AMMO ,
  SLOWDOWN ,
  PLAYER ,
+ BULLET,
 };
 
 

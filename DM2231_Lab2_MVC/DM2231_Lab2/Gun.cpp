@@ -1,238 +1,193 @@
-#include "Gun.h"
-
-CGun::CGun()
+#include "gun.h"
+gun::gun()
 {
+	GunRenderOffset_x = 20;
+	GunRenderOffset_y = 20;
+	tile_size = 10;
+	time = mvcTime::getInstance();
+	index = time->insertNewTime(MilliSecondPerShot);
+	SetGun(pistol);
+
+
 
 }
 
-CGun::~CGun()
-{
 
+gun::~gun()
+{
 }
 
-CGun::CGun(std::vector<unsigned int>& anim, unsigned int ol, unsigned int na, unsigned int ra, unsigned int fa
-								,int dam, int maxb, int allb, int spd, const char* n, float prec, float aprec, bool isauto)
+void gun::render()
 {
-		frames = anim;
-		Overview = ol;
-		normalAnimation = na;
-		reloadAnimation = ra;
-		fireAnimation = fa;
-		Precision = (prec != 0 ? prec : 0.000001);
-		aimPrecision = (aprec != 0 ? aprec : 0.00001);
-		DamageG = dam;	
-		allBullets = allb;
-		maxBulletsInMag = maxb;
-		speed = spd;
-		name = n;
-
-		isaim = false;
-		isreload = false;
-		isautomatic = isauto;
-		isfired = false;
-		istest = false;
-		bulletsInMag = maxBulletsInMag;
-		lastShot = 1000;
-
-		curframe = 0;
-		curmode = 1;
-}
-
-void CGun::Update()
-{
-	//test();
-	lastShot++;// 10 + 1
-	curframe++;
-
-	if (curmode == 1)
-	{
-		if (curframe >= normalAnimation)
-		{
-			curframe = 0;
-		}
-		else if (curmode = 2)
-		{
-			if (curframe >= normalAnimation + fireAnimation)
-			{
-				if (isautomatic && isfired)
-				{
-					curframe = normalAnimation;
-				}
-				else
-				{
-					curmode = 1;
-					curframe = 0;
-				}
-			}
-		}
-		else if (curmode = 3)
-		{
-			if (curframe >= normalAnimation + fireAnimation + reloadAnimation)
-			{
-				curmode = 1;
-				curframe = 0;
-				isreload = false;
-			}
-		}
-	}
-}
-
-void CGun::Show()
-{
-	int tile_size = 24;
+	glPushMatrix();
+	glTranslatef(static_cast<float>(theHero->GetX() + GunRenderOffset_x), static_cast<float>(theHero->GetY() + tile_size * 0.5), 0);
+	glTranslatef(static_cast<float>(tile_size * 0.5 - GunRenderOffset_x), static_cast<float>(tile_size * 0.5), 0);
+	glRotatef(theHero->HeroRotation, 0, 0, 1);
+	glTranslatef(-tile_size * 0.5 + GunRenderOffset_x, -tile_size * 0.5, 0);
 	glEnable(GL_TEXTURE_2D);
-	glPushMatrix();
-	glTranslatef(300,100, 0);
 	glEnable(GL_BLEND);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glScalef(3,3,3);
-	glColor4f(0.0f, 1.0f, 1.0f, 1.0f);
-	glPushMatrix();
+	glColor3f(0, 1, 1);
+
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 1); glVertex2f(0, 0);
-	glTexCoord2f(0, 0); glVertex2f(0, tile_size);
-	glTexCoord2f(1, 0); glVertex2f(tile_size, tile_size);
-	glTexCoord2f(1, 1); glVertex2f(tile_size, 0);
+	glTexCoord2f(0, 0); glVertex2f(0, static_cast<float>(tile_size));
+	glTexCoord2f(1, 0); glVertex2f(static_cast<float>(tile_size), static_cast<float>(tile_size));
+	glTexCoord2f(1, 1); glVertex2f(static_cast<float>(tile_size), 0);
 	glEnd();
-	glPopMatrix();
+
+	glDisable(GL_BLEND);
+	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 }
 
-bool CGun::Fire(/*Vector3D<float> Direction, Vector3D<float> camDirection*/)
+bool gun::SetPlayer(CPlayerInfo &theHero)
 {
-	if (isreload)
+	if (this->theHero = &theHero)
+		return true;
+	else
 		return false;
-	if ( (!isautomatic && !isfired) || isautomatic)
+}
+
+void gun::FireGun()
+{
+
+	if (currentBullet > 0)
 	{
-		if (lastShot >= speed)
+
+		if (time->testTime(index))	//Count time
 		{
-			if (bulletsInMag > 0)
-			{
-				/*if (isaim)
-				{
-					Direction.x = camDirection.x + ((float)(rand()%3 - 1) / aimPrecision);	
-					Direction.y = camDirection.y + ((float)(rand()%3 - 1) / aimPrecision);	
-					Direction.z = camDirection.z + ((float)(rand()%3 - 1) / aimPrecision);	
-				}
-				else 
-				{
-					Direction.x = camDirection.x + ((float)(rand()%3 - 1) / Precision);	
-					Direction.y = camDirection.y + ((float)(rand()%3 - 1) / Precision);	
-					Direction.z = camDirection.z + ((float)(rand()%3 - 1) / Precision);	
-				}*/
-				//cout << "success" << endl;
-				isfired = true;
-				lastShot = 0;
-				bulletsInMag--;
-				curframe = normalAnimation;
-				return true;
-			}
-			else 
-			{
-				Reload();
-				return false;
-			}
+			currentBullet -= 1;	//Take away one bullet
+			//DO BULLET STUFF HERE
+			theArrayofEntities->push_back(theFactory->Create(BULLET));
+			theArrayofEntities->back()->SetPos(theHero->GetX(), theHero->GetY());
+			thePointertoBullet = (dynamic_cast<bullet*> (theArrayofEntities->back()));
+			thePointertoBullet->GetAngle(theHero->HeroRotation);
+			
 		}
+		prevshot = currentshot;
 	}
-	return false;
-}
 
-void CGun::stopFire()
-{
-	isfired = false;
-}
-
-void CGun::Reload()
-{
-	if (!isreload && maxBulletsInMag != bulletsInMag)
+	if (currentBullet <= 0)	//AUTO RELOAD
 	{
-		isreload = true;
-		if (allBullets > maxBulletsInMag - bulletsInMag)
-		{
-			allBullets -= maxBulletsInMag - bulletsInMag;
-			bulletsInMag = maxBulletsInMag;
+		currentreload = static_cast<float>(timeGetTime());
+		if (reloadC == false){
+			prevreload = currentreload;
+			reloadC = true;
 		}
-		else 
+		if (currentreload - prevreload >= reloadtime)
 		{
-			bulletsInMag = allBullets + bulletsInMag;
-			allBullets = 0;
+			ReloadGun();
+			reloadC = false;;
 		}
-
-		curframe = normalAnimation + fireAnimation;
-		curmode = 3;
 	}
 }
 
-void CGun::addBullets(unsigned int num)
+void gun::ReloadGun()
 {
-	allBullets += num;
-}
-
-void CGun::setBullet(unsigned int num)
-{
-	allBullets = num;
-}
-
-int CGun::getDamageG()
-{
-	return DamageG;
-}
-
-int CGun::getAmmo()
-{
-	return bulletsInMag;
-}
-
-int CGun::getAllAmmo()
-{
-	return allBullets;
-}
-
-string CGun::getName()
-{
-	return name;
-}
-
-std::vector<unsigned int>& CGun::getAnimation()
-{
-	return frames;
-}
-
-bool CGun::isAimed()
-{
-	return isaim;
-}
-
-unsigned int CGun::getOverview()
-{
-	return Overview;
-}
-
-//Rendering of Guns
-void CGun::renderPistol()
-{
-
-}
-
-void CGun::renderUzi()
-{
-
-}
-
-void CGun::renderShotgun()
-{
-
-}
-
-//temporary class
-void CGun::Keyboard(unsigned char key, int x, int y)
-{
-	/*keyState[key] = BUTTON_DOWN;
-
-	switch(key)
+	if (bulletCount >= 0)	//CHECK IF YOU HAVE ENOUGH AMMO
 	{
-	case '1':
-		cout << "Pistol" << endl;
+
+		if (currentBullet >= bulletCount)		//IF LESS BULLET THAN RELOADABLE COUNT, USE ALL BULLETS LEFT
+		{
+			currentBullet += bulletCount;
+			bulletCount = 0;
+		}
+		else
+		{
+			bulletCount = bulletCount - (ReloadBullet - currentBullet);
+			currentBullet = ReloadBullet;//ELSE SET CURRENT BULLET TO 30 AND MINUS OFF BULLET COUNT
+
+		}
+	}
+}
+
+void gun::SetGun(GunStates theState)
+{
+	switch (theState)
+	{
+	case pistol:
+		bulletCount = 18;
+		currentBullet = 15;
+		ReloadBullet = 15;
+
+		power = 400;
+		firing = false;
+		prevshot = 0;
+		currentshot = 0;
+		currentreload = 0;
+		prevreload = 0;
+		reloadtime = 100;
+		reloadC = false;
+
+		MilliSecondPerShot = 500;
+
+		totalbullet = bulletCount + currentBullet;
+
+		StateNow = pistol;
+
+		time->resetTime(index);//have a time reference
+		time->changeLimit(index, MilliSecondPerShot);//reset time and change limit
+
 		break;
-	}*/
+	case uzi:
+		bulletCount = 60;
+		currentBullet = 30;
+		ReloadBullet = 30;
+
+		power = 200;
+		firing = false;
+		prevshot = 0;
+		currentshot = 0;
+		currentreload = 0;
+		prevreload = 0;
+		reloadtime = 100;
+		reloadC = false;
+
+		MilliSecondPerShot = 150;
+
+		totalbullet = bulletCount + currentBullet;
+		StateNow = uzi;
+
+		time->resetTime(index);//have a time reference
+		time->changeLimit(index, MilliSecondPerShot);//reset time and change limit
+
+
+		break;
+	case shotgun:
+		bulletCount = 9;
+		currentBullet = 9;
+		ReloadBullet = 9;
+
+		power = 400;
+		firing = false;
+		prevshot = 0;
+		currentshot = 0;
+		currentreload = 0;
+		prevreload = 0;
+		reloadtime = 100;
+		reloadC = false;
+
+		MilliSecondPerShot = 700;
+
+		totalbullet = bulletCount + currentBullet;
+		StateNow = shotgun;
+
+		time->resetTime(index);//have a time reference
+		time->changeLimit(index, MilliSecondPerShot);//reset time and change limit
+
+
+		break;
+	}
+}
+
+void gun::SetArray(vector<CEntity*> & theArrayofEntities)
+{
+	this->theArrayofEntities = &theArrayofEntities;
+}
+
+void gun::SetFactory(CEntityFactory & theFactory)
+{
+	this->theFactory = &theFactory;
 }

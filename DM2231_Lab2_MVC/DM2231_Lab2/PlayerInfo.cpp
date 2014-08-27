@@ -28,10 +28,10 @@ void CPlayerInfo::Init(void)
  ****************************************************************************************************/
 void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
 	glPushMatrix();
-	glTranslatef(GetX(), GetY(), 0);
-	glTranslatef(tile_size/2, tile_size/2,0);
+	glTranslatef(static_cast<float>(GetX()), static_cast<float>(GetY()), 0);
+	glTranslatef(static_cast<float>(tile_size * 0.5), static_cast<float>(tile_size * 0.5),0);
 	glRotatef(HeroRotation,0,0,1);
-	glTranslatef(-tile_size / 2, -tile_size / 2, 0);
+	glTranslatef(static_cast<float>(-tile_size * 0.5), static_cast<float>(-tile_size * 0.5), 0);
 	//glTranslatef(-20, -20,0);
 	glEnable( GL_TEXTURE_2D );
 	glEnable( GL_BLEND );
