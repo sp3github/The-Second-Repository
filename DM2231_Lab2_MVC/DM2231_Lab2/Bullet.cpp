@@ -28,8 +28,7 @@ void Bullet::Draw()
 	glTexCoord2f(0,1);	glVertex2f(0,0);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
-	glPopMatrix();					
-	cout << "DRAWNDRAWNDRAWNDRAWNDRAWNDRAWN" << endl;	
+	glPopMatrix();						
 }
 
 void Bullet::Tick()
