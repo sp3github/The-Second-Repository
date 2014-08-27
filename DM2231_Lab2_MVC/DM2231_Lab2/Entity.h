@@ -2,13 +2,14 @@
 #include "Header.h"
 
 
-enum Entity
-{
-HEALTH = 0,
-AMMO ,
-SLOWDOWN ,
-PLAYER ,
+
+enum Entity{
+ HEALTH = 0,
+ AMMO ,
+ SLOWDOWN ,
+ PLAYER ,
 };
+
 
 class CEntity
 {

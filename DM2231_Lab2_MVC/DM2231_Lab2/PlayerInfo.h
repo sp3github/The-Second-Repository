@@ -29,10 +29,7 @@ public:
 	int GetAnimationCounter(void);
 
 	// Constrain the position of the Hero to within the border
-	void ConstrainHero(const int leftBorder, const int rightBorder, 
-					   const int topBorder, const int bottomBorder, 
-					   float timeDiff,
-					   int& mapOffset_x, int& mapOffset_y);
+	void ConstrainHero( const int leftBorder, const int rightBorder, const int topBorder, const int bottomBorder, const int LsoftBorder, const int RsoftBorder, const int TsoftBorder, const int BsoftBorder, float timeDiff, int& mapOffset_x, int& mapOffset_y, int mapheight, int mapwidth);
 
 	int m_iTileSize;
 
