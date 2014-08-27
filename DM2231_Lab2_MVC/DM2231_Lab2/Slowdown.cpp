@@ -17,7 +17,7 @@ void CSlowdown::update()
 void CSlowdown::render(int mapOffset_x, int mapOffset_y)
 {
 	glPushMatrix();
-		glTranslatef(GetX(), GetY(), 0);
+		glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
 		glEnable( GL_TEXTURE_2D );
 		glEnable( GL_BLEND );
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
