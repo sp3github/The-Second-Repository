@@ -7,7 +7,6 @@ CPlayerInfo::CPlayerInfo(void)
 	heroAnimationCounter = 0;
 	movementspeed = 5;
 	HeroRotation = 0;
-	tile_size = 24;
 }
 
 CPlayerInfo::~CPlayerInfo(void)
@@ -101,6 +100,7 @@ void CPlayerInfo::ConstrainHero(const int leftBorder, const int rightBorder,
 		mapOffset_y =  mapOffset_y - (int) (movementspeed * timeDiff);
 		if (mapOffset_y < 0)
 			mapOffset_y = 0;
+		cout<<"MAPOFFSET_Y "<<mapOffset_y<<endl;
 	}
 	else if (GetY() > bottomBorder)
 	{
@@ -108,6 +108,7 @@ void CPlayerInfo::ConstrainHero(const int leftBorder, const int rightBorder,
 		mapOffset_y = mapOffset_y + (int)(movementspeed * timeDiff);
 		if (mapOffset_y > 600)	// This must be changed to soft-coded
 			mapOffset_y = 600;
+		cout<<"MAPOFFSET_Y "<<mapOffset_y<<endl;
 	}
 }
 
@@ -122,6 +123,7 @@ void CPlayerInfo::moveMeUpDown(bool mode, float timeDiff, float movementspeed)
 	{
 		Set_Y( GetY() + (int) (movementspeed * timeDiff) );
 	}
+	cout<<"My Y Pos is: "<<GetY()<<endl;
 }
 
 void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed)
@@ -144,20 +146,10 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 		if (GetAnimationCounter() > 3)
 			SetAnimationCounter( 0 );
 	}
+	cout<<"My X Pos is: "<<GetX()<<endl;
 }
 
 void CPlayerInfo::update()
 {
 
-}
-
-bool CPlayerInfo::CollisionEvent(CEntity &other)
-{
-	switch(other.ID)
-	{
-	case HEALTH:
-
-		break;
-	}
-	return false;
 }

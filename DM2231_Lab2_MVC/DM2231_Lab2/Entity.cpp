@@ -1,6 +1,5 @@
 #include "Entity.h"
-#include "Health.h"
-#include "PlayerInfo.h"
+
 
 CEntity::CEntity(void)
 {
@@ -54,7 +53,7 @@ void CEntity::render()
 	glPopMatrix();
 }
 
-bool CEntity::CollisionEvent(CEntity &other)
+bool CEntity::CollisionEvent()
 {
 	return false;
 }
@@ -68,4 +67,3 @@ void CEntity::Set_X(int pos_x)
 {
 	this->pos_x = pos_x;
 }
-

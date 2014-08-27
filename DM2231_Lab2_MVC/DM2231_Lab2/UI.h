@@ -30,6 +30,6 @@ public:
 
 	void printw (float x, float y, float z, char* format, ...);
 
-	loadTGA* theTexture;
+	loadTGA theTexture;
 };
 

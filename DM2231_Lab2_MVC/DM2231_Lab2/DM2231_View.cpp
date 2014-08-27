@@ -36,15 +36,29 @@ BOOL DM2231_View::Draw(void)
 
 	theModel->theOrtho2DSetUp.SetHUD(true);
 
-	theModel->TestMap.RenderTileMap();
-
-
-
-	theModel->theGun.Show();
-	for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
+	switch(theModel->theState.theState)
 	{
-		(*it)->render();
+	case (theModel->theState.states::menu):
+		{
+			theModel->theUI.RenderUI(theUI->STARTSCREEN);
+			break;
+		}
+	case (theModel->theState.states::level):
+		{
+			theModel->theGun.Show();
+			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
+			{
+				(*it)->render();
+			}
+			break;
+		}
 	}
+
+	//theModel->TestMap.RenderTileMap();
+
+
+	//theModel->TestMap.RenderTileMap();
+	
 
 
 
@@ -75,7 +89,6 @@ BOOL DM2231_View::Draw(void)
 	//rtri+=0.2f; // Increase The Rotation Variable For The Triangle ( NEW )
 	//rquad-=0.15f; // Decrease The Rotation Variable For The Quad ( NEW )
 	theModel->theOrtho2DSetUp.SetHUD(false);
-
 
 	SwapBuffers(hDC); // Swap Buffers (Double Buffering)
 
@@ -338,6 +351,15 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	m_iWindows_Width = width; 
 	m_iWindows_Height = height;
 
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.menuTexture[0],"Images\\Menu.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.levelTexture[0], "Images/Level.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.scoreTexture[0], "Images/Score.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.subpageTexture[0], "Images/Subpage.tga"))
+		return false;
+
 	return TRUE; // Success
 }
 
@@ -401,7 +423,8 @@ LRESULT CALLBACK DM2231_View::MsgProc( HWND hWnd, // Handle For This Window
 			theModel->theMouseInfo.SetMousePos( LOWORD(lParam), HIWORD(lParam) );
 			int diffX = theModel->theMouseInfo.GetDiff_X();
 			int diffY = theModel->theMouseInfo.GetDiff_Y();
-			
+			//cout<<"MOUSE"<<theModel->theMouseInfo.MousePos<<endl;
+
 			RECT WindowRect;
 			GetWindowRect( hWnd, &WindowRect);
 			ClipCursor( &WindowRect );

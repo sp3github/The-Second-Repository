@@ -1,6 +1,6 @@
 #pragma once
 
-#include "loadTGA.h"
+#include "UI.h"
 #include "DM2231_Model.h"
 #include "Mouse.h"
 
@@ -17,9 +17,11 @@ public:
 	GLvoid ReSizeGLScene(GLsizei width, GLsizei height);		// Resize And Initialize The GL Window
 	GLvoid KillGLWindow(GLvoid);
 
+
+
 private:
 	DM2231_Model* theModel;
-
+	UI* theUI;
 	HDC hDC; // Private GDI Device Context
 	HGLRC hRC; // Permanent Rendering Context
 	HWND hWnd; // Holds Our Window Handle
@@ -35,8 +37,6 @@ private:
 
 	virtual LRESULT CALLBACK MsgProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 	static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
-
-	//RECT r;
 
 public:
 	// Check if the player wants to quit the game

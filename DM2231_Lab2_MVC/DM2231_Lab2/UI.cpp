@@ -4,6 +4,7 @@
 UI::UI(void)
 {
 	font_style = GLUT_BITMAP_TIMES_ROMAN_24;
+	//theTexture=new loadTGA;
 }
 
 
@@ -21,7 +22,7 @@ void UI::RenderUI(StateType States)
 		glPushMatrix();
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glBindTexture(GL_TEXTURE_2D, theTexture->levelTexture[0].texID);
+			glBindTexture(GL_TEXTURE_2D, theTexture.levelTexture[0].texID);
 			glPushMatrix();
 				glBegin(GL_QUADS);
 					glTexCoord2f(0,0); glVertex2f(0, 600);
@@ -36,23 +37,27 @@ void UI::RenderUI(StateType States)
 
 	case STARTSCREEN:
 		glPushMatrix();
+			glColor3f(1.0f , 1.0f, 1.0f);
+			glEnable(GL_TEXTURE_2D);
 			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glBindTexture(GL_TEXTURE_2D, theTexture->menuTexture[0].texID);
 			glPushMatrix();
+			glBindTexture(GL_TEXTURE_2D, theTexture.menuTexture[0].texID);
 				glBegin(GL_QUADS);
 					glTexCoord2f(0,0); glVertex2f(0, 600);
 					glTexCoord2f(1,0); glVertex2f(800, 600);
 					glTexCoord2f(1,1); glVertex2f(800, 0);
 					glTexCoord2f(0,1); glVertex2f(0, 0);
+				glEnd();
 			glPopMatrix();
 			glDisable(GL_BLEND);
+			glDisable(GL_TEXTURE_2D);
+		glColor3f(0.0f , 0.0f ,0.0f);
 		glPopMatrix();
-		glDisable(GL_TEXTURE_2D);
 
 		glPushMatrix();
 			glColor3f(1.0f, 0.0f, 0.0f);
 			printw(370.0f, 250.0f, 0.0f, "PLAY");
+		glColor3f(0.0f , 0.0f ,0.0f);
 		glPopMatrix();
 
 		glPushMatrix();
@@ -75,11 +80,13 @@ void UI::RenderUI(StateType States)
 			glVertex2f(450.0f, 220.0f);
 			glVertex2f(450.0f, 260.0f);
 		glEnd();
+		glColor3f(0.0f , 0.0f ,0.0f);
 		glPopMatrix();
-
+		
 		glPushMatrix();
 			glColor3f(1.0f, 0.0f, 0.0f);
 			printw(372.0f, 300.0f, 0.0f, "EXIT");
+		glColor3f(0.0f , 0.0f ,0.0f);
 		glPopMatrix();
 
 		glPushMatrix();
@@ -102,6 +109,7 @@ void UI::RenderUI(StateType States)
 			glVertex2f(450.0f, 270.0f);
 			glVertex2f(450.0f, 310.0f);
 		glEnd();
+		glColor3f(0.0f, 0.0f, 0.0f);
 		glPopMatrix();
 		break;
 
@@ -109,7 +117,7 @@ void UI::RenderUI(StateType States)
 		glPushMatrix();
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glBindTexture(GL_TEXTURE_2D, theTexture->subpageTexture[0].texID);
+			glBindTexture(GL_TEXTURE_2D, theTexture.subpageTexture[0].texID);
 			glPushMatrix();
 				glBegin(GL_QUADS);
 					glTexCoord2f(0,0); glVertex2f(0, 600);
