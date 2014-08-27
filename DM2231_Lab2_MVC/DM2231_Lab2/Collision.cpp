@@ -48,7 +48,7 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 	if(m_bCheckRight)
 		return WallCollision( Atile_left_x + go->movementspeed, Atile_right_x + go->movementspeed, Atile_top_y, Atile_bottom_y);
 	}
-	else
+	else if(go->ID == Entity::PLAYER)
 	{
 		Btile_left_x = other->GetX();
 		Btile_right_x = other->GetX() + other->tile_size; 
@@ -61,7 +61,7 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 			|| Btile_top_y > Atile_bottom_y
 			|| Btile_bottom_y < Atile_top_y ))
 		{
-			cout<<"COLLIDED"<<endl;
+			//go->CollisionEvent();
 			return true;
 		}
 	}

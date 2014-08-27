@@ -1,6 +1,13 @@
 #pragma once
 #include "Header.h"
 
+enum Entity{
+ HEALTH = 0,
+ AMMO ,
+ SLOWDOWN ,
+ PLAYER ,
+};
+
 class CEntity
 {
 private:
@@ -25,6 +32,6 @@ public:
 
 	virtual bool CollisionEvent();
 	
-
+	Entity ID;
 };
 
