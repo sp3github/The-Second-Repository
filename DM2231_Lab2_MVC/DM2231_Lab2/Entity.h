@@ -1,7 +1,7 @@
 #pragma once
 #include "Header.h"
 
-<<<<<<< HEAD
+
 enum Entity{
  HEALTH = 0,
  AMMO ,
@@ -10,16 +10,6 @@ enum Entity{
 };
 
 
-=======
-enum Entity
-{
-HEALTH = 0,
-AMMO ,
-SLOWDOWN ,
-PLAYER ,
-};
-
->>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
 class CEntity
 {
 private:
