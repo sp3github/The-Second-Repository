@@ -12,11 +12,11 @@ public:
 	LEVEL,
 	STARTSCREEN,
 	SUBPAGE,
-	ITEM,
 	VICTORY,
 	DEFEAT,
 	WINLEVEL,
-	BET
+	BET,
+	SHOP
 	};
 
 	UI(void);
@@ -25,8 +25,6 @@ public:
 	void RenderUI(StateType States);
 
 	int DetermineState(int choice);
-
-	void Click(void);
 
 	void printw (float x, float y, float z, char* format, ...);
 
