@@ -98,7 +98,7 @@ bool Collision::WallCollision(int left, int right, int top, int bottom)
 
 bool Collision::Collider(int x, int y)
 {
-	if(x > theMap->getNumOfTiles_MapWidth() || y > theMap->getNumOfTiles_MapHeight())
+	if(x > theMap->getNumOfTiles_ScreenWidth()  * TILE_SIZE|| y > theMap->getNumOfTiles_ScreenHeight() * TILE_SIZE)
 		return true;
 	if( x < 0 || y < 0)
 		return true;
