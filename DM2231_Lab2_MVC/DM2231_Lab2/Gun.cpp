@@ -112,7 +112,7 @@ void gun::SetGun(GunStates theState)
 		currentBullet = 15;
 		ReloadBullet = 15;
 
-		power = 10;
+		power = 1000;
 		firing = false;
 		prevshot = 0;
 		currentshot = 0;
@@ -136,7 +136,7 @@ void gun::SetGun(GunStates theState)
 		currentBullet = 30;
 		ReloadBullet = 30;
 
-		power = 20;
+		power = 2000;
 		firing = false;
 		prevshot = 0;
 		currentshot = 0;
@@ -160,7 +160,7 @@ void gun::SetGun(GunStates theState)
 		currentBullet = 9;
 		ReloadBullet = 9;
 
-		power = 30;
+		power = 3000;
 		firing = false;
 		prevshot = 0;
 		currentshot = 0;

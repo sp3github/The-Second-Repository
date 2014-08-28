@@ -50,7 +50,7 @@ void bullet::render(int mapOffset_x, int mapOffset_y)
 	glPopMatrix();
 }
 
-void bullet::update()
+void bullet::update(float dt)
 {
 	Vector3D<float> pos(GetX(),GetY());
 	Vector3D<float> vel;
@@ -59,8 +59,7 @@ void bullet::update()
 	vel.Normalize();
 
 
-
-	pos += vel * power;
+	pos += vel * power * dt;
 
 	Set_X(pos.x);
 	Set_Y(pos.y);

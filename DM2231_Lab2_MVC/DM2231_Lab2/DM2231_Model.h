@@ -11,6 +11,7 @@
 #include "Collision.h"
 #include "State.h"
 #include "gun.h"
+#include "MVCtime.h"
 #define PI 3.1415f
 
 class DM2231_Model
@@ -39,4 +40,6 @@ public:
 
 	State theState;
 	void ConstrainHero();
+
+	mvcTime * time;
 };

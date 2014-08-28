@@ -5,6 +5,7 @@
 
 DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 {
+	time = mvcTime::getInstance();
 	//theUI = new UI;
 }
 
@@ -19,6 +20,7 @@ DM2231_Model::~DM2231_Model(void)
 // Update the model
 void DM2231_Model::Update(void)
 {
+	
 
 	theHero->HeroRotation = AnglefromHerotoMouse();
 	ConstrainHero();	
@@ -37,9 +39,14 @@ void DM2231_Model::Update(void)
 		}
 		if(go->ID == BULLET)
 		{
-			theCollision.CheckCollision(go,NULL,false,false,false,false,true);
+			if(!theCollision.CheckCollision(go,NULL,false,false,false,false,true))
+			{
+				ArrayofEntities.erase(it);
+				go->~CEntity();
+				break;
+			}
 		}
-		go->update();
+		go->update(time->getDelta());
 	}
 
 

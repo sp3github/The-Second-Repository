@@ -12,7 +12,7 @@ public:
 	int power;
 
 	void render(int mapOffset_x, int mapOffset_y);
-	void update();
+	void update(float dt);
 
 	bool SetPower(int power);
 	bool SetAngle(float HeroRotation);

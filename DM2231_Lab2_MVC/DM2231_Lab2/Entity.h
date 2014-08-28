@@ -31,7 +31,7 @@ public:
 	int movementspeed;
 	int tile_size;
 
-	virtual void update();
+	virtual void update(float dt);
 	virtual void render(int mapOffset_x, int mapOffset_y);
 
 	virtual bool CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
