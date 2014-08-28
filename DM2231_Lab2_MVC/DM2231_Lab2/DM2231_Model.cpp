@@ -34,24 +34,30 @@ void DM2231_Model::Update(void)
 		{
 			CEntity * other = (*i);
 			if(go != other)
-				if(theCollision.CheckCollision(go,other,false,false,false,false))
-					break;
-		}
-		if(go->ID == BULLET)
-		{
-			if(!theCollision.CheckCollision(go,NULL,false,false,false,false,true))
 			{
-				ArrayofEntities.erase(it);
-				go->~CEntity();
-				break;
+				if(!theCollision.CheckCollision(go,other,false,false,false,false))
+				{
+					//go->CollisionEvent(*other, ArrayofEntities);
+					//cout<<"HI"<<endl;
+					//go->CollisionEvent(*other, ArrayofEntities);
+					//
+					break;
+					//break;
+				}
 			}
+			if(go->ID == BULLET)
+			{
+				if(!theCollision.CheckCollision(go,NULL,false,false,false,false,true))
+				{
+					ArrayofEntities.erase(it);
+					go->~CEntity();
+					break;
+				}
+			}
+			go->update(time->getDelta());
 		}
-		go->update(time->getDelta());
 	}
-
-
 }
-
 float DM2231_Model::AnglefromHerotoMouse()
 {
 	Vector3D<float> MouseVector(theMouseInfo.MousePos);
