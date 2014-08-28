@@ -10,9 +10,9 @@ CZombies::CZombies(void)
 , i(0)
 {
 	Set_X(rand()% 800);
-	Set_Y(rand()% 600);
+	Set_Y(rand()% 600);  
 
-	vel.Set(10,10,10);
+	vel.Set(-10,0,0);
 }
 
 CZombies::~CZombies(void)
@@ -63,7 +63,7 @@ void CZombies::update(int herox, int heroy)
 	Vector3D<float> HeroPos (herox,heroy);
 	Vector3D<float> ZombiePos(GetX(), GetY());
 
-	Vector3D<float> theDiff(HeroPos - ZombiePos);
+	Vector3D<float> theDiff(HeroPos + ZombiePos);
 
 	theDiff.Normalize();
 	vel += theDiff;
@@ -73,73 +73,24 @@ void CZombies::update(int herox, int heroy)
 
 	Set_X(pos.x);
 	Set_Y(pos.y);
-
 }
-
 
 void CZombies::render(int mapOffset_x, int mapOffset_y)
 {	
+	//Zombies
+	glPushMatrix();
+	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
+	glEnable(GL_TEXTURE_2D);		
+	glColor3f(0,1,0);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,0); glVertex2f(0,0);
+	glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
+	glTexCoord2f(1,1); glVertex2f(0,tile_size);
+	glTexCoord2f(0,1); glVertex2f(tile_size,0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
 
-//	if (i < 10){
-		// int x = rand()% 100;
-		 //srand(time(NULL));
-		//int y = rand()% 300;
-
-		//cout << "ZOMBIE" << endl;
-		//Zombies
-		glPushMatrix();
-		glTranslatef(GetX() - mapOffset_x, GetY() -mapOffset_y, 0);
-		glEnable(GL_TEXTURE_2D);		
-		glColor3f(0,1,0);
-		glBegin(GL_QUADS);
-		glTexCoord2f(0,0); glVertex2f(0,0);
-		glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
-		glTexCoord2f(1,1); glVertex2f(0,tile_size);
-		glTexCoord2f(0,1); glVertex2f(tile_size,0);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-
-		/*glPushMatrix();
-		glTranslatef(300, 200, 0);
-		glEnable(GL_TEXTURE_2D);		
-		glColor3f(0,1,0);
-		glBegin(GL_QUADS);
-		glTexCoord2f(0,0); glVertex2f(0,0);
-		glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
-		glTexCoord2f(1,1); glVertex2f(0,tile_size);
-		glTexCoord2f(0,1); glVertex2f(tile_size,0);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-
-		glPushMatrix();
-		glTranslatef(200, 100, 0);
-		glEnable(GL_TEXTURE_2D);		
-		glColor3f(0,1,0);
-		glBegin(GL_QUADS);
-		glTexCoord2f(0,0); glVertex2f(0,0);
-		glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
-		glTexCoord2f(1,1); glVertex2f(0,tile_size);
-		glTexCoord2f(0,1); glVertex2f(tile_size,0);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-
-		glPushMatrix();
-		glTranslatef(200, 300, 0);
-		glEnable(GL_TEXTURE_2D);		
-		glColor3f(0,1,0);
-		glBegin(GL_QUADS);
-		glTexCoord2f(0,0); glVertex2f(0,0);
-		glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
-		glTexCoord2f(1,1); glVertex2f(0,tile_size);
-		glTexCoord2f(0,1); glVertex2f(tile_size,0);
-		glEnd();
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();*/
-		
-	//}
 }
 
 void CZombies::drawzombie(int x, int y)

@@ -37,10 +37,15 @@ void DM2231_Model::Update(void)
 		{
 			go->update(theHero->GetX(), theHero->GetY());
 		}
-		else
+		if (go->ID == Entity::OBSTACLE)
+		{
+			//go->update(theObstacle.GetX(), theObstacle.GetY());
+		}
+		else 
 		{
 			go->update();
 		}
+		
 		//if(go->ID == Entity::ZOMBIES)
 		//{
 		//	go->update(theHero->GetX(), therHero->GetY());

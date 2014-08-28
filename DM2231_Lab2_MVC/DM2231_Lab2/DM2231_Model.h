@@ -39,7 +39,7 @@ public:
 	CEntity * theHeroEntity;
 	Bullet theBullet;
 
-	CObstacle * theObstacle;
+	CObstacle theObstacle;
 
 	CGun theGun;
 

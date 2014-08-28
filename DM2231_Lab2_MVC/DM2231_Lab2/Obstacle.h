@@ -1,21 +1,24 @@
 #pragma once
 #include "Entity.h"
 #include "Header.h"
-
+#include "Vector3D.h"
 class CObstacle : public CEntity
 {
 private:
-	bool spawnrate;
-	int zombiecount;
-	int maxzombiecount;
+
+
 public:
 	CObstacle(void);
 	~CObstacle(void);
-	CObstacle(int zc, int mzc, bool sr);
-
+	
 	int getZombiecount();
-
-	void Spawn();
-	void UpdateObstacle();
-	void renderObstacle();
+	Vector3D<float> vel;
+	Vector3D<float> pos;
+	bool Spawn();
+	void update();
+	void render(int mapOffset_x, int mapOffset_y);
+	
+	int zombiecount;
+	bool spawn;
+	int maxzombiecount;
 };

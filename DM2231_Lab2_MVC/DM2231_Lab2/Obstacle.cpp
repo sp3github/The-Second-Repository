@@ -2,17 +2,18 @@
 
 CObstacle::CObstacle(void)
 {
+	zombiecount = 0;
+	spawn = false;
+	maxzombiecount = 5;
+
+	Set_X(rand()% 800);
+	Set_Y(rand()% 600);  
+
+	vel.Set(0.0001,0.0001,0.0001);
 }
 
 CObstacle::~CObstacle(void)
 {
-}
-
-CObstacle::CObstacle(int zc, int mzc, bool sr)
-{
-	spawnrate = sr;
-	zombiecount = zc;
-	maxzombiecount = mzc; 
 }
 
 int CObstacle::getZombiecount()
@@ -20,17 +21,12 @@ int CObstacle::getZombiecount()
 	return zombiecount;
 }
 
-void CObstacle::Spawn()
+void CObstacle::render(int mapOffset_x, int mapOffset_y)
 {
-
-}
-
-void CObstacle::renderObstacle()
-{
-	cout << "OBSTACLE" << endl;
+	//cout << "OBSTACLE" << endl;
 	int tile_size = 24;
 	glPushMatrix();
-		glTranslatef(500,300, 0);
+	glTranslatef(GetX()- mapOffset_x,GetY() - mapOffset_y, 0);
 		glEnable(GL_TEXTURE_2D);
 		glScalef(5,5,0);
 		glColor3f(0,1,1);
@@ -42,9 +38,14 @@ void CObstacle::renderObstacle()
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
-}
 
-void CObstacle::UpdateObstacle()
+}
+void CObstacle::update()
 {
 
-} 
+}
+
+bool CObstacle::Spawn()
+{
+	return true;
+}

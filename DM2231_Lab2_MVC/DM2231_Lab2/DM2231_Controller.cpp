@@ -47,18 +47,15 @@ bool DM2231_Controller::Init(void)
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
 	theModel->ArrayofEntities.back()->SetPos(100,300);
 
-
-	for(int i = 0; i < 5; i++)
+	
+	for(int zombiecount = 0; zombiecount < 1;  zombiecount++)
 	{
 		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
+		cout <<"CONTROLLER:" << zombiecount << endl;
 	}
-	//theModel->ArrayofEntities.back()->SetPos(300,100);
-
+	
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(OBSTACLE));
 	theModel->ArrayofEntities.back()->SetPos(400,150);
-
-	
-	
 
 	return true;
 }
