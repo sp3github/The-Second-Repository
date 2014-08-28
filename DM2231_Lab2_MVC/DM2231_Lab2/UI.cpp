@@ -137,7 +137,21 @@ void UI::RenderUI(StateType States)
 		break;
 	case WINLEVEL:
 		break;
-	case BET:
+	case SHOP:
+		glPushMatrix();
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBindTexture(GL_TEXTURE_2D, theTexture.shopTexture[0].texID);
+			glPushMatrix();
+				glBegin(GL_QUADS);
+					glTexCoord2f(0,0); glVertex2f(0, 600);
+					glTexCoord2f(1,0); glVertex2f(800, 600);
+					glTexCoord2f(1,1); glVertex2f(800, 0);
+					glTexCoord2f(0,1); glVertex2f(0, 0);
+			glPopMatrix();
+			glDisable(GL_BLEND);
+		glPopMatrix();
+		glDisable(GL_TEXTURE_2D);
 		break;
 	default:
 		break;
@@ -147,10 +161,6 @@ void UI::RenderUI(StateType States)
 int UI::DetermineState(int choice)
 {
 	return 0;
-}
-
-void UI::Click(void)
-{
 }
 
 void UI::printw (float x, float y, float z, char* format, ...)

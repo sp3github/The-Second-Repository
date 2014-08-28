@@ -386,6 +386,8 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	//	return false;
 	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.subpageTexture[0], "Images/Subpage.tga"))
 	//	return false;
+	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
+	//	return false;
 
 	return TRUE; // Success
 }

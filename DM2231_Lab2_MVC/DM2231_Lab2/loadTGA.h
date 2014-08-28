@@ -10,6 +10,7 @@ public:
 	TextureImage levelTexture[1];
 	TextureImage scoreTexture[1];
 	TextureImage subpageTexture[1];
+	TextureImage shopTexture[1];
 
 	loadTGA(void);
 	~loadTGA(void);
