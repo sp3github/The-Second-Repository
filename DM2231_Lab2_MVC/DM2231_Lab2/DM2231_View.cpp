@@ -47,10 +47,12 @@ BOOL DM2231_View::Draw(void)
 		{
 			theModel->theUI.RenderUI(theUI->LEVEL);
 			theModel->TestMap.RenderTileMap();
+
 			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
 			{
 				(*it)->render(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
 			}
+			theModel->thegun.render();
 			break;
 		}
 	case (theModel->theState.states::shop) :
@@ -455,6 +457,22 @@ LRESULT CALLBACK DM2231_View::MsgProc( HWND hWnd, // Handle For This Window
 			LMKeyDown = true;
 			return 1;
 		}
+	case WM_LBUTTONUP:
+		{
+			LMKeyDown = false;
+			return 1;
+		}
+	case WM_MOUSEWHEEL:
+		{
+			//if ((short)HIWORD(wParam) < 0)
+			// {
+			//	nZoom--;
+			// }
+			//else
+			//	nZoom++;
+			 return 1;
+		}
+
 	}
 
 	// Pass All Unhandled Messages To DefWindowProc

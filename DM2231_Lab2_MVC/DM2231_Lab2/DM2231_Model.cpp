@@ -3,8 +3,9 @@
 #define LEFT_BORDER TILE_SIZE*1
 #define BOTTOM_BORDER TILE_SIZE*1
 
-DM2231_Model::DM2231_Model(void):theCollision(TestMap)
+DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 {
+	time = mvcTime::getInstance();
 	//theUI = new UI;
 }
 
@@ -19,6 +20,7 @@ DM2231_Model::~DM2231_Model(void)
 // Update the model
 void DM2231_Model::Update(void)
 {
+	
 
 	theHero->HeroRotation = AnglefromHerotoMouse();
 	ConstrainHero();	
@@ -31,25 +33,21 @@ void DM2231_Model::Update(void)
 		{
 			CEntity * other = (*i);
 			if(go != other)
-				theCollision.CheckCollision(go,other,false,false,false,false);
+				if(theCollision.CheckCollision(go,other,false,false,false,false))
+					break;
 		}
-		if(go->ID == Entity::ZOMBIE)
+	
+		if(go->ID == BULLET)
 		{
-			go->update(theHero->GetX(), theHero->GetY());
+			if(!theCollision.CheckCollision(go,NULL,false,false,false,false,true))
+			{
+				ArrayofEntities.erase(it);
+				go->~CEntity();
+				break;
+			}
 		}
-		if (go->ID == Entity::OBSTACLE)
-		{
-			go->update(theObstacle.GetX(), theObstacle.GetY());
-		}
-		else 
-		{
-			go->update();
-		}
-		
-		//if(go->ID == Entity::ZOMBIES)
-		//{
-		//	go->update(theHero->GetX(), therHero->GetY());
-		//}	
+		go->update(time->getDelta());
+
 	}
 }
 

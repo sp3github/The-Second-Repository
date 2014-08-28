@@ -19,6 +19,7 @@ DM2231_Controller::DM2231_Controller(DM2231_Model* theModel, DM2231_View* theVie
 	this->theModel = theModel;
 	this->theView = theView;
 	Init();
+	time = mvcTime::getInstance();
 }
 
 DM2231_Controller::~DM2231_Controller(void)
@@ -42,8 +43,9 @@ bool DM2231_Controller::Init(void)
 
 	
 	theModel->theHeroEntity = theModel->ArrayofEntities.back();
-	theModel->theHero = (dynamic_cast<CPlayerInfo*>(theModel->theHeroEntity));
+	theModel->theHero = (dynamic_cast<CPlayerInfo*>(theModel->ArrayofEntities.back()));
 
+<<<<<<< HEAD
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
 	theModel->ArrayofEntities.back()->SetPos(100,300);
 
@@ -56,6 +58,14 @@ bool DM2231_Controller::Init(void)
 	
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(OBSTACLE));
 	theModel->ArrayofEntities.back()->SetPos(400,150);
+=======
+	theModel->thegun.SetPlayer(*theModel->theHero);
+	theModel->thegun.SetArray(theModel->ArrayofEntities);
+	theModel->thegun.SetFactory(theModel->theEntityFactory);
+	
+	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
+	theModel->ArrayofEntities.back()->SetPos(300,300);
+>>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
 
 	return true;
 }
@@ -94,6 +104,7 @@ BOOL DM2231_Controller::RunMainLoop(void)
 		{
 			if (ProcessInput())
 			{
+				time->updateTime();
 				theModel->Update();
 				theView->Draw();
 			}
@@ -135,22 +146,34 @@ bool DM2231_Controller::ProcessInput(void)
 			if (theView->GetKeys('w'))
 			{
 				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,true))
-					theModel->theHero->moveMeUpDown(true, 1.0f, theModel->theHero->movementspeed);
+					theModel->theHero->moveMeUpDown(true, 1.0f, static_cast<float>(theModel->theHero->movementspeed));
 			}
 			if (theView->GetKeys('s'))
 			{
 				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,true))
-					theModel->theHero->moveMeUpDown(false, 1.0f, theModel->theHero->movementspeed);
+					theModel->theHero->moveMeUpDown(false, 1.0f, static_cast<float>(theModel->theHero->movementspeed));
 			}
 			if (theView->GetKeys('a'))
 			{
 				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,false,true))
-					theModel->theHero->moveMeLeftRight(true,1.0f,theModel->theHero->movementspeed);
+					theModel->theHero->moveMeLeftRight(true,1.0f,static_cast<float>(theModel->theHero->movementspeed));
 			}
 			if (theView->GetKeys('d'))
 			{
 				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,false,false,true))
-					theModel->theHero->moveMeLeftRight(false, 1.0f, theModel->theHero->movementspeed);
+					theModel->theHero->moveMeLeftRight(false, 1.0f, static_cast<float>(theModel->theHero->movementspeed));
+			}
+			if (theView->GetKeys('1'))
+			{
+				theModel->thegun.SetGun(pistol);
+			}
+			if (theView->GetKeys('2'))
+			{
+				theModel->thegun.SetGun(uzi);
+			}
+			if (theView->GetKeys('3'))
+			{
+				theModel->thegun.SetGun(shotgun);
 			}
 			if (theView->GetKeys('z'))
 			{
@@ -158,9 +181,8 @@ bool DM2231_Controller::ProcessInput(void)
 			}
 			if(theView->LMKeyDown)
 			{
-				cout<<"FIRE"<<endl;
-				theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
-				theModel->theBullet.Draw();
+				theModel->thegun.FireGun();
+				//theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
 				//theModel->theBullet.FireBullet();
 			}
 			break;

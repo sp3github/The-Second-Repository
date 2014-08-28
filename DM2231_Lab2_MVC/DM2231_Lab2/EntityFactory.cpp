@@ -40,18 +40,13 @@ CEntity* CEntityFactory::Create(Entity id)
 			theNewItems->ID = PLAYER;
 		}
 		break;
-	case ZOMBIE:
+
+	case BULLET:
 		{
-			theNewItems = new CZombies;
-			theNewItems->ID = ZOMBIE;
-			break;
+			theNewItems = new bullet;
+			theNewItems->ID = BULLET;
 		}
-	case OBSTACLE:
-		{
-			theNewItems = new CObstacle;
-			theNewItems->ID = OBSTACLE;
-			break;
-		}
+		break;
 	default:
 		{
 

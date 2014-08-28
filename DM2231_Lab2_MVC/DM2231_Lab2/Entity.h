@@ -1,5 +1,6 @@
 #pragma once
 #include "Header.h"
+#include <vector>
 
 
 
@@ -8,8 +9,7 @@ enum Entity{
  AMMO ,
  SLOWDOWN ,
  PLAYER ,
- ZOMBIE,
- OBSTACLE
+ BULLET,
 };
 
 class CEntity
@@ -31,12 +31,11 @@ public:
 	int movementspeed;
 	int tile_size;
 
-	virtual void update();
-	virtual void update(int ZombieCount);
-	virtual void update(int herox, int heroy);
+
+	virtual void update(float dt);
 	virtual void render(int mapOffset_x, int mapOffset_y);
 
-	virtual bool CollisionEvent();
+	virtual bool CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 	
 	Entity ID;
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Header.h"
+#include <vector>
 #include "Entity.h"
 
 class CPlayerInfo : public CEntity
@@ -37,7 +38,8 @@ public:
 	void moveMeLeftRight(bool mode, float timeDiff, float movementspeed);
 
 
-	bool CollisionEvent(CEntity &other);
+	bool CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+
 
 	int hp;
 	int ammo;

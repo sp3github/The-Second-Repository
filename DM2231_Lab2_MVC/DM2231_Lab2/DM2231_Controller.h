@@ -6,9 +6,9 @@
 #include "DM2231_View.h"
 #include "loadTGA.h"
 #include "Header.h"
-#include "Gun.h"
+#include "MVCtime.h"
 
-class DM2231_Controller : public CGun 
+class DM2231_Controller 
 {
 public:
 	DM2231_Controller(DM2231_Model* theModel, DM2231_View* theView);
@@ -27,6 +27,8 @@ public:
 
 	// Handle to the view
 	DM2231_View* theView;
+
+	mvcTime * time;
 
 protected:
 	HWND handle;                                            // window handle to map window to controller

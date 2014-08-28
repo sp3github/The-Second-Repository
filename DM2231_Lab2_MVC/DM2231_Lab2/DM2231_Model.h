@@ -9,14 +9,10 @@
 #include <vector>
 #include "PlayerInfo.h"
 #include "Collision.h"
-#include "Gun.h"
-#include "Bullet.h"
-
-#include "Zombies.h"
-#include "Obstacle.h"
-
 
 #include "State.h"
+#include "gun.h"
+#include "MVCtime.h"
 
 #define PI 3.1415f
 
@@ -37,17 +33,18 @@ public:
 
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
-	Bullet theBullet;
 
-	CObstacle theObstacle;
-	CZombies theZombie;
-	CGun theGun;
 
-	//Collision theCollision(TestMap);
+
+	gun thegun;
+
+
 	Collision theCollision;
 
 	float AnglefromHerotoMouse();
 
 	State theState;
 	void ConstrainHero();
+
+	mvcTime * time;
 };

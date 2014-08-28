@@ -41,7 +41,7 @@ public:
 			this->last_x = x;
 			this->last_y = y;
 		}
-		MousePos.Set(x,y);
+		MousePos.Set(static_cast<float>(x),static_cast<float>(y));
 		this->x = new_x;
 		this->y = new_y;
 	}

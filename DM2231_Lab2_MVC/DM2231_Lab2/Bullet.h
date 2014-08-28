@@ -1,34 +1,18 @@
 #pragma once
 #include "Entity.h"
 
-#include <vector>
-
-
-class Bullet : public CEntity
+class bullet : public CEntity
 {
-private:
-	bool canFire;
-	float x;
-	float y;
-	float velX;
-	float velY;
-
-	float sx;
-	float sy;
-
-
 public:
-	Bullet(void);
-	~Bullet(void);
+	bullet();
+	~bullet();
+	float HeroRotationRad;
+	int power;
 
-	void FireBullet(float x, float y);
-	void Tick();
+	void render(int mapOffset_x, int mapOffset_y);
+	void update(float dt);
 
-
-	void render();
-	void update();
-
-	void Draw();
-
+	bool SetPower(int power);
+	bool SetAngle(float HeroRotation);
 };
 

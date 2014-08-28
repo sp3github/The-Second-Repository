@@ -30,7 +30,7 @@ void CEntity::SetPos(const int pos_x, const int pos_y)
 	this->pos_y = pos_y;
 }
 
-void CEntity::update()
+void CEntity::update(float dt)
 {
 	
 }
@@ -40,18 +40,8 @@ void CEntity::update(int ZombieCount)
 	
 }
 
-void CEntity::update(int herox, int heroy)
-{
+bool CEntity::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 
-}
-
-void CEntity::render(int mapOffset_x, int mapOffset_y)
-{
-
-}
-
-
-bool CEntity::CollisionEvent()
 {
 	return false;
 }
