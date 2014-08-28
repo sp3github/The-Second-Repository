@@ -85,7 +85,7 @@ bool mvcTime::testTime(int num)//Check if time has passed limit
 		return false;
 	}
 	else
-		return true;
+		return false;
 }
 
 void mvcTime::resetTime(int num)

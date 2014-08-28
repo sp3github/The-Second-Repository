@@ -16,7 +16,7 @@ public:
 	void updateTime();
 	float getDelta();
 	float getFPS();
-	int insertNewTime(int limit);
+	int		 insertNewTime(int limit);
 	bool testTime(int num);
 	void resetTime(int num);
 	void changeLimit(int num,int nlimit);
@@ -35,6 +35,7 @@ private:
 	float fps;
 	std::vector<timeKeeper*> timer;
 	int currentTime, previousTime,timeInterval,dtPTime;
+	
 	float dt;
 };
 

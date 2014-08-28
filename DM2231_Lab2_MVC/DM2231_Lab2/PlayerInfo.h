@@ -2,6 +2,7 @@
 #include "Header.h"
 #include <vector>
 #include "Entity.h"
+#include "MVCtime.h"
 
 class CPlayerInfo : public CEntity
 {
@@ -41,12 +42,12 @@ public:
 
 	int hp;
 	int ammo;
-	bool slow;
 
 private:
 
 	bool heroAnimationInvert;
 	int heroAnimationCounter;
 
-	
+	mvcTime *time;
+	int index;
 };
