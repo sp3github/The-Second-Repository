@@ -17,8 +17,9 @@ Collision::~Collision(void)
 
 bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards, bool m_bCheckDownwards, bool m_bCheckLeft , bool m_bCheckRight, bool CheckPos )
 {
+	//if true, not colliding. if false, collided.
 	if(go->movementspeed == 0)
-		return false;
+		return true;
 	float Atile_left_x;
 	float Atile_right_x;
 	float Atile_bottom_y;
@@ -52,13 +53,13 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 		return WallCollision(Atile_left_x, Atile_right_x, Atile_top_y, Atile_bottom_y);
 	}
 
-	else if(go->ID == Entity::PLAYER)
+	else if ((go->ID == Entity::PLAYER && other->ID != BULLET) || (go->ID == BULLET && other->ID != PLAYER))
 
 	{
-		Btile_left_x = other->GetX();
-		Btile_right_x = other->GetX() + other->tile_size; 
-		Btile_top_y =  other->GetY() ; 
-		Btile_bottom_y = other->GetY()+ other->tile_size;
+		Btile_left_x = other->GetX() - theMap->mapOffset_x;
+		Btile_right_x = other->GetX() + other->tile_size - theMap->mapOffset_x;
+		Btile_top_y = other->GetY() - theMap->mapOffset_y;
+		Btile_bottom_y = other->GetY() + other->tile_size - theMap->mapOffset_y;
 
 
 		if(!(Btile_left_x > Atile_right_x
@@ -66,11 +67,10 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 			|| Btile_top_y > Atile_bottom_y
 			|| Btile_bottom_y < Atile_top_y ))
 		{
-			go->CollisionEvent(*other, *theArray);
-			return true;
+			return false;
 		}
 	}
-
+	return true;
 
 }
 
@@ -102,7 +102,7 @@ bool Collision::Collider(int x, int y)
 		return true;
 	if( x < 0 || y < 0)
 		return true;
-	if(theMap->theScreenMap[(y + theMap->mapOffset_y) / TILE_SIZE][(x + theMap->mapOffset_x) / TILE_SIZE] != 0)
+	if(theMap->theScreenMap[(y + theMap->mapOffset_y) / TILE_SIZE][(x + theMap->mapOffset_x) / TILE_SIZE] == 1)
 	{
 		return true;
 	}

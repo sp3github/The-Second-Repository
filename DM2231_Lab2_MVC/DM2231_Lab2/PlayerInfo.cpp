@@ -174,7 +174,7 @@ void CPlayerInfo::update()
 	}
 }
 
-bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	switch(other.ID)
 	{
@@ -194,8 +194,8 @@ bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
 				{
 					go->~CEntity();
-					theArray.erase(it);
-					break;
+					it = theArray.erase(it);
+					return it;
 				}
 				else
 				{
@@ -221,8 +221,8 @@ bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
 				{
 					go->~CEntity();
-					theArray.erase(it);
-					break;
+					it = theArray.erase(it);
+					return it;
 				}
 				else
 				{
@@ -245,8 +245,8 @@ bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
 				{
 					go->~CEntity();
-					theArray.erase(it);
-					break;
+					it = theArray.erase(it);
+					return it;
 				}
 				else
 				{
@@ -256,6 +256,4 @@ bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 		}
 		break;
 	}
-	return false;
-
 }

@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-
+#include "EntityFactory.h"
 #include "Header.h"
 
 class CMap
@@ -35,7 +35,7 @@ public:
 	int mapFineOffset_x, mapFineOffset_y;
 
 	void Update();
-
+	bool LoadItems(vector<CEntity*> &theArray,CEntityFactory &theFac );
 private:
 	int theScreen_Height;
 	int theScreen_Width;
@@ -48,4 +48,5 @@ private:
 	int theTileSize;
 
 	bool LoadFile(const string mapName);
+
 };
