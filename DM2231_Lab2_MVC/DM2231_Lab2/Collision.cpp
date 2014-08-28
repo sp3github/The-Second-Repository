@@ -5,9 +5,10 @@ Collision::Collision(void)
 {
 }
 
-Collision::Collision(CMap & theMap)
+Collision::Collision(CMap & theMap,vector<CEntity*> & theArray)
 {
 	this->theMap = &theMap;
+	this->theArray = &theArray;
 }
 
 Collision::~Collision(void)
@@ -63,7 +64,7 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 			|| Btile_top_y > Atile_bottom_y
 			|| Btile_bottom_y < Atile_top_y ))
 		{
-			go->CollisionEvent(*other);
+			go->CollisionEvent(*other, *theArray);
 			return true;
 		}
 	}

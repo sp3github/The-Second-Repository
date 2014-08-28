@@ -49,7 +49,8 @@ bool DM2231_Controller::Init(void)
 	theModel->thegun.SetArray(theModel->ArrayofEntities);
 	theModel->thegun.SetFactory(theModel->theEntityFactory);
 	
-	
+	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
+	theModel->ArrayofEntities.back()->SetPos(300,300);
 
 	return true;
 }

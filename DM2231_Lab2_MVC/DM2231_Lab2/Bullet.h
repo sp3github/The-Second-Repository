@@ -9,11 +9,13 @@ class bullet : public CEntity
 {
 public:
 	float HeroRotationRad;
+	int power;
 
 	void render(int mapOffset_x, int mapOffset_y);
 	void update();
 
-	bool GetAngle(float HeroRotation);
+	bool SetPower(int power);
+	bool SetAngle(float HeroRotation);
 
 
 	bullet();

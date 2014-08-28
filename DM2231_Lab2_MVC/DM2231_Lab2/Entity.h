@@ -1,6 +1,6 @@
 #pragma once
 #include "Header.h"
-
+#include <vector>
 
 
 enum Entity{
@@ -34,7 +34,9 @@ public:
 	virtual void update();
 	virtual void render(int mapOffset_x, int mapOffset_y);
 
-	virtual bool CollisionEvent(CEntity &other);
+	virtual bool CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+
+
 	
 	Entity ID;
 };

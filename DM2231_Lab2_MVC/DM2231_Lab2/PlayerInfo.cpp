@@ -166,7 +166,7 @@ void CPlayerInfo::update()
 {
 }
 
-bool CPlayerInfo::CollisionEvent(CEntity &other)
+bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	switch(other.ID)
 	{
@@ -177,6 +177,21 @@ bool CPlayerInfo::CollisionEvent(CEntity &other)
 			if(this->hp > 100)
 			{
 				this->hp = 100;
+			}
+			for(auto it = theArray.begin(); it != theArray.end();)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
+				{
+					go->~CEntity();
+					theArray.erase(it);
+					break;
+				}
+				else
+				{
+					it++;
+				}
 			}
 		}
 		break;

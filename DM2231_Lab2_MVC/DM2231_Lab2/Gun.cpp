@@ -63,8 +63,8 @@ void gun::FireGun()
 			theArrayofEntities->push_back(theFactory->Create(BULLET));
 			theArrayofEntities->back()->SetPos(theHero->GetX(), theHero->GetY());
 			thePointertoBullet = (dynamic_cast<bullet*> (theArrayofEntities->back()));
-			thePointertoBullet->GetAngle(theHero->HeroRotation);
-			
+			thePointertoBullet->SetAngle(theHero->HeroRotation);
+			thePointertoBullet->SetPower(power);
 		}
 		prevshot = currentshot;
 	}
@@ -112,7 +112,7 @@ void gun::SetGun(GunStates theState)
 		currentBullet = 15;
 		ReloadBullet = 15;
 
-		power = 400;
+		power = 10;
 		firing = false;
 		prevshot = 0;
 		currentshot = 0;
@@ -121,7 +121,7 @@ void gun::SetGun(GunStates theState)
 		reloadtime = 100;
 		reloadC = false;
 
-		MilliSecondPerShot = 500;
+		MilliSecondPerShot = 400;
 
 		totalbullet = bulletCount + currentBullet;
 
@@ -136,7 +136,7 @@ void gun::SetGun(GunStates theState)
 		currentBullet = 30;
 		ReloadBullet = 30;
 
-		power = 200;
+		power = 20;
 		firing = false;
 		prevshot = 0;
 		currentshot = 0;
@@ -160,7 +160,7 @@ void gun::SetGun(GunStates theState)
 		currentBullet = 9;
 		ReloadBullet = 9;
 
-		power = 400;
+		power = 30;
 		firing = false;
 		prevshot = 0;
 		currentshot = 0;

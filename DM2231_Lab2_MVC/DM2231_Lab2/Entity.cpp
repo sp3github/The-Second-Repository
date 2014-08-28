@@ -40,7 +40,7 @@ void CEntity::render(int mapOffset_x, int mapOffset_y)
 	
 }
 
-bool CEntity::CollisionEvent(CEntity &other)
+bool CEntity::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	return false;
 }

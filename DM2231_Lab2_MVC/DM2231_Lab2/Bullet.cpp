@@ -13,11 +13,18 @@ bullet::~bullet()
 
 
 
-bool bullet::GetAngle(float HeroRotation)
+bool bullet::SetAngle(float HeroRotation)
 {
 	this->HeroRotationRad = static_cast<float>(HeroRotation * 3.1415 / 180);
 	return true;
 }
+
+bool bullet::SetPower(int power)
+{
+	this->power = power;
+	return true;
+}
+
 
 void bullet::render(int mapOffset_x, int mapOffset_y)
 {
@@ -52,7 +59,7 @@ void bullet::update()
 
 
 
-	pos += vel * 10;
+	pos += vel * power;
 
 	Set_X(pos.x);
 	Set_Y(pos.y);
