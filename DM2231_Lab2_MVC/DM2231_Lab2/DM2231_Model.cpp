@@ -48,6 +48,7 @@ void DM2231_Model::Update(void)
 		}
 		go->update(time->getDelta());
 	}
+	theHero->update();
 
 
 }

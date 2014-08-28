@@ -52,6 +52,9 @@ bool DM2231_Controller::Init(void)
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
 	theModel->ArrayofEntities.back()->SetPos(300,300);
 
+	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(SLOWDOWN));
+	theModel->ArrayofEntities.back()->SetPos(400,400);
+
 	return true;
 }
 
