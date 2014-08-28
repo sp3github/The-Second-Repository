@@ -106,6 +106,7 @@
     <ClCompile Include="loadTGA.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Money.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Ortho2D.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="LoadResources.h" />
     <ClInclude Include="loadTGA.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Money.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Ortho2D.h" />
     <ClInclude Include="PlayerInfo.h" />
