@@ -7,7 +7,6 @@ CEntity::CEntity(void)
 	pos_y = 10;
 	movementspeed = 0;
 	tile_size = 24;
-	hp = 100;
 }
 
 

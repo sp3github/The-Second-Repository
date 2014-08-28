@@ -42,13 +42,13 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 		//Now check if move against wall
 	if(m_bCheckUpwards)
 		return WallCollision( Atile_left_x, Atile_right_x, Atile_top_y - go->movementspeed, Atile_bottom_y - go->movementspeed);
-	else if(m_bCheckDownwards)
+	if(m_bCheckDownwards)
 		return WallCollision( Atile_left_x, Atile_right_x, Atile_top_y + go->movementspeed, Atile_bottom_y + go->movementspeed);
-	else if(m_bCheckLeft)
+	if(m_bCheckLeft)
 		return WallCollision( Atile_left_x - go->movementspeed, Atile_right_x - go->movementspeed, Atile_top_y, Atile_bottom_y);
-	else if(m_bCheckRight)
+	if(m_bCheckRight)
 		return WallCollision( Atile_left_x + go->movementspeed, Atile_right_x + go->movementspeed, Atile_top_y, Atile_bottom_y);
-	else if(CheckPos)
+	if(CheckPos)
 		return WallCollision(Atile_left_x, Atile_right_x, Atile_top_y, Atile_bottom_y);
 	}
 
@@ -102,7 +102,7 @@ bool Collision::Collider(int x, int y)
 		return true;
 	if( x < 0 || y < 0)
 		return true;
-	if(theMap->theScreenMap[(y + theMap->mapOffset_y) / TILE_SIZE][(x + theMap->mapOffset_x) / TILE_SIZE] == 1)
+	if(theMap->theScreenMap[(y + theMap->mapOffset_y) / TILE_SIZE][(x + theMap->mapOffset_x) / TILE_SIZE] != 0)
 	{
 		return true;
 	}

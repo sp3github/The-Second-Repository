@@ -38,21 +38,13 @@ bool DM2231_Controller::Init(void)
 
 
 	theModel->TestMap.LoadLevel(1);
-	theModel->TestMap.LoadItem(theModel->ArrayofEntities, theModel->theEntityFactory);
-
-	for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
-	{
-		if((*it)->ID == PLAYER)
-		{
-			theModel->theHeroEntity = (*it);
-			theModel->theHero = (dynamic_cast<CPlayerInfo*>(*it));
-			break;
-		}
-	}
-
-	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
+	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(PLAYER));
 	theModel->ArrayofEntities.back()->SetPos(100,300);
+
 	
+	theModel->theHeroEntity = theModel->ArrayofEntities.back();
+	theModel->theHero = (dynamic_cast<CPlayerInfo*>(theModel->ArrayofEntities.back()));
+
 	theModel->thegun.SetPlayer(*theModel->theHero);
 	theModel->thegun.SetArray(theModel->ArrayofEntities);
 	theModel->thegun.SetFactory(theModel->theEntityFactory);

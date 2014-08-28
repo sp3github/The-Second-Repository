@@ -37,7 +37,7 @@ public:
 	virtual bool CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
 
-	int hp;
+	
 	Entity ID;
 };
 
