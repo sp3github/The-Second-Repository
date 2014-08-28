@@ -201,3 +201,43 @@ void CMap::Update()
 	if (tileOffset_y+getNumOfTiles_ScreenHeight() > getNumOfTiles_MapHeight())
 		tileOffset_y = getNumOfTiles_MapHeight() - getNumOfTiles_ScreenHeight();
 }
+
+void CMap::LoadItem(vector<CEntity*> & theArray,CEntityFactory & theFac)
+{
+	for(int y = 0; y < getNumOfTiles_MapHeight(); y++)
+	{
+		for(int x = 0; x < getNumOfTiles_MapWidth(); x++)
+		{
+			switch(theScreenMap[y][x])
+			{
+			case 2:
+				theArray.push_back(theFac.Create(PLAYER));
+				theArray.back()->SetPos(x * TILE_SIZE, y * TILE_SIZE);
+				break;
+			case 3:
+				theArray.push_back(theFac.Create(HEALTH));
+				theArray.back()->SetPos(x * TILE_SIZE, y * TILE_SIZE);
+				break;
+			case 4:
+				theArray.push_back(theFac.Create(AMMO));
+				theArray.back()->SetPos(x * TILE_SIZE, y * TILE_SIZE);
+				break;
+			case 5:
+				theArray.push_back(theFac.Create(SLOWDOWN));
+				theArray.back()->SetPos(x * TILE_SIZE, y * TILE_SIZE);
+				break;
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+				//theArray.push_back(theFac.Create(CASINO));
+				//theArray.back()->SetPos(x * TILE_SIZE, y * TILE_SIZE);
+				break;
+			default:
+				break;
+
+			}
+		}
+	}
+	
+}

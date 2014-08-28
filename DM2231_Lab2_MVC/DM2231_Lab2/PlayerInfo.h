@@ -39,7 +39,6 @@ public:
 
 	bool CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
-	int hp;
 	int ammo;
 	bool slow;
 
