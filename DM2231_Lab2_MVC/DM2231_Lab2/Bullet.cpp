@@ -22,6 +22,7 @@ bool bullet::SetAngle(float HeroRotation)
 bool bullet::SetPower(int power)
 {
 	this->power = power;
+	this->movementspeed = power;
 	return true;
 }
 

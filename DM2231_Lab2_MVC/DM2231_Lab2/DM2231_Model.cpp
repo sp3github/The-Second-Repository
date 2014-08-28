@@ -35,6 +35,10 @@ void DM2231_Model::Update(void)
 				if(theCollision.CheckCollision(go,other,false,false,false,false))
 					break;
 		}
+		if(go->ID == BULLET)
+		{
+			theCollision.CheckCollision(go,NULL,false,false,false,false,true);
+		}
 		go->update();
 	}
 
