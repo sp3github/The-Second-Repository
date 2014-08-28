@@ -10,9 +10,9 @@ CZombies::CZombies(void)
 , i(0)
 {
 	Set_X(rand()% 800);
-	Set_Y(rand()% 600);  
+	Set_Y(rand()% 40+405);  
 
-	vel.Set(-10,0,0);
+	vel.Set(1,1,1);
 }
 
 CZombies::~CZombies(void)
@@ -37,6 +37,7 @@ int CZombies::getMoneySteal()
 {
 	return moneysteal;
 }
+
 bool CZombies::isDead()
 {
 	return isdead;
@@ -44,26 +45,68 @@ bool CZombies::isDead()
 
 int CZombies::CalculateDistance(const int hero_x, const int hero_y)
 {
-	//return ( (hero_x - GetX()) * (hero_x - GetX()) + (hero_x - GetY()) * (hero_x - GetY()));
-	return false;
+	return ( (hero_x - GetX()) * (hero_x - GetX()) + (hero_x - GetY()) * (hero_x - GetY()));
 }
 
-void CZombies::Update()
-{
+void CZombies::update()
+{	
+	//int pos_x;
+	//int pos_y;
 
-	cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << endl;
-	if (hero_x < 0)
-	{
-		cout << "kidhasuidasiodasdsdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdawd" << endl;
-	}
+	//Set_X(pos_x);
+	//Set_Y(pos_y);
+	//cout << "UPDATE: CLEAR!!!" << endl;
+
+	//if (CalculateDistance(hero_x, hero_y) < 100000.0f)
+	//{
+	//	if (CalculateDistance(hero_x, hero_y) < 625.0f)
+	//	{
+	//		CurrentState = REPEL;
+	//	}
+
+	//	CurrentState = ATTACK;
+	//}
+	//else
+	//{
+	//	CurrentState = IDLE;
+	//}
+
+	//if (CurrentState == IDLE)
+	//{
+	//	
+	//}
+
+	//else if (CurrentState == ATTACK)
+	//{
+	//	if (hero_x > pos_x)
+	//	{
+	//		pos_x = pos_x + 2;
+	//	}
+	//	else
+	//	{
+	//		pos_x = pos_x - 2;
+	//	}
+	//}
+
+	//else if (CurrentState == REPEL)
+	//{
+	//	if (hero_x > pos_x)
+	//	{	
+	//		pos_x = pos_x -2;
+	//	}
+	//	else 
+	//	{
+	//		pos_x = pos_x + 2;
+	//	}
+	//}
 }
 
 void CZombies::update(int herox, int heroy)
 {
-	Vector3D<float> HeroPos (herox,heroy);
+	Vector3D<float> HeroPos(herox,heroy);
 	Vector3D<float> ZombiePos(GetX(), GetY());
 
-	Vector3D<float> theDiff(HeroPos + ZombiePos);
+	Vector3D<float> theDiff(HeroPos -  ZombiePos);
 
 	theDiff.Normalize();
 	vel += theDiff;
@@ -78,6 +121,7 @@ void CZombies::update(int herox, int heroy)
 void CZombies::render(int mapOffset_x, int mapOffset_y)
 {	
 	//Zombies
+	cout << "zombies" << endl;
 	glPushMatrix();
 	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
 	glEnable(GL_TEXTURE_2D);		
@@ -93,9 +137,3 @@ void CZombies::render(int mapOffset_x, int mapOffset_y)
 
 }
 
-void CZombies::drawzombie(int x, int y)
-{
-	
-		
-	
-}
