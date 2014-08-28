@@ -45,6 +45,7 @@ BOOL DM2231_View::Draw(void)
 		}
 	case (theModel->theState.states::level):
 		{
+			theModel->theUI.RenderUI(theUI->LEVEL);
 			theModel->TestMap.RenderTileMap();
 			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
 			{
@@ -52,6 +53,31 @@ BOOL DM2231_View::Draw(void)
 			}
 			break;
 		}
+	case (theModel->theState.states::shop) :
+		{
+			break;
+		}
+	case (theModel->theState.states::bet) :
+	{
+											   break;
+	}
+	case (theModel->theState.states::message) :
+	{
+											   break;
+	}
+	case (theModel->theState.states::credit) :
+	{
+											   break;
+	}
+	case (theModel->theState.states::win) :
+	{
+											   break;
+	}
+	case (theModel->theState.states::defeat) :
+	{
+											   break;
+	}
+
 	}
 
 	//theModel->TestMap.RenderTileMap();

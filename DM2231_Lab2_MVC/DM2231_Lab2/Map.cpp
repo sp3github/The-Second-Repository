@@ -150,7 +150,7 @@ void CMap::RenderTileMap(void)
 	mapFineOffset_y = mapOffset_y % TILE_SIZE;
 
 	glPushMatrix();
-	for(int i = 0; i < getNumOfTiles_ScreenHeight(); i ++)
+	for(int i = 0; i < getNumOfTiles_ScreenHeight()+1; i ++)
 	{
 		for(int k = 0; k < getNumOfTiles_ScreenWidth()+1; k ++)
 		{
