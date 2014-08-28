@@ -48,7 +48,7 @@ bool DM2231_Controller::Init(void)
 	theModel->ArrayofEntities.back()->SetPos(100,300);
 
 	
-	for(int zombiecount = 0; zombiecount < 1;  zombiecount++)
+	for(int zombiecount = 0; zombiecount < 6;  zombiecount++)
 	{
 		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
 		cout <<"CONTROLLER:" << zombiecount << endl;
@@ -151,6 +151,10 @@ bool DM2231_Controller::ProcessInput(void)
 			{
 				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,false,false,true))
 					theModel->theHero->moveMeLeftRight(false, 1.0f, theModel->theHero->movementspeed);
+			}
+			if (theView->GetKeys('z'))
+			{
+				
 			}
 			if(theView->LMKeyDown)
 			{

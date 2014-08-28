@@ -27,7 +27,8 @@ bool CZombies::ChangeState(const int newState)
 void CZombies::deceasingHealth(int num)
 {
 	health = num;
-}
+} 
+
 int CZombies::getHealth()
 {
 	return health;
@@ -43,7 +44,7 @@ bool CZombies::isDead()
 	return isdead;
 }
 
-int CZombies::CalculateDistance(const int hero_x, const int hero_y)
+int CZombies::CalculateDistance(int hero_x, int hero_y)
 {
 	return ( (hero_x - GetX()) * (hero_x - GetX()) + (hero_x - GetY()) * (hero_x - GetY()));
 }
@@ -109,7 +110,7 @@ void CZombies::update(int herox, int heroy)
 	Vector3D<float> theDiff(HeroPos -  ZombiePos);
 
 	theDiff.Normalize();
-	vel += theDiff;
+	 vel += theDiff;
 	
 	pos.Set(GetX(),GetY());
 	pos += vel;

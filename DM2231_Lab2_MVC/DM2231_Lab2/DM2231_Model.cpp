@@ -39,7 +39,7 @@ void DM2231_Model::Update(void)
 		}
 		if (go->ID == Entity::OBSTACLE)
 		{
-			//go->update(theObstacle.GetX(), theObstacle.GetY());
+			go->update(theObstacle.GetX(), theObstacle.GetY());
 		}
 		else 
 		{

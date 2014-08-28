@@ -8,8 +8,6 @@ CObstacle::CObstacle(void)
 
 	Set_X(rand()% 800);
 	Set_Y(rand()% 600);  
-
-	vel.Set(0.0001,0.0001,0.0001);
 }
 
 CObstacle::~CObstacle(void)
@@ -22,8 +20,8 @@ int CObstacle::getZombiecount()
 }
 
 void CObstacle::render(int mapOffset_x, int mapOffset_y)
-{
-	//cout << "OBSTACLE" << endl;
+{	
+	cout << "OBSTACLE" << endl;
 	int tile_size = 24;
 	glPushMatrix();
 	glTranslatef(GetX()- mapOffset_x,GetY() - mapOffset_y, 0);
@@ -40,9 +38,22 @@ void CObstacle::render(int mapOffset_x, int mapOffset_y)
 	glPopMatrix();
 
 }
-void CObstacle::update()
+void CObstacle::update(int ZombieCount)
 {
-
+//	Vector3D<float> ObstaclePos(ObstacleX, ObstacleY);
+//	Vector3D<float> ZombiePos(GetX(), GetY());
+//
+//	//Vector3D<float> theDiff(HeroPos -  ZombiePos);
+//
+//	theDiff.Normalize();
+//	vel += theDiff;
+//	
+//	pos.Set(GetX(),GetY());
+//	pos += vel;
+//
+//	Set_X(pos.x);
+//	Set_Y(pos.y);
+//
 }
 
 bool CObstacle::Spawn()

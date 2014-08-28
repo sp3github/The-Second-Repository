@@ -5,6 +5,8 @@
 #include "Entity.h"
 #include <time.h>
 
+#define PI 3.142;
+
 class CZombies : public CEntity
 {
 protected:
@@ -28,14 +30,16 @@ private:
 	const int hero_x;
 	const int hero_y;
 
+	int i;
+
 public:
 	CZombies(void);
 	~CZombies(void);
 	//Overloaded Constructor
    //CZombies( unsigned int w, unsigned int a, unsigned int d, int h, int st, float spd);
 
-	int CalculateDistance(const int hero_x, const int hero_y);
-	void Update();
+	int CalculateDistance(int hero_x, int hero_y);
+	void update();
 
 	void deceasingHealth(int num);
 	int getHealth();
@@ -45,5 +49,5 @@ public:
 	void update(int herox, int heroy);
 	void render(int mapOffset_x, int mapOffset_y);
 	void drawzombie(int x, int y);
-	int i;
+	//void spawnz(int zombiecount);
 };

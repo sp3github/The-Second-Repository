@@ -35,6 +35,11 @@ void CEntity::update()
 	
 }
 
+void CEntity::update(int ZombieCount)
+{
+	
+}
+
 void CEntity::update(int herox, int heroy)
 {
 

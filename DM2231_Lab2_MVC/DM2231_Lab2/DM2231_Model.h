@@ -40,7 +40,7 @@ public:
 	Bullet theBullet;
 
 	CObstacle theObstacle;
-
+	CZombies theZombie;
 	CGun theGun;
 
 	//Collision theCollision(TestMap);

@@ -32,6 +32,7 @@ public:
 	int tile_size;
 
 	virtual void update();
+	virtual void update(int ZombieCount);
 	virtual void update(int herox, int heroy);
 	virtual void render(int mapOffset_x, int mapOffset_y);
 
