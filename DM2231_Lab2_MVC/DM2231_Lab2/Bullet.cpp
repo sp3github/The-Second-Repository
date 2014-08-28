@@ -1,37 +1,67 @@
-#include "Bullet.h"
+#include "bullet.h"
 
-Bullet::Bullet(void)
+
+bullet::bullet()
 {
-	canFire = false;
+	tile_size = 10;
 }
 
-Bullet::~Bullet(void)
+
+bullet::~bullet()
 {
 }
 
-void Bullet::FireBullet(float x, float y)
+
+
+bool bullet::SetAngle(float HeroRotation)
 {
-	sx = x;
-	sy = y;
+	this->HeroRotationRad = static_cast<float>(HeroRotation * 3.1415 / 180);
+	return true;
 }
 
-void Bullet::Draw()
+bool bullet::SetPower(int power)
 {
-	int tile_size = 24;
+	this->power = power;
+	this->movementspeed = power;
+	return true;
+}
+
+
+void bullet::render(int mapOffset_x, int mapOffset_y)
+{
 	glPushMatrix();
+	glTranslatef(GetX(), GetY(), 0);
+
 	glEnable(GL_TEXTURE_2D);
-	glTranslatef(sx,sy,0);
+	glEnable(GL_BLEND);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor3f(0, 1, 0);
+
 	glBegin(GL_QUADS);
-	glTexCoord2f(0,0);	glVertex2f(0,tile_size);
-	glTexCoord2f(1,0);	glVertex2f(tile_size,tile_size);
-	glTexCoord2f(1,1);	glVertex2f(tile_size,0);
-	glTexCoord2f(0,1);	glVertex2f(0,0);
+	glTexCoord2f(0, 1); glVertex2f(0, 0);
+	glTexCoord2f(0, 0); glVertex2f(0, tile_size);
+	glTexCoord2f(1, 0); glVertex2f(tile_size, tile_size);
+	glTexCoord2f(1, 1); glVertex2f(tile_size, 0);
 	glEnd();
+
+	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
-	glPopMatrix();						
+	glPopMatrix();
 }
 
-void Bullet::Tick()
+void bullet::update()
 {
-	sy -= 0.06;
+	Vector3D<float> pos(GetX(),GetY());
+	Vector3D<float> vel;
+
+	vel.Set(cos(HeroRotationRad), sin(HeroRotationRad));
+	vel.Normalize();
+
+
+
+	pos += vel * power;
+
+	Set_X(pos.x);
+	Set_Y(pos.y);
 }

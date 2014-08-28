@@ -3,7 +3,7 @@
 #define LEFT_BORDER TILE_SIZE*1
 #define BOTTOM_BORDER TILE_SIZE*1
 
-DM2231_Model::DM2231_Model(void):theCollision(TestMap)
+DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 {
 	//theUI = new UI;
 }
@@ -32,8 +32,14 @@ void DM2231_Model::Update(void)
 		{
 			CEntity * other = (*i);
 			if(go != other)
-				theCollision.CheckCollision(go,other,false,false,false,false);
+				if(theCollision.CheckCollision(go,other,false,false,false,false))
+					break;
 		}
+		if(go->ID == BULLET)
+		{
+			theCollision.CheckCollision(go,NULL,false,false,false,false,true);
+		}
+		go->update();
 	}
 
 

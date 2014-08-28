@@ -1,26 +1,24 @@
 #pragma once
 #include "Entity.h"
-#include <vector>
+#include "vector3D.h"
 
-class Bullet : public CEntity
+
+using namespace std;
+
+class bullet : public CEntity
 {
-private:
-	bool canFire;
-	float x;
-	float y;
-	float velX;
-	float velY;
-	float sx;
-	float sy;
-
-	std::vector<Bullet *> bulls;
-
 public:
-	Bullet(void);
-	~Bullet(void);
+	float HeroRotationRad;
+	int power;
 
-	void FireBullet(float x, float y);
-	void Tick();
-	void Draw();
+	void render(int mapOffset_x, int mapOffset_y);
+	void update();
+
+	bool SetPower(int power);
+	bool SetAngle(float HeroRotation);
+
+
+	bullet();
+	~bullet();
 };
 

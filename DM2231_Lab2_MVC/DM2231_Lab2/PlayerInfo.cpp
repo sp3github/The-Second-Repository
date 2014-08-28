@@ -28,10 +28,10 @@ void CPlayerInfo::Init(void)
  ****************************************************************************************************/
 void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
 	glPushMatrix();
-	glTranslatef(GetX(), GetY(), 0);
-	glTranslatef(tile_size/2, tile_size/2,0);
+	glTranslatef(static_cast<float>(GetX()), static_cast<float>(GetY()), 0);
+	glTranslatef(static_cast<float>(tile_size * 0.5), static_cast<float>(tile_size * 0.5),0);
 	glRotatef(HeroRotation,0,0,1);
-	glTranslatef(-tile_size / 2, -tile_size / 2, 0);
+	glTranslatef(static_cast<float>(-tile_size * 0.5), static_cast<float>(-tile_size * 0.5), 0);
 	//glTranslatef(-20, -20,0);
 	glEnable( GL_TEXTURE_2D );
 	glEnable( GL_BLEND );
@@ -166,7 +166,7 @@ void CPlayerInfo::update()
 {
 }
 
-bool CPlayerInfo::CollisionEvent(CEntity &other)
+bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	switch(other.ID)
 	{
@@ -177,6 +177,21 @@ bool CPlayerInfo::CollisionEvent(CEntity &other)
 			if(this->hp > 100)
 			{
 				this->hp = 100;
+			}
+			for(auto it = theArray.begin(); it != theArray.end();)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
+				{
+					go->~CEntity();
+					theArray.erase(it);
+					break;
+				}
+				else
+				{
+					it++;
+				}
 			}
 		}
 		break;

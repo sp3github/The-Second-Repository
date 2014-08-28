@@ -40,6 +40,11 @@ CEntity* CEntityFactory::Create(Entity id)
 			theNewItems->ID = PLAYER;
 		}
 		break;
+	case BULLET:
+		{
+			theNewItems = new bullet;
+			theNewItems->ID = BULLET;
+		}
 	default:
 		{
 

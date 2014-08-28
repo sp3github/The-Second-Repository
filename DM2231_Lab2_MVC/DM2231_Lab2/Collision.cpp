@@ -5,16 +5,17 @@ Collision::Collision(void)
 {
 }
 
-Collision::Collision(CMap & theMap)
+Collision::Collision(CMap & theMap,vector<CEntity*> & theArray)
 {
 	this->theMap = &theMap;
+	this->theArray = &theArray;
 }
 
 Collision::~Collision(void)
 {
 }
 
-bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards, bool m_bCheckDownwards, bool m_bCheckLeft , bool m_bCheckRight )
+bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards, bool m_bCheckDownwards, bool m_bCheckLeft , bool m_bCheckRight, bool CheckPos )
 {
 	if(go->movementspeed == 0)
 		return false;
@@ -47,8 +48,12 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 		return WallCollision( Atile_left_x - go->movementspeed, Atile_right_x - go->movementspeed, Atile_top_y, Atile_bottom_y);
 	if(m_bCheckRight)
 		return WallCollision( Atile_left_x + go->movementspeed, Atile_right_x + go->movementspeed, Atile_top_y, Atile_bottom_y);
+	if(CheckPos)
+		return WallCollision(Atile_left_x, Atile_right_x, Atile_top_y, Atile_bottom_y);
 	}
-	else
+
+	else if(go->ID == Entity::PLAYER)
+
 	{
 		Btile_left_x = other->GetX();
 		Btile_right_x = other->GetX() + other->tile_size; 
@@ -61,13 +66,10 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 			|| Btile_top_y > Atile_bottom_y
 			|| Btile_bottom_y < Atile_top_y ))
 		{
-			cout<<"COLLIDED"<<endl;
+			go->CollisionEvent(*other, *theArray);
 			return true;
 		}
 	}
-
-	
-
 
 
 }
@@ -96,6 +98,10 @@ bool Collision::WallCollision(int left, int right, int top, int bottom)
 
 bool Collision::Collider(int x, int y)
 {
+	if(x > theMap->getNumOfTiles_MapWidth() || y > theMap->getNumOfTiles_MapHeight())
+		return true;
+	if( x < 0 || y < 0)
+		return true;
 	if(theMap->theScreenMap[(y + theMap->mapOffset_y) / TILE_SIZE][(x + theMap->mapOffset_x) / TILE_SIZE] != 0)
 	{
 		return true;

@@ -9,9 +9,8 @@
 #include <vector>
 #include "PlayerInfo.h"
 #include "Collision.h"
-#include "Gun.h"
-#include "Bullet.h"
 #include "State.h"
+#include "gun.h"
 #define PI 3.1415f
 
 class DM2231_Model
@@ -31,11 +30,9 @@ public:
 
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
-	Bullet theBullet;
 
-	CGun theGun;
+	gun thegun;
 
-	//Collision theCollision(TestMap);
 	Collision theCollision;
 
 	float AnglefromHerotoMouse();
