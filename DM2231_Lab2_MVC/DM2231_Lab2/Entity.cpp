@@ -7,6 +7,7 @@ CEntity::CEntity(void)
 	pos_y = 10;
 	movementspeed = 0;
 	tile_size = 24;
+	hp = 100;
 }
 
 
@@ -35,7 +36,7 @@ void CEntity::update(float dt)
 	
 }
 
-void CEntity::update(int herox, int heroy, float dt)
+void CEntity::update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt)
 {
 
 }

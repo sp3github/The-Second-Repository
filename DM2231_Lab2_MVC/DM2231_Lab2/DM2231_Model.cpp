@@ -20,53 +20,65 @@ DM2231_Model::~DM2231_Model(void)
 // Update the model
 void DM2231_Model::Update(void)
 {
-	
-
-	theHero->HeroRotation = AnglefromHerotoMouse();
-	ConstrainHero();	
-	TestMap.Update();
-
-	for(auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+	if(theState.theState == State::level)
 	{
-		CEntity * go = (*it);
 
-		for(auto i = ArrayofEntities.begin(); i != ArrayofEntities.end();)
+		theHero->HeroRotation = AnglefromHerotoMouse();
+		ConstrainHero();	
+		TestMap.Update();
+
+		for(auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
 		{
-			//Collision for entities. Collision Event returns the iterator after an element is erased.
-			CEntity * other = (*i);
-			if (go != other)
+			CEntity * go = (*it);
+
+			for(auto i = ArrayofEntities.begin(); i != ArrayofEntities.end();)
 			{
-				if (!theCollision.CheckCollision(go, other, false, false, false, false))
+				//Collision for entities. Collision Event returns the iterator after an element is erased.
+				CEntity * other = (*i);
+				if (go != other)
 				{
-					i = go->CollisionEvent(*other, ArrayofEntities);
-					cout << "HOHO" << endl;
+					if (!theCollision.CheckCollision(go, other, false, false, false, false))
+					{
+						i = go->CollisionEvent(*other, ArrayofEntities);
+						break;
+					}
+					else
+					{
+						i++;
+					}
 				}
 				else
+				{
 					i++;
+				}
 			}
-			else
-				i++;
-		}
-		if(go->ID == BULLET)
-		{
-			if(!theCollision.CheckCollision(go,NULL,false,false,false,false,true))
+			if(go->ID == BULLET)//Checl bullet against environment
 			{
-				ArrayofEntities.erase(it);
-				go->~CEntity();
+				if(!theCollision.CheckCollision(go,NULL,false,false,false,false,true))
+				{
+					ArrayofEntities.erase(it);
+					go->~CEntity();
+					break;
+				}
+			}
+
+			if (go->ID == ZOMBIE)
+			{
+				go->update(theHero->GetX(), theHero->GetY(), TestMap.mapOffset_x, TestMap.mapOffset_y,time->getDelta());
+			}
+
+			go->update(time->getDelta());
+			
+			//Fix for the end of vector problem
+			if( it == ArrayofEntities.end())
+			{
 				break;
 			}
 		}
 
-		if (go->ID == ZOMBIE)
-		{
-			go->update(theHero->GetX(), theHero->GetY(), time->getDelta());
-		}
 
-		go->update(time->getDelta());
+		
 	}
-	theHero->update();
-
-
 }
 
 float DM2231_Model::AnglefromHerotoMouse()

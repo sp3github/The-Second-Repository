@@ -59,7 +59,7 @@ void CZombies::setStats(int health, int moneysteal)
 	moneysteal = 20;
 
 }
-void CZombies::update(int herox, int heroy, float dt)
+void CZombies::update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt)
 {
 	Vector3D<float> vel;
 	Vector3D<float> pos;
@@ -67,24 +67,27 @@ void CZombies::update(int herox, int heroy, float dt)
 	vel.Set(0.5,0.5,0.5);
 
 	Vector3D<float> HeroPos(herox,heroy);
-	Vector3D<float> ZombiePos(GetX(), GetY());
+	Vector3D<float> ZombiePos(GetX() - mapOffset_x, GetY() - mapOffset_y);
 
 	Vector3D<float> theDiff((HeroPos * dt) - ZombiePos*dt);
 
-	theDiff.Normalize();
-	vel += theDiff;
-	
-	pos.Set(GetX(),GetY());
-	pos += vel;
+	if(theDiff.Magnitude() > 0.5)
+	{
+		theDiff.Normalize();
 
-	Set_X(pos.x);
-	Set_Y(pos.y);
+		vel += theDiff;
+
+		pos.Set(GetX(),GetY());
+		pos += vel;
+
+		Set_X(pos.x);
+		Set_Y(pos.y);
+	}
 }
 
 void CZombies::render(int mapOffset_x, int mapOffset_y)
 {	
 	//Zombies
-	cout << "zombies" << endl;
 	glPushMatrix();
 	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
 	glEnable(GL_TEXTURE_2D);		

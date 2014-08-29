@@ -257,22 +257,15 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 		break;
 	case ZOMBIE:
 		{
-			
-			for(auto it = theArray.begin(); it != theArray.end();)
+			hp -= 10;
+			auto it = theArray.begin();
+			for(it = theArray.begin(); it != theArray.end(); it++)
 			{
-				CEntity *go = NULL;
-				go = (*it);
-				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
+				if((*it) == &other)
 				{
-					go->~CEntity();
-					theArray.erase(it);
-					break;
+					return it + 1;
 				}
-				else
-				{
-					it++;
-				}
-			}	
+			}
 		}
 		break;
 	}

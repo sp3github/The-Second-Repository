@@ -34,7 +34,6 @@ public:
 	CEntity * theHeroEntity;
 
 	gun thegun;
-	CZombies thezombie;
 
 	Collision theCollision;
 

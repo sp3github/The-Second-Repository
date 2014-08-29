@@ -40,7 +40,6 @@ public:
 
 	vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
-	int hp;
 	int ammo;
 
 private:

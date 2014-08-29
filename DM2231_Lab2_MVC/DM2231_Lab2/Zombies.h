@@ -44,7 +44,7 @@ public:
 	bool isDead();
 	void setStats(int health, int moneysteal);
 	
-	void update(int herox, int heroy, float dt);
+	void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
 	void render(int mapOffset_x, int mapOffset_y);
 	void drawzombie(int x, int y);
 
