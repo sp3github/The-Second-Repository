@@ -43,10 +43,11 @@ void DM2231_Model::Update(void)
 				CEntity * other = (*i);
 				if (go != other)
 				{
-					if (!theCollision.CheckCollision(go, other, false, false, false, false))
+					if (!theCollision.CheckCollision(go, other, false, false, false, false)) //Checks if it has collided go with other
 					{
-						i = go->CollisionEvent(*other, ArrayofEntities);
-						break;
+						i = go->CollisionEvent(*other, ArrayofEntities);	//Run collision code, setting i to the iterator which is returned.
+
+						//break;
 					}
 					else
 					{
@@ -76,9 +77,9 @@ void DM2231_Model::Update(void)
 			go->update(time->getDelta());
 			
 			//Fix for the end of vector problem
-			if( it == ArrayofEntities.end())
+			//if( it == ArrayofEntities.end())
 			{
-				break;
+				//break;
 			}
 		}
 

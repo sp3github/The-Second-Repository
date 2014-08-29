@@ -64,7 +64,7 @@ void bullet::update(float dt)
 	Set_Y(pos.y);
 }
 
-vector<CEntity*>::iterator bullet::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	switch (other.ID)
 	{
@@ -105,7 +105,7 @@ vector<CEntity*>::iterator bullet::CollisionEvent(CEntity &other, vector<CEntity
 			}
 
 			this->~bullet();//Delete the bullet
-			//theArray.erase(theArray.begin() + bulletindex);
+			theArray.erase(theArray.begin() + bulletindex);
 			
 
 			if(other.hp <= 0)

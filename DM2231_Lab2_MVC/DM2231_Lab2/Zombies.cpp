@@ -94,10 +94,39 @@ void CZombies::render(int mapOffset_x, int mapOffset_y)
 	glColor3f(0,1,0);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0,0); glVertex2f(0,0);
-	glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
 	glTexCoord2f(1,1); glVertex2f(0,tile_size);
+	glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
 	glTexCoord2f(0,1); glVertex2f(tile_size,0);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
+}
+
+vector<CEntity*>::iterator  CZombies::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+{
+	switch (other.ID)
+	{
+	case HEALTH:
+		{
+			for (auto it = theArray.begin(); it != theArray.end();it++)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+				if (go == &other)
+				{
+					return it + 1;
+				}
+
+			}
+		}
+	case ZOMBIE:
+		{
+			CZombies * zombie;
+			zombie = (dynamic_cast<CZombies*>(&other));
+
+			
+		}
+	default:
+		break;
+	}
 }
