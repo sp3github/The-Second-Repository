@@ -9,6 +9,7 @@ enum Entity{
  SLOWDOWN ,
  PLAYER ,
  BULLET,
+ ZOMBIE,
 };
 
 
@@ -32,11 +33,12 @@ public:
 	int tile_size;
 
 	virtual void update(float dt);
+	virtual void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
 	virtual void render(int mapOffset_x, int mapOffset_y);
 
-	virtual bool CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	virtual vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
-
+	int hp;
 	
 	Entity ID;
 };

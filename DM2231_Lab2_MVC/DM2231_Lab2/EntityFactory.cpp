@@ -45,6 +45,13 @@ CEntity* CEntityFactory::Create(Entity id)
 			theNewItems = new bullet;
 			theNewItems->ID = BULLET;
 		}
+		break;
+	case ZOMBIE:
+		{
+			theNewItems = new CZombies;
+			theNewItems->ID = ZOMBIE;
+		}
+		break;
 	default:
 		{
 

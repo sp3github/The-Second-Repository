@@ -110,12 +110,14 @@
     <ClCompile Include="Money.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MVCtime.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Ortho2D.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
     <ClCompile Include="Slowdown.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="Zombies.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ammo.h" />
@@ -137,6 +139,7 @@
     <ClInclude Include="Money.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MVCtime.h" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Ortho2D.h" />
     <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="Slowdown.h" />
@@ -144,6 +147,7 @@
     <ClInclude Include="State.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="vector3D.h" />
+    <ClInclude Include="Zombies.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

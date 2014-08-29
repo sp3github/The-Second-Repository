@@ -2,6 +2,7 @@
 #include "Header.h"
 #include <vector>
 #include "Entity.h"
+#include "MVCtime.h"
 
 class CPlayerInfo : public CEntity
 {
@@ -37,16 +38,15 @@ public:
 	void moveMeUpDown(bool mode, float timeDiff, float movementspeed);
 	void moveMeLeftRight(bool mode, float timeDiff, float movementspeed);
 
-	bool CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
-	int hp;
 	int ammo;
-	bool slow;
 
 private:
 
 	bool heroAnimationInvert;
 	int heroAnimationCounter;
 
-	
+	mvcTime *time;
+	int index;
 };

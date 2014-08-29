@@ -380,6 +380,7 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	m_iWindows_Width = width; 
 	m_iWindows_Height = height;
 
+
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.menuTexture[0],"Images/Menu.tga"))
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.levelTexture[0], "Images/Level.tga"))

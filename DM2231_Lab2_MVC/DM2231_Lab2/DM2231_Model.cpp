@@ -25,27 +25,62 @@ void DM2231_Model::Update(void)
 	TestMap.Update();
 
 	for(auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
-	{
-		CEntity * go = (*it);
 
-		for(auto i = ArrayofEntities.begin(); i != ArrayofEntities.end(); i++)
+	if(theState.theState == State::level)
+	{
+
+		theHero->HeroRotation = AnglefromHerotoMouse();
+		ConstrainHero();	
+		TestMap.Update();
+
+		for(auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
 		{
-			CEntity * other = (*i);
-			if(go != other)
-				if(theCollision.CheckCollision(go,other,false,false,false,false))
-					break;
-		}
-		if(go->ID == BULLET)
-		{
-			if(!theCollision.CheckCollision(go,NULL,false,false,false,false,true))
+			CEntity * go = (*it);
+
+			for(auto i = ArrayofEntities.begin(); i != ArrayofEntities.end();)
 			{
-				ArrayofEntities.erase(it);
-				go->~CEntity();
+				//Collision for entities. Collision Event returns the iterator after an element is erased.
+				CEntity * other = (*i);
+				if (go != other)
+				{
+					if (!theCollision.CheckCollision(go, other, false, false, false, false))
+					{
+						i = go->CollisionEvent(*other, ArrayofEntities);
+						break;
+					}
+					else
+					{
+						i++;
+					}
+				}
+				else
+				{
+					i++;
+				}
+			}
+			if(go->ID == BULLET)//Checl bullet against environment
+			{
+				if(!theCollision.CheckCollision(go,NULL,false,false,false,false,true))
+				{
+					ArrayofEntities.erase(it);
+					go->~CEntity();
+					break;
+				}
+			}
+
+			if (go->ID == ZOMBIE)
+			{
+				go->update(theHero->GetX(), theHero->GetY(), TestMap.mapOffset_x, TestMap.mapOffset_y,time->getDelta());
+			}
+
+			go->update(time->getDelta());
+			
+			//Fix for the end of vector problem
+			if( it == ArrayofEntities.end())
+			{
 				break;
 			}
 		}
-		go->update(time->getDelta());
-	}
 
 	if(theState.states::win)
 	{
@@ -59,6 +94,8 @@ void DM2231_Model::Update(void)
 	theHero->update();
 
 
+		
+	}
 }
 
 float DM2231_Model::AnglefromHerotoMouse()

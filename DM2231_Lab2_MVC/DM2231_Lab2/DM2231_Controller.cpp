@@ -38,19 +38,30 @@ bool DM2231_Controller::Init(void)
 
 
 	theModel->TestMap.LoadLevel(1);
-	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(PLAYER));
-	theModel->ArrayofEntities.back()->SetPos(100,300);
+	theModel->TestMap.LoadItems(theModel->ArrayofEntities, theModel->theEntityFactory);
 
-	
-	theModel->theHeroEntity = theModel->ArrayofEntities.back();
-	theModel->theHero = (dynamic_cast<CPlayerInfo*>(theModel->ArrayofEntities.back()));
+	for (auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
+	{
+		if ((*it)->ID == PLAYER)
+		{
+			theModel->theHeroEntity = (*it);
+			theModel->theHero = (dynamic_cast<CPlayerInfo*>(*it));
+			break;
+		}
+	}
+
 
 	theModel->thegun.SetPlayer(*theModel->theHero);
 	theModel->thegun.SetArray(theModel->ArrayofEntities);
 	theModel->thegun.SetFactory(theModel->theEntityFactory);
 	
-	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
-	theModel->ArrayofEntities.back()->SetPos(300,300);
+
+	for (int zombie = 0; zombie < 5; zombie++)
+	{
+		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
+
+		cout << "ZombieCount:" << zombie << endl;
+	}
 
 	return true;
 }

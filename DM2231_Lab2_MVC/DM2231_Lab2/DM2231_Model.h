@@ -12,6 +12,7 @@
 #include "State.h"
 #include "gun.h"
 #include "MVCtime.h"
+#include "Zombies.h"
 #define PI 3.1415f
 
 class DM2231_Model

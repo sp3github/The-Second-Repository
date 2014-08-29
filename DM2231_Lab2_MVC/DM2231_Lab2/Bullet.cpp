@@ -58,9 +58,70 @@ void bullet::update(float dt)
 	vel.Set(cos(HeroRotationRad), sin(HeroRotationRad));
 	vel.Normalize();
 
-
 	pos += vel * power * dt;
 
 	Set_X(pos.x);
 	Set_Y(pos.y);
+}
+
+vector<CEntity*>::iterator bullet::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+{
+	switch (other.ID)
+	{
+	case HEALTH:
+		{
+			for (auto it = theArray.begin(); it != theArray.end();it++)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+				if (go == &other)
+				{
+					return it + 1;
+				}
+
+			}
+			break;
+		}
+	case ZOMBIE:
+		{
+			other.hp -= power * 0.01;//Effect
+			
+
+			int Counter, index, bulletindex;
+			auto it = theArray.begin();
+			//Find the bullet and the other in the array.
+			for (it = theArray.begin(), Counter = 0; it != theArray.end();it++, Counter++)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+				if (go == &other)
+				{
+					index = Counter;
+				}
+				if(go->ID == BULLET && go->GetX() == GetX() && go->GetY() == GetY())
+				{
+					bulletindex = Counter;
+				}
+			}
+
+			this->~bullet();//Delete the bullet
+			//theArray.erase(theArray.begin() + bulletindex);
+			
+
+			if(other.hp <= 0)
+			{
+				other.~CEntity();
+				it = theArray.erase(theArray.begin() + index); //delete from array.
+				
+				
+				return it;
+			}
+			
+			it = theArray.begin() + index;
+			return it;
+			
+		}
+	default:
+		break;
+	}
 }
