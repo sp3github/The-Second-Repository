@@ -30,12 +30,22 @@ void DM2231_Model::Update(void)
 	{
 		CEntity * go = (*it);
 
-		for(auto i = ArrayofEntities.begin(); i != ArrayofEntities.end(); i++)
+		for(auto i = ArrayofEntities.begin(); i != ArrayofEntities.end();)
 		{
+			//Collision for entities. Collision Event returns the iterator after an element is erased.
 			CEntity * other = (*i);
-			if(go != other)
-				if(theCollision.CheckCollision(go,other,false,false,false,false))
-					break;
+			if (go != other)
+			{
+				if (!theCollision.CheckCollision(go, other, false, false, false, false))
+				{
+					i = go->CollisionEvent(*other, ArrayofEntities);
+					cout << "HOHO" << endl;
+				}
+				else
+					i++;
+			}
+			else
+				i++;
 		}
 		if(go->ID == BULLET)
 		{
@@ -54,6 +64,7 @@ void DM2231_Model::Update(void)
 
 		go->update(time->getDelta());
 	}
+	theHero->update();
 
 
 }

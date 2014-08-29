@@ -36,7 +36,7 @@ public:
 	virtual void update(int herox, int heroy, float dt);
 	virtual void render(int mapOffset_x, int mapOffset_y);
 
-	virtual bool CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	virtual vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
 
 	

@@ -63,3 +63,25 @@ void bullet::update(float dt)
 	Set_X(pos.x);
 	Set_Y(pos.y);
 }
+
+vector<CEntity*>::iterator bullet::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+{
+	switch (other.ID)
+	{
+	case HEALTH:
+	{
+				   for (auto it = theArray.begin(); it != theArray.end();it++)
+				   {
+					   CEntity *go = NULL;
+					   go = (*it);
+					   if (go == &other)
+					   {
+						   return it + 1;
+					   }
+
+				   }
+	}
+	default:
+		break;
+	}
+}

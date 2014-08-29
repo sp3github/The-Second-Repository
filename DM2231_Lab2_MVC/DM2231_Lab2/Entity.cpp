@@ -45,9 +45,9 @@ void CEntity::render(int mapOffset_x, int mapOffset_y)
 	
 }
 
-bool CEntity::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+vector<CEntity*>::iterator CEntity::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
-	return false;
+	return theArray.end();
 }
 
 void CEntity::Set_Y(int pos_y)

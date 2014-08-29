@@ -10,8 +10,10 @@ CPlayerInfo::CPlayerInfo(void)
 
 	hp = 0;
 	ammo = 0;
-	slow = false;
 
+	time = mvcTime::getInstance();
+	index = time->insertNewTime(5000);
+	time->setActive(false,index);
 }
 
 CPlayerInfo::~CPlayerInfo(void)
@@ -164,9 +166,15 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 
 void CPlayerInfo::update()
 {
+	if(time->testTime(index))
+	{
+		movementspeed=5;
+		time->setActive(false,index);
+
+	}
 }
 
-bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	switch(other.ID)
 	{
@@ -178,6 +186,7 @@ bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 			{
 				this->hp = 100;
 			}
+
 			for(auto it = theArray.begin(); it != theArray.end();)
 			{
 				CEntity *go = NULL;
@@ -185,8 +194,8 @@ bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
 				{
 					go->~CEntity();
-					theArray.erase(it);
-					break;
+					it = theArray.erase(it);
+					return it;
 				}
 				else
 				{
@@ -203,11 +212,47 @@ bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 			{
 				this->ammo = 36;
 			}
+
+			for(auto it = theArray.begin(); it != theArray.end();)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+
+				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
+				{
+					go->~CEntity();
+					it = theArray.erase(it);
+					return it;
+				}
+				else
+				{
+					it++;
+				}
+			}
 		}
 		break;
 	case SLOWDOWN:
 		{
-			this->slow = true;
+			movementspeed = 15;
+			time->setActive(true,index);
+			
+
+			for(auto it = theArray.begin(); it != theArray.end();)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+
+				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
+				{
+					go->~CEntity();
+					it = theArray.erase(it);
+					return it;
+				}
+				else
+				{
+					it++;
+				}
+			}
 		}
 		break;
 	case ZOMBIE:
@@ -231,6 +276,4 @@ bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 		}
 		break;
 	}
-	return false;
-
 }
