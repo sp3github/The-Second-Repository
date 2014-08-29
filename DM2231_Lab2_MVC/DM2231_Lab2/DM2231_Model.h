@@ -9,11 +9,10 @@
 #include <vector>
 #include "PlayerInfo.h"
 #include "Collision.h"
-
 #include "State.h"
 #include "gun.h"
 #include "MVCtime.h"
-
+#include "Zombies.h"
 #define PI 3.1415f
 
 class DM2231_Model
@@ -34,10 +33,8 @@ public:
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
 
-
-
 	gun thegun;
-
+	CZombies thezombie;
 
 	Collision theCollision;
 

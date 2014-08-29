@@ -39,33 +39,25 @@ bool DM2231_Controller::Init(void)
 
 	theModel->TestMap.LoadLevel(1);
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(PLAYER));
-	theModel->ArrayofEntities.back()->SetPos(100,200);
+	theModel->ArrayofEntities.back()->SetPos(100,300);
 
 	
 	theModel->theHeroEntity = theModel->ArrayofEntities.back();
 	theModel->theHero = (dynamic_cast<CPlayerInfo*>(theModel->ArrayofEntities.back()));
 
-<<<<<<< HEAD
-	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
-	theModel->ArrayofEntities.back()->SetPos(100,300);
-
-	
-	for(int zombiecount = 0; zombiecount < 6;  zombiecount++)
-	{
-		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
-		cout <<"CONTROLLER:" << zombiecount << endl;
-	}
-	
-	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(OBSTACLE));
-	theModel->ArrayofEntities.back()->SetPos(400,150);
-=======
 	theModel->thegun.SetPlayer(*theModel->theHero);
 	theModel->thegun.SetArray(theModel->ArrayofEntities);
 	theModel->thegun.SetFactory(theModel->theEntityFactory);
 	
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
 	theModel->ArrayofEntities.back()->SetPos(300,300);
->>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
+
+	for (int zombie = 0; zombie < 5; zombie++)
+	{
+		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
+
+		cout << "ZombieCount:" << zombie << endl;
+	}
 
 	return true;
 }
@@ -175,10 +167,6 @@ bool DM2231_Controller::ProcessInput(void)
 			{
 				theModel->thegun.SetGun(shotgun);
 			}
-			if (theView->GetKeys('z'))
-			{
-				
-			}
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
@@ -206,37 +194,28 @@ bool DM2231_Controller::ProcessInput(void)
 		}
 	case (theModel->theState.states::shop) :
 	{
-
 											   break;
-
 	}
 	case (theModel->theState.states::bet) :
 	{
-
 											  break;
 	}
 	case (theModel->theState.states::message) :
 	{
-
 												  break;
-
 	}
 	case (theModel->theState.states::credit) :
 	{
-
 												 break;
-
 	}
 	case (theModel->theState.states::win) :
 	{
-
 											  break;
 	}
 	case (theModel->theState.states::defeat) :
 	{
 												 break;
 	}
-
 	}
 
 	return true;

@@ -25,6 +25,7 @@ void DM2231_Model::Update(void)
 	theHero->HeroRotation = AnglefromHerotoMouse();
 	ConstrainHero();	
 	TestMap.Update();
+
 	for(auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
 	{
 		CEntity * go = (*it);
@@ -36,7 +37,6 @@ void DM2231_Model::Update(void)
 				if(theCollision.CheckCollision(go,other,false,false,false,false))
 					break;
 		}
-	
 		if(go->ID == BULLET)
 		{
 			if(!theCollision.CheckCollision(go,NULL,false,false,false,false,true))
@@ -46,9 +46,16 @@ void DM2231_Model::Update(void)
 				break;
 			}
 		}
-		go->update(time->getDelta());
 
+		if (go->ID == ZOMBIE)
+		{
+			go->update(theHero->GetX(), theHero->GetY(), time->getDelta());
+		}
+
+		go->update(time->getDelta());
 	}
+
+
 }
 
 float DM2231_Model::AnglefromHerotoMouse()

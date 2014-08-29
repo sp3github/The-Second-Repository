@@ -6,12 +6,12 @@ CPlayerInfo::CPlayerInfo(void)
 	heroAnimationCounter = 0;
 	movementspeed = 5;
 	HeroRotation = 0;
-
 	tile_size = 24;
 
 	hp = 0;
 	ammo = 0;
 	slow = false;
+
 }
 
 CPlayerInfo::~CPlayerInfo(void)
@@ -52,8 +52,6 @@ void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
 	glDisable( GL_BLEND );
 	glDisable( GL_TEXTURE_2D );
 	glPopMatrix();
-
-
 }
 
 // Set Animation Counter of the player
@@ -99,23 +97,6 @@ void CPlayerInfo::ConstrainHero( const int leftBorder, const int rightBorder, co
 			mapOffset_x = mapwidth; 
 	}
 
-
-	if (GetY() < topBorder)
-	{
-		Set_Y(topBorder);
-		mapOffset_y =  mapOffset_y - (int) (movementspeed * timeDiff);
-		if (mapOffset_y < 0)
-			mapOffset_y = 0;
-		cout<<"MAPOFFSET_Y "<<mapOffset_y<<endl;
-	}
-	else if (GetY() > bottomBorder)
-	{
-		Set_Y( bottomBorder);
-		mapOffset_y = mapOffset_y + (int)(movementspeed * timeDiff);
-		if (mapOffset_y > 600)	// This must be changed to soft-coded
-			mapOffset_y = 600;
-		cout<<"MAPOFFSET_Y "<<mapOffset_y<<endl;
-	}
 	if (GetY() < topBorder) 
 	{ 
 		Set_Y(leftBorder);
@@ -183,7 +164,6 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 
 void CPlayerInfo::update()
 {
-	return;
 }
 
 bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
@@ -212,7 +192,7 @@ bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 				{
 					it++;
 				}
-			}
+			}	
 		}
 		break;
 	case AMMO:
@@ -230,8 +210,27 @@ bool CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 			this->slow = true;
 		}
 		break;
+	case ZOMBIE:
+		{
+			
+			for(auto it = theArray.begin(); it != theArray.end();)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
+				{
+					go->~CEntity();
+					theArray.erase(it);
+					break;
+				}
+				else
+				{
+					it++;
+				}
+			}	
+		}
+		break;
 	}
 	return false;
-
 
 }

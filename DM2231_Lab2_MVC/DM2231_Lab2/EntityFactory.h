@@ -7,6 +7,7 @@
 #include "Slowdown.h"
 #include "PlayerInfo.h"
 #include "bullet.h"
+#include "Zombies.h"
 
 class CEntityFactory
 {

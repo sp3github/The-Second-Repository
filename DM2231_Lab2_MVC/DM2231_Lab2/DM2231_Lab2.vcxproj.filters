@@ -78,22 +78,6 @@
     <ClCompile Include="Bet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Zombies.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Obstacle.cpp">
-=======
-    <ClCompile Include="Time.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
->>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
-=======
     <ClCompile Include="gun.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -104,7 +88,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Money.cpp">
->>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombies.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -131,6 +120,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="State.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ortho2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vector3D.h">
@@ -178,30 +170,16 @@
     <ClInclude Include="bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <ClInclude Include="Bullet.h">
+    <ClInclude Include="MVCtime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Money.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Zombies.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Obstacle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ortho2D.h">
-=======
-    <ClInclude Include="Time.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
->>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
-=======
-    <ClInclude Include="MVCtime.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Money.h">
->>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

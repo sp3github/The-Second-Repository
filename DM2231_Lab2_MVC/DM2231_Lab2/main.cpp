@@ -8,9 +8,6 @@
 
 int main( int argc, char **args )
 {
-
-	srand (time(NULL));
-
 	glutInit(&argc, args);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100,100);

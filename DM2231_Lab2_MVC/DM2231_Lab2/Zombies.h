@@ -1,4 +1,3 @@
-//<<<<<<< HEAD
 #pragma once
 #include "vector3D.h"
 #include "Header.h"
@@ -20,8 +19,6 @@ private:
 	
 	unsigned int walk, attack, die;
 	int health, moneysteal;
-	Vector3D<float> vel;
-	Vector3D<float> pos;
 	bool iswalk, isattack, isdead;	
 
 	void SetZombieState(int num);
@@ -36,7 +33,7 @@ public:
 	CZombies(void);
 	~CZombies(void);
 	//Overloaded Constructor
-   //CZombies( unsigned int w, unsigned int a, unsigned int d, int h, int st, float spd);
+    //CZombies( unsigned int w, unsigned int a, unsigned int d, int h, int st, float spd);
 
 	int CalculateDistance(int hero_x, int hero_y);
 	void update();
@@ -45,9 +42,11 @@ public:
 	int getHealth();
 	int getMoneySteal();
 	bool isDead();
+	void setStats(int health, int moneysteal);
 	
-	void update(int herox, int heroy);
+	void update(int herox, int heroy, float dt);
 	void render(int mapOffset_x, int mapOffset_y);
 	void drawzombie(int x, int y);
-	//void spawnz(int zombiecount);
+
+
 };

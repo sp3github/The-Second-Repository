@@ -10,9 +10,8 @@ CZombies::CZombies(void)
 , i(0)
 {
 	Set_X(rand()% 800);
-	Set_Y(rand()% 40+405);  
-
-	vel.Set(1,1,1);
+	Set_Y(rand()% 600);  
+	
 }
 
 CZombies::~CZombies(void)
@@ -51,66 +50,29 @@ int CZombies::CalculateDistance(int hero_x, int hero_y)
 
 void CZombies::update()
 {	
-	//int pos_x;
-	//int pos_y;
 
-	//Set_X(pos_x);
-	//Set_Y(pos_y);
-	//cout << "UPDATE: CLEAR!!!" << endl;
-
-	//if (CalculateDistance(hero_x, hero_y) < 100000.0f)
-	//{
-	//	if (CalculateDistance(hero_x, hero_y) < 625.0f)
-	//	{
-	//		CurrentState = REPEL;
-	//	}
-
-	//	CurrentState = ATTACK;
-	//}
-	//else
-	//{
-	//	CurrentState = IDLE;
-	//}
-
-	//if (CurrentState == IDLE)
-	//{
-	//	
-	//}
-
-	//else if (CurrentState == ATTACK)
-	//{
-	//	if (hero_x > pos_x)
-	//	{
-	//		pos_x = pos_x + 2;
-	//	}
-	//	else
-	//	{
-	//		pos_x = pos_x - 2;
-	//	}
-	//}
-
-	//else if (CurrentState == REPEL)
-	//{
-	//	if (hero_x > pos_x)
-	//	{	
-	//		pos_x = pos_x -2;
-	//	}
-	//	else 
-	//	{
-	//		pos_x = pos_x + 2;
-	//	}
-	//}
 }
 
-void CZombies::update(int herox, int heroy)
+void CZombies::setStats(int health, int moneysteal)
 {
+	health = 10;
+	moneysteal = 20;
+
+}
+void CZombies::update(int herox, int heroy, float dt)
+{
+	Vector3D<float> vel;
+	Vector3D<float> pos;
+
+	vel.Set(0.5,0.5,0.5);
+
 	Vector3D<float> HeroPos(herox,heroy);
 	Vector3D<float> ZombiePos(GetX(), GetY());
 
-	Vector3D<float> theDiff(HeroPos -  ZombiePos);
+	Vector3D<float> theDiff((HeroPos * dt) - ZombiePos*dt);
 
 	theDiff.Normalize();
-	 vel += theDiff;
+	vel += theDiff;
 	
 	pos.Set(GetX(),GetY());
 	pos += vel;
@@ -135,6 +97,4 @@ void CZombies::render(int mapOffset_x, int mapOffset_y)
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
-
 }
-

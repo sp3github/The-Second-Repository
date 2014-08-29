@@ -84,8 +84,12 @@ BOOL DM2231_View::Draw(void)
 
 	//theModel->TestMap.RenderTileMap();
 
-	//theModel->theObstacle->renderObstacle();
-	//theModel->theZombie.renderZ();
+
+
+
+
+
+	
 	//glTranslatef(-1.5f,0.0f,-6.0f); // Move Left 1.5 Units And Into The Screen 6.0
 	//glRotatef(rtri,0.0f,1.0f,0.0f); // Rotate The Triangle On The Y axis ( NEW )
 	//glBegin(GL_TRIANGLES); // Start Drawing A Triangle
@@ -115,13 +119,14 @@ BOOL DM2231_View::Draw(void)
 
 	SwapBuffers(hDC); // Swap Buffers (Double Buffering)
 
-	/*glBegin(GL_QUADS);
+	glBegin(GL_QUADS);
 	glTexCoord2f(0,0);	glVertex2f(0,0.25);
 	glTexCoord2f(1,0);	glVertex2f(0.25,0.25);
 	glTexCoord2f(1,1);	glVertex2f(0.25,0);
 	glTexCoord2f(0,1);	glVertex2f(0,0);
-	glEnd();*/
+	glEnd();
 	
+
 	return TRUE; // Keep Going
 }
 

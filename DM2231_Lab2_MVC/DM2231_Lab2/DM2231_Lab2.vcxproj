@@ -20,12 +20,10 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -111,11 +109,8 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Money.cpp" />
     <ClCompile Include="Mouse.cpp" />
-<<<<<<< HEAD
-    <ClCompile Include="Obstacle.cpp" />
-=======
     <ClCompile Include="MVCtime.cpp" />
->>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Ortho2D.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
     <ClCompile Include="Slowdown.cpp" />
@@ -143,11 +138,8 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Money.h" />
     <ClInclude Include="Mouse.h" />
-<<<<<<< HEAD
-    <ClInclude Include="Obstacle.h" />
-=======
     <ClInclude Include="MVCtime.h" />
->>>>>>> origin/THE-NEW-MASTER-BITCHES-PLZ-NO-DESTROY-AGAIN
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Ortho2D.h" />
     <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="Slowdown.h" />

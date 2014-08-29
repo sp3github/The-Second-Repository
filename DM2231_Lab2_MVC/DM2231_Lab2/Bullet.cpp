@@ -15,7 +15,6 @@ bullet::~bullet()
 
 bool bullet::SetAngle(float HeroRotation)
 {
-
 	this->HeroRotationRad = static_cast<float>(HeroRotation * 3.1415 / 180);
 	return true;
 }
@@ -24,10 +23,8 @@ bool bullet::SetPower(int power)
 {
 	this->power = power;
 	this->movementspeed = power;
-	return true;	
+	return true;
 }
-
-
 
 
 void bullet::render(int mapOffset_x, int mapOffset_y)
@@ -55,19 +52,14 @@ void bullet::render(int mapOffset_x, int mapOffset_y)
 
 void bullet::update(float dt)
 {
-
-
-
 	Vector3D<float> pos(GetX(),GetY());
 	Vector3D<float> vel;
 
 	vel.Set(cos(HeroRotationRad), sin(HeroRotationRad));
 	vel.Normalize();
 
-
 	pos += vel * power * dt;
 
 	Set_X(pos.x);
 	Set_Y(pos.y);
-
 }

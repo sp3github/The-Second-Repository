@@ -1,11 +1,13 @@
 #pragma once
 #include "Entity.h"
+#include "vector3D.h"
+
+
+using namespace std;
 
 class bullet : public CEntity
 {
 public:
-	bullet();
-	~bullet();
 	float HeroRotationRad;
 	int power;
 
@@ -14,5 +16,9 @@ public:
 
 	bool SetPower(int power);
 	bool SetAngle(float HeroRotation);
+
+
+	bullet();
+	~bullet();
 };
 

@@ -3,14 +3,15 @@
 #include <vector>
 
 
-
 enum Entity{
  HEALTH = 0,
  AMMO ,
  SLOWDOWN ,
  PLAYER ,
  BULLET,
+ ZOMBIE,
 };
+
 
 class CEntity
 {
@@ -31,13 +32,14 @@ public:
 	int movementspeed;
 	int tile_size;
 
-
 	virtual void update(float dt);
+	virtual void update(int herox, int heroy, float dt);
 	virtual void render(int mapOffset_x, int mapOffset_y);
 
 	virtual bool CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+
+
 	
 	Entity ID;
-
 };
 
