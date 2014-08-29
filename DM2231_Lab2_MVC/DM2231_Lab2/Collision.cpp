@@ -5,19 +5,21 @@ Collision::Collision(void)
 {
 }
 
-Collision::Collision(CMap & theMap)
+Collision::Collision(CMap & theMap,vector<CEntity*> & theArray)
 {
 	this->theMap = &theMap;
+	this->theArray = &theArray;
 }
 
 Collision::~Collision(void)
 {
 }
 
-bool Collision::CheckCollision(CEntity go, CEntity other,bool m_bCheckUpwards, bool m_bCheckDownwards, bool m_bCheckLeft, bool m_bCheckRight)
+bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards, bool m_bCheckDownwards, bool m_bCheckLeft , bool m_bCheckRight, bool CheckPos )
 {
-	if(go.movementspeed == 0)
-		return false;
+	//if true, not colliding. if false, collided.
+	if(go->movementspeed == 0)
+		return true;
 	float Atile_left_x;
 	float Atile_right_x;
 	float Atile_bottom_y;
@@ -30,74 +32,80 @@ bool Collision::CheckCollision(CEntity go, CEntity other,bool m_bCheckUpwards, b
 	//Variables for the sides of the collision
 
 	//Calculate the sides of rect A 
-	Atile_left_x = go.GetX() - TILE_SIZE / 2;
-	Atile_right_x = go.GetX() + TILE_SIZE / 2; 
-	Atile_top_y =  go.GetY() + TILE_SIZE / 2; 
-	Atile_bottom_y = go.GetY() - TILE_SIZE / 2;
-	
-	//Calculate the sides of rect B 
-	Btile_left_x = other.GetX() - TILE_SIZE / 2;
-	Btile_right_x = other.GetX() + TILE_SIZE / 2; 
-	Btile_top_y =  other.GetY() + TILE_SIZE / 2; 
-	Btile_bottom_y = other.GetY() - TILE_SIZE / 2;
+	Atile_left_x = go->GetX();
+	Atile_right_x = go->GetX() + go->tile_size; 
+	Atile_top_y =  go->GetY() ; 
+	Atile_bottom_y = go->GetY() + go->tile_size;
 
-	//For forward checking
-	//if(m_bCheckUpwards)
-	//{
-	//	Atile_bottom_y += go.movementspeed;
-	//	Atile_top_y += go.movementspeed;  
-
-
-	//}
-	//if(m_bCheckDownwards)
-	//{
-	//	Atile_bottom_y -= go.movementspeed;
-	//	Atile_top_y -= go.movementspeed;  
-	//}
-	//if(m_bCheckLeft)
-	//{
-	//	Atile_left_x += go.movementspeed;
-	//	Atile_right_x += go.movementspeed;
-
-	//}
-	//if(m_bCheckRight)
-	//{
-	//	Atile_left_x -= go.movementspeed;
-	//	Atile_right_x -= go.movementspeed;
-	//}
-
-	//This checks against other entities.
-	if(Atile_bottom_y <= Btile_top_y)
+	//Check against other entities.
+	if(other == NULL)
 	{
-		//COLLIDED
-		return false;
+		//Now check if move against wall
+	if(m_bCheckUpwards)
+		return WallCollision( Atile_left_x, Atile_right_x, Atile_top_y - go->movementspeed, Atile_bottom_y - go->movementspeed);
+	if(m_bCheckDownwards)
+		return WallCollision( Atile_left_x, Atile_right_x, Atile_top_y + go->movementspeed, Atile_bottom_y + go->movementspeed);
+	if(m_bCheckLeft)
+		return WallCollision( Atile_left_x - go->movementspeed, Atile_right_x - go->movementspeed, Atile_top_y, Atile_bottom_y);
+	if(m_bCheckRight)
+		return WallCollision( Atile_left_x + go->movementspeed, Atile_right_x + go->movementspeed, Atile_top_y, Atile_bottom_y);
+	if(CheckPos)
+		return WallCollision(Atile_left_x, Atile_right_x, Atile_top_y, Atile_bottom_y);
 	}
-	if(Atile_top_y >= Btile_bottom_y)
-	{
-		//COLLIDED
-		return false;
-	}
-	if(Atile_right_x <= Btile_left_x)
-	{
-		//COLLIDED
-		return false;
-	}
-	if(Atile_left_x >= Btile_right_x)
-	{
-		//COLLIDED
-		return false;
-	}
-	//Now check if move against wall
-	
-	//If none of the sides from A are outside B
-	return WallCollision(go);
-}
 
-bool Collision::WallCollision(CEntity go)
-{
-	if(theMap->theScreenMap[go.GetX() + theMap->mapOffset_x][go.GetX() + theMap->mapOffset_x ] == 1)
+	else if ((go->ID == Entity::PLAYER && other->ID != BULLET) || (go->ID == BULLET && other->ID != PLAYER))
+
 	{
-		return false;
+		Btile_left_x = other->GetX() - theMap->mapOffset_x;
+		Btile_right_x = other->GetX() + other->tile_size - theMap->mapOffset_x;
+		Btile_top_y = other->GetY() - theMap->mapOffset_y;
+		Btile_bottom_y = other->GetY() + other->tile_size - theMap->mapOffset_y;
+
+
+		if(!(Btile_left_x > Atile_right_x
+			|| Btile_right_x < Atile_left_x
+			|| Btile_top_y > Atile_bottom_y
+			|| Btile_bottom_y < Atile_top_y ))
+		{
+			return false;
+		}
 	}
 	return true;
+
+}
+
+bool Collision::WallCollision(int left, int right, int top, int bottom)
+{
+	if(Collider(left,top))
+	{
+		return false;
+	}
+	if(Collider(left, bottom))
+	{
+		return false;
+	}
+	if(Collider(right, top))
+	{
+		return false;
+	}
+	if(Collider(right, bottom))
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool Collision::Collider(int x, int y)
+{
+	if(x > theMap->getNumOfTiles_ScreenWidth()  * TILE_SIZE|| y > theMap->getNumOfTiles_ScreenHeight() * TILE_SIZE)
+		return true;
+	if( x < 0 || y < 0)
+		return true;
+	if(theMap->theScreenMap[(y + theMap->mapOffset_y) / TILE_SIZE][(x + theMap->mapOffset_x) / TILE_SIZE] == 1)
+	{
+		return true;
+	}
+
+	return false;
 }

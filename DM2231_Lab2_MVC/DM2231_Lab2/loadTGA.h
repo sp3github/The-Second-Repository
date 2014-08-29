@@ -11,7 +11,9 @@ public:
 	TextureImage scoreTexture[1];
 	TextureImage subpageTexture[1];
 	TextureImage shopTexture[1];
-
+	TextureImage creditTexture[1];
+	TextureImage winTexture[1];
+	TextureImage defeatTexture[1];
 	loadTGA(void);
 	~loadTGA(void);
 };

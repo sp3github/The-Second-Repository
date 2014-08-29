@@ -19,6 +19,7 @@ DM2231_Controller::DM2231_Controller(DM2231_Model* theModel, DM2231_View* theVie
 	this->theModel = theModel;
 	this->theView = theView;
 	Init();
+	time = mvcTime::getInstance();
 }
 
 DM2231_Controller::~DM2231_Controller(void)
@@ -37,17 +38,30 @@ bool DM2231_Controller::Init(void)
 
 
 	theModel->TestMap.LoadLevel(1);
-	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(PLAYER));
-	theModel->ArrayofEntities.back()->SetPos(100,300);
+	theModel->TestMap.LoadItems(theModel->ArrayofEntities, theModel->theEntityFactory);
 
-	
-	theModel->theHeroEntity = theModel->ArrayofEntities.back();
-	theModel->theHero = (dynamic_cast<CPlayerInfo*>(theModel->theHeroEntity));
+	for (auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
+	{
+		if ((*it)->ID == PLAYER)
+		{
+			theModel->theHeroEntity = (*it);
+			theModel->theHero = (dynamic_cast<CPlayerInfo*>(*it));
+			break;
+		}
+	}
 
-	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
-	theModel->ArrayofEntities.back()->SetPos(100,300);
+
+	theModel->thegun.SetPlayer(*theModel->theHero);
+	theModel->thegun.SetArray(theModel->ArrayofEntities);
+	theModel->thegun.SetFactory(theModel->theEntityFactory);
 	
-	
+
+	for (int zombie = 0; zombie < 5; zombie++)
+	{
+		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
+
+		cout << "ZombieCount:" << zombie << endl;
+	}
 
 	return true;
 }
@@ -86,6 +100,7 @@ BOOL DM2231_Controller::RunMainLoop(void)
 		{
 			if (ProcessInput())
 			{
+				time->updateTime();
 				theModel->Update();
 				theView->Draw();
 			}
@@ -126,25 +141,40 @@ bool DM2231_Controller::ProcessInput(void)
 		{
 			if (theView->GetKeys('w'))
 			{
-				theModel->theHero->moveMeUpDown(true, 1.0f, theModel->theHero->movementspeed);
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,true))
+					theModel->theHero->moveMeUpDown(true, 1.0f, static_cast<float>(theModel->theHero->movementspeed));
 			}
 			if (theView->GetKeys('s'))
 			{
-				theModel->theHero->moveMeUpDown(false, 1.0f, theModel->theHero->movementspeed);
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,true))
+					theModel->theHero->moveMeUpDown(false, 1.0f, static_cast<float>(theModel->theHero->movementspeed));
 			}
 			if (theView->GetKeys('a'))
 			{
-				theModel->theHero->moveMeLeftRight(true,1.0f,theModel->theHero->movementspeed);
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,false,true))
+					theModel->theHero->moveMeLeftRight(true,1.0f,static_cast<float>(theModel->theHero->movementspeed));
 			}
 			if (theView->GetKeys('d'))
 			{
-				theModel->theHero->moveMeLeftRight(false, 1.0f, theModel->theHero->movementspeed);
+				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,false,false,false,true))
+					theModel->theHero->moveMeLeftRight(false, 1.0f, static_cast<float>(theModel->theHero->movementspeed));
+			}
+			if (theView->GetKeys('1'))
+			{
+				theModel->thegun.SetGun(pistol);
+			}
+			if (theView->GetKeys('2'))
+			{
+				theModel->thegun.SetGun(uzi);
+			}
+			if (theView->GetKeys('3'))
+			{
+				theModel->thegun.SetGun(shotgun);
 			}
 			if(theView->LMKeyDown)
 			{
-				cout<<"FIRE"<<endl;
-				theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
-				theModel->theBullet.Draw();
+				theModel->thegun.FireGun();
+				//theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
 				//theModel->theBullet.FireBullet();
 			}
 			break;
@@ -166,6 +196,22 @@ bool DM2231_Controller::ProcessInput(void)
 			}
 			break;
 		}
+	case (theModel->theState.states::shop) :
+	{
+											   break;
+	}
+	case (theModel->theState.states::credit) :
+	{
+												 break;
+	}
+	case (theModel->theState.states::win) :
+	{
+											  break;
+	}
+	case (theModel->theState.states::defeat) :
+	{
+												 break;
+	}
 	}
 
 	return true;

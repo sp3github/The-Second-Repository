@@ -1,37 +1,52 @@
-//#pragma once
-//#ifndef CZOMBIES_H
-//#define CZOMBIES_H
-//
-//#include "Define.h"
-//class CZombies
-//{
-//private:
-//	std::vector<unsigned int> frames;
-//	unsigned int walk, attack, die;
-//	unsigned int curframe;
-//
-//	int health, strength;
-//	float speed;
-//	vector3D direction;
-//	vector3D rotation;
-//	bool iswalk, isattack, isdead;
-//
-//	//collision
-//	//collisionsphere cs;
-//public:
-//	//CZombies(void);
-//	~CZombies(void);
-//	CZombies(std::vector<unsigned int> anim
-//			, unsigned int w, unsigned int a, unsigned int d
-//			, int h, int str, float spd/*, collisionsphere css*/);
-//	bool Update(/*std::vector<collision plane>& col,*/ vector3D playerLoc);
-//	void show(); //show zombie
-//	bool setAttack(/*collisionpshere player*/);
-//	/*collisionsphere* getCollisonSphere();*/
-//	void setLocation(vector3D newloc);
-//	void deceasingHealth(int num);
-//	int getHealth();
-//	int getStrength();
-//	bool isDead();
-//};
-//#endif
+#pragma once
+#include "vector3D.h"
+#include "Header.h"
+#include "Entity.h"
+#include <time.h>
+
+#define PI 3.142;
+
+class CZombies : public CEntity
+{
+protected:
+	int CurrentState;
+	const int ATTACK;
+	const int IDLE;
+	const int REPEL;
+protected:
+	bool ChangeState(const int newState);
+private:
+	
+	unsigned int walk, attack, die;
+	int health, moneysteal;
+	bool iswalk, isattack, isdead;	
+
+	void SetZombieState(int num);
+	int GetZombieState();
+
+	const int hero_x;
+	const int hero_y;
+
+	int i;
+
+public:
+	CZombies(void);
+	~CZombies(void);
+	//Overloaded Constructor
+    //CZombies( unsigned int w, unsigned int a, unsigned int d, int h, int st, float spd);
+
+	int CalculateDistance(int hero_x, int hero_y);
+	void update();
+
+	void deceasingHealth(int num);
+	int getHealth();
+	int getMoneySteal();
+	bool isDead();
+	void setStats(int health, int moneysteal);
+	
+	void update(int herox, int heroy, float dt);
+	void render(int mapOffset_x, int mapOffset_y);
+	void drawzombie(int x, int y);
+
+
+};

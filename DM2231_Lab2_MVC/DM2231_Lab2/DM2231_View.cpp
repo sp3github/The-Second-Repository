@@ -45,20 +45,54 @@ BOOL DM2231_View::Draw(void)
 		}
 	case (theModel->theState.states::level):
 		{
-			theModel->theGun.Show();
+			theModel->theUI.RenderUI(theUI->LEVEL);
+			theModel->TestMap.RenderTileMap();
+
 			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
 			{
-				(*it)->render();
+				(*it)->render(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
+			}
+			theModel->thegun.render();
+			break;
+		}
+	case (theModel->theState.states::shop) :
+		{
+			break;
+		}
+	case (theModel->theState.states::credit) :
+		{
+			// Credit page -> Menu
+			theModel->theUI.RenderUI(theUI->CREDIT);
+			// Input Timer here
+			theModel->theUI.RenderUI(theUI->STARTSCREEN);
+			break;
+		}
+	case (theModel->theState.states::win) :
+		{
+			// When zombie count = 0, go to 'Win' page -> Credit
+			theModel->theUI.RenderUI(theUI->WIN);
+			// Input Timer here
+			theModel->theUI.RenderUI(theUI->CREDIT);
+			break;
+		}
+	case (theModel->theState.states::defeat) :
+		{
+			// When life count = 0, go to 'Defeat' page -> Credit
+			if(theModel->theHero->hp==0)
+			{
+				theModel->theUI.RenderUI(theUI->DEFEAT);
+				// Input Timer here
+				theModel->theUI.RenderUI(theUI->CREDIT);
 			}
 			break;
 		}
+
 	}
 
 	//theModel->TestMap.RenderTileMap();
 
 
-	//theModel->TestMap.RenderTileMap();
-	
+
 
 
 
@@ -351,7 +385,7 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	m_iWindows_Width = width; 
 	m_iWindows_Height = height;
 
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.menuTexture[0],"Images\\Menu.tga"))
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.menuTexture[0],"Images/Menu.tga"))
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.levelTexture[0], "Images/Level.tga"))
 		return false;
@@ -360,6 +394,14 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.subpageTexture[0], "Images/Subpage.tga"))
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Credit.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Win.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Defeat.tga"))
 		return false;
 
 	return TRUE; // Success
@@ -437,6 +479,22 @@ LRESULT CALLBACK DM2231_View::MsgProc( HWND hWnd, // Handle For This Window
 			LMKeyDown = true;
 			return 1;
 		}
+	case WM_LBUTTONUP:
+		{
+			LMKeyDown = false;
+			return 1;
+		}
+	case WM_MOUSEWHEEL:
+		{
+			//if ((short)HIWORD(wParam) < 0)
+			// {
+			//	nZoom--;
+			// }
+			//else
+			//	nZoom++;
+			 return 1;
+		}
+
 	}
 
 	// Pass All Unhandled Messages To DefWindowProc

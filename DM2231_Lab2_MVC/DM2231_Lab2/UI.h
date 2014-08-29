@@ -8,14 +8,12 @@ private:
 	void *font_style;
 public:
 	enum StateType{
-	PAUSE = 0,
-	LEVEL,
+	LEVEL = 0,
 	STARTSCREEN,
 	SUBPAGE,
-	VICTORY,
+	CREDIT,
+	WIN,
 	DEFEAT,
-	WINLEVEL,
-	BET,
 	SHOP
 	};
 
@@ -23,8 +21,6 @@ public:
 	~UI(void);
 
 	void RenderUI(StateType States);
-
-	int DetermineState(int choice);
 
 	void printw (float x, float y, float z, char* format, ...);
 

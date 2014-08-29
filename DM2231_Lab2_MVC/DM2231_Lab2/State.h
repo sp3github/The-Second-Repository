@@ -6,7 +6,7 @@ public:
 	State(void);
 	~State(void);
 
-	enum states{start, menu, level, tutorial, win, defeat, shop, bet, message, credit};
+	enum states{start, menu, level, tutorial, win, defeat, shop, credit};
 	int theState;
 	
 };
