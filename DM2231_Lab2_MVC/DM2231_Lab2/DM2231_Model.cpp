@@ -20,8 +20,6 @@ DM2231_Model::~DM2231_Model(void)
 // Update the model
 void DM2231_Model::Update(void)
 {
-	
-
 	theHero->HeroRotation = AnglefromHerotoMouse();
 	ConstrainHero();	
 	TestMap.Update();
@@ -48,6 +46,17 @@ void DM2231_Model::Update(void)
 		}
 		go->update(time->getDelta());
 	}
+
+	if(theState.states::win)
+	{
+		// When zombie count = 0, go to 'Win' page -> Credit
+	}
+	else if(theState.states::defeat)
+	{
+		// When life count = 0, go to 'Defeat' page -> Credit
+		theHero->hp = 0;
+	}
+	theHero->update();
 
 
 }

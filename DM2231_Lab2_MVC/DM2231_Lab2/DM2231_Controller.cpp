@@ -186,29 +186,21 @@ bool DM2231_Controller::ProcessInput(void)
 			break;
 		}
 	case (theModel->theState.states::shop) :
-	{
-											   break;
-	}
-	case (theModel->theState.states::bet) :
-	{
-											  break;
-	}
-	case (theModel->theState.states::message) :
-	{
-												  break;
-	}
+		{
+			break;
+		}
 	case (theModel->theState.states::credit) :
-	{
-												 break;
-	}
+		{
+			break;
+		}
 	case (theModel->theState.states::win) :
-	{
-											  break;
-	}
+		{
+			break;
+		}
 	case (theModel->theState.states::defeat) :
-	{
-												 break;
-	}
+		{
+			break;
+		}
 	}
 
 	return true;

@@ -59,26 +59,28 @@ BOOL DM2231_View::Draw(void)
 		{
 			break;
 		}
-	case (theModel->theState.states::bet) :
-	{
-											   break;
-	}
-	case (theModel->theState.states::message) :
-	{
-											   break;
-	}
 	case (theModel->theState.states::credit) :
-	{
-											   break;
-	}
+		{
+			// Credit page -> Menu
+			theModel->theUI.RenderUI(theUI->CREDIT);
+			// Input Timer here
+			theModel->theUI.RenderUI(theUI->STARTSCREEN);
+			break;
+		}
 	case (theModel->theState.states::win) :
-	{
-											   break;
-	}
+		{
+			theModel->theUI.RenderUI(theUI->WIN);
+			// Input Timer here
+			theModel->theUI.RenderUI(theUI->CREDIT);
+			break;
+		}
 	case (theModel->theState.states::defeat) :
-	{
-											   break;
-	}
+		{
+			theModel->theUI.RenderUI(theUI->DEFEAT);
+			// Input Timer here
+			theModel->theUI.RenderUI(theUI->CREDIT);
+			break;
+		}
 
 	}
 
@@ -378,16 +380,24 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	m_iWindows_Width = width; 
 	m_iWindows_Height = height;
 
-	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.menuTexture[0],"Images\\Menu.tga"))
-	//	return false;
-	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.levelTexture[0], "Images/Level.tga"))
-	//	return false;
-	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.scoreTexture[0], "Images/Score.tga"))
-	//	return false;
-	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.subpageTexture[0], "Images/Subpage.tga"))
-	//	return false;
-	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
-	//	return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.menuTexture[0],"Images/Menu.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.levelTexture[0], "Images/Level.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.scoreTexture[0], "Images/Score.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.subpageTexture[0], "Images/Subpage.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Credit.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Win.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Defeat.tga"))
+		return false;
 
 	return TRUE; // Success
 }
