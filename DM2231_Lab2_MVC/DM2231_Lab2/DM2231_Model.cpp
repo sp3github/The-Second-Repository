@@ -86,14 +86,15 @@ void DM2231_Model::Update(void)
 			//if( it == ArrayofEntities.end())
 		}
 
-		//if (theState.states::win)
+		////if (//if zombie count = 0 )
 		//{
-		//	// When zombie count = 0, go to 'Win' page -> Credit
+		//	theState.theState = theState.win;
 		//}
-		//else if (theState.states::defeat)
+		////else if (theHero->hp <= 0)
 		//{
+		//	theState.theState = theState.defeat;
 		//	// When life count = 0, go to 'Defeat' page -> Credit
-		//	theHero->hp = 0;
+		//	//theHero->hp = 0;
 		//}
 	}
 }

@@ -70,16 +70,7 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 	{
 	case HEALTH:
 		{
-			for (auto it = theArray.begin(); it != theArray.end();it++)
-			{
-				CEntity *go = NULL;
-				go = (*it);
-				if (go == &other)
-				{
-					return it + 1;
-				}
 
-			}
 			break;
 		}
 	case ZOMBIE:
@@ -104,13 +95,15 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 				}
 			}
 
-			this->~bullet();//Delete the bullet
+			//delete this;//Delete the bullet
+			this->~bullet();
 			theArray.erase(theArray.begin() + bulletindex);
 			
 			index -= 1;
 
 			if(other.hp <= 0)
 			{
+				//delete &other;
 				other.~CEntity();
 				it = theArray.erase(theArray.begin() + index); //delete from array.
 				
@@ -125,4 +118,14 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 	default:
 		break;
 	}
+	for (auto it = theArray.begin(); it != theArray.end();it++)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+				if (go == &other)
+				{
+					return it + 1;
+				}
+
+			}
 }

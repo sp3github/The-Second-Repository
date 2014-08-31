@@ -261,7 +261,7 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 			auto it = theArray.begin();
 			for(it = theArray.begin(); it != theArray.end(); it++)
 			{
-				if((*it) == &other)
+				if((*it) == this)
 				{
 					return it + 1;
 				}

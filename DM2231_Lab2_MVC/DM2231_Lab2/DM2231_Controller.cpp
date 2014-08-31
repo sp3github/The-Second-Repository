@@ -19,7 +19,7 @@ DM2231_Controller::DM2231_Controller(DM2231_Model* theModel, DM2231_View* theVie
 	this->theModel = theModel;
 	this->theView = theView;
 	Init();
-	time = mvcTime::getInstance();
+	timer = mvcTime::getInstance();
 }
 
 DM2231_Controller::~DM2231_Controller(void)
@@ -30,6 +30,8 @@ DM2231_Controller::~DM2231_Controller(void)
 
 bool DM2231_Controller::Init(void)
 {
+	srand(time(NULL));
+
 	// Ask The User Which Screen Mode They Prefer
 	if (MessageBox(NULL,"Would You Like To Run In Fullscreen Mode?", "Start FullScreen?",MB_YESNO|MB_ICONQUESTION)==IDNO)
 		theView->setFullScreen( false );
@@ -56,10 +58,9 @@ bool DM2231_Controller::Init(void)
 	theModel->thegun.SetFactory(theModel->theEntityFactory);
 	
 
-	for (int zombie = 0; zombie < 5; zombie++)
+	for (int zombie = 0; zombie < 2; zombie++)
 	{
 		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
-
 	}
 
 	return true;
@@ -99,7 +100,7 @@ BOOL DM2231_Controller::RunMainLoop(void)
 		{
 			if (ProcessInput())
 			{
-				time->updateTime();
+				timer->updateTime();
 				theModel->Update();
 				theView->Draw();
 			}

@@ -58,15 +58,31 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 
 	else if ((go->ID == PLAYER && other->ID != BULLET) || (go->ID == BULLET && other->ID != PLAYER) || (go->ID == ZOMBIE))
 	{
-		Atile_left_x = go->GetX() - theMap->mapOffset_x + go->vel.x;
-		Atile_right_x = go->GetX() + go->tile_size - theMap->mapOffset_x + go->vel.x;
-		Atile_top_y = go->GetY() - theMap->mapOffset_y + go->vel.y;
-		Atile_bottom_y = go->GetY() + go->tile_size - theMap->mapOffset_y + go->vel.y;
+		if (go->ID == ZOMBIE && other->ID == ZOMBIE)	//forward checking for zombie
+		{
 
-		Btile_left_x = other->GetX() - theMap->mapOffset_x + other->vel.x;
-		Btile_right_x = other->GetX() + other->tile_size - theMap->mapOffset_x + other->vel.x;
-		Btile_top_y = other->GetY() - theMap->mapOffset_y + other->vel.y;
-		Btile_bottom_y = other->GetY() + other->tile_size - theMap->mapOffset_y + other->vel.y;
+			Atile_left_x = go->GetX() - theMap->mapOffset_x;
+			Atile_right_x = go->GetX() + go->tile_size - theMap->mapOffset_x;
+			Atile_top_y = go->GetY() - theMap->mapOffset_y ;
+			Atile_bottom_y = go->GetY() + go->tile_size - theMap->mapOffset_y ;
+
+			Btile_left_x = other->GetX() - theMap->mapOffset_x ;
+			Btile_right_x = other->GetX() + other->tile_size - theMap->mapOffset_x ;
+			Btile_top_y = other->GetY() - theMap->mapOffset_y;
+			Btile_bottom_y = other->GetY() + other->tile_size - theMap->mapOffset_y ;
+		}
+		else
+		{
+			Atile_left_x = go->GetX() ;
+			Atile_right_x = go->GetX() + go->tile_size;
+			Atile_top_y = go->GetY(); 
+			Atile_bottom_y = go->GetY() + go->tile_size ;
+
+			Btile_left_x = other->GetX() - theMap->mapOffset_x;
+			Btile_right_x = other->GetX() + other->tile_size - theMap->mapOffset_x;
+			Btile_top_y = other->GetY() - theMap->mapOffset_y;
+			Btile_bottom_y = other->GetY() + other->tile_size - theMap->mapOffset_y;
+		}
 
 
 		if(!(Btile_left_x > Atile_right_x

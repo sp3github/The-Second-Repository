@@ -3,6 +3,7 @@
 #include "Header.h"
 #include "Entity.h"
 #include <time.h>
+#include "MVCtime.h"
 
 #define PI 3.142;
 
@@ -28,6 +29,8 @@ private:
 	const int hero_y;
 
 	int i;
+	bool bounce;
+	Vector3D<float> BounceDir;
 
 public:
 	CZombies(void);
@@ -49,5 +52,7 @@ public:
 	void drawzombie(int x, int y);
 	vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
+	mvcTime * Timer;
+	int TimeIndex;
 
 };

@@ -168,7 +168,7 @@ void CMap::RenderTileMap(void)
 			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-			if (theScreenMap[tileOffset_y + i][tileOffset_x + k] == 0)
+			if (theScreenMap[tileOffset_y + i][tileOffset_x + k] == 1)
 				glColor3f(0,0,0);
 			//	glBindTexture(GL_TEXTURE_2D, TileMapTexture[theMap->theScreenMap[i][tileOffset_x + k]].texID);
 			//else if (theMap->theScreenMap[i][tileOffset_x + k] == 2)
