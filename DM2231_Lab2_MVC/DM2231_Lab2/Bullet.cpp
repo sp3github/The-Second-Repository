@@ -52,8 +52,8 @@ void bullet::render(int mapOffset_x, int mapOffset_y)
 
 void bullet::update(float dt)
 {
-	Vector3D<float> pos(GetX(),GetY());
-	Vector3D<float> vel;
+	pos.Set(GetX(),GetY());
+
 
 	vel.Set(cos(HeroRotationRad), sin(HeroRotationRad));
 	vel.Normalize();
@@ -107,6 +107,7 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 			this->~bullet();//Delete the bullet
 			theArray.erase(theArray.begin() + bulletindex);
 			
+			index -= 1;
 
 			if(other.hp <= 0)
 			{

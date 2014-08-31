@@ -1,6 +1,7 @@
 #pragma once
 #include "Header.h"
 #include <vector>
+#include "vector3D.h"
 
 
 enum Entity{
@@ -39,7 +40,9 @@ public:
 	virtual  vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
 	int hp;
-	
+	Vector3D<float> pos;
+	Vector3D<float> vel;
+
 	Entity ID;
 };
 

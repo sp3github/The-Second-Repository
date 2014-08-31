@@ -16,7 +16,7 @@ public:
 
 	// Render the Hero onto the screen
 	void render(int mapOffset_x, int mapOffset_y);
-	void update();
+	void update(float dt);
 	// Initialise this class instance
 	void Init(void);
 

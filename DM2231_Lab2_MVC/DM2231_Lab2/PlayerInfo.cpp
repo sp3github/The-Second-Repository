@@ -164,7 +164,7 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 	cout<<"My X Pos is: "<<GetX()<<endl;
 }
 
-void CPlayerInfo::update()
+void CPlayerInfo::update(float dt)
 {
 	if(time->testTime(index))
 	{

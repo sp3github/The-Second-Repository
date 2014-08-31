@@ -8,6 +8,8 @@ CEntity::CEntity(void)
 	movementspeed = 0;
 	tile_size = 24;
 	hp = 100;
+	vel.Set(0, 0, 0);
+	pos.Set(0, 0, 0);
 }
 
 

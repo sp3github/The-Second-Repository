@@ -60,7 +60,6 @@ bool DM2231_Controller::Init(void)
 	{
 		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
 
-		cout << "ZombieCount:" << zombie << endl;
 	}
 
 	return true;

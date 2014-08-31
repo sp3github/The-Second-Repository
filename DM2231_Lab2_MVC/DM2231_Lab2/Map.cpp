@@ -226,6 +226,11 @@ bool CMap::LoadItems(vector<CEntity*> &theArray, CEntityFactory &theFac)
 				theArray.push_back(theFac.Create(SLOWDOWN));
 				theArray.back()->SetPos(j * TILE_SIZE, i * TILE_SIZE);
 				break;
+			case 6:
+				theArray.push_back(theFac.Create(ZOMBIE));
+				theArray.back()->SetPos(j * TILE_SIZE, i * TILE_SIZE);
+				break;
+
 			case 10:
 			case 11:
 			case 12:
