@@ -1,5 +1,5 @@
+#pragma once
 #include "EntityFactory.h"
-#include <stdlib.h>
 
 CEntityFactory::CEntityFactory(void)
 {
@@ -52,12 +52,13 @@ CEntity* CEntityFactory::Create(Entity id)
 			theNewItems->ID = ZOMBIE;
 		}
 		break;
-	case OBSTACLE:
+	case CASINO:
 		{
-			theNewItems = new CObstacle;
-			theNewItems->ID = OBSTACLE;
+			theNewItems = new Casino;
+			theNewItems->ID = CASINO;
 
 		}
+		break;
 	default:
 		{
 

@@ -15,6 +15,7 @@
 #include "Zombies.h"
 #include "Obstacle.h"
 
+
 #define PI 3.1415f
 
 class DM2231_Model
@@ -34,10 +35,11 @@ public:
 
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
+
 	CZombies * theZombie;
 
 	gun thegun;
-
+	Casino * theCasino;
 	Collision theCollision;
 
 	CObstacle * theObstacle;
@@ -49,11 +51,22 @@ public:
 
 	mvcTime * time;
 
+
+	int zombiecount;
+	int zombie;
+
+	void setZombieCount(int z);
+
 	int IndexTime[10];
 
 	bool SetTimeDefeat;
 	bool SetTimeCredit;
 
 	void SetStart();
+
+
+	int getZombieCount();
+	void UpdateLimit();
+	void updateZombieCount();
 
 };

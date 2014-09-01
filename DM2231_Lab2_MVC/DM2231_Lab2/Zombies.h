@@ -32,15 +32,13 @@ private:
 
 	const int hero_x;
 	const int hero_y;
-
-	int i;
-
 public:
 	CZombies(void);
 	~CZombies(void);
 	//Overloaded Constructor
 
 	int CalculateDistance(int hero_x, int hero_y);
+
 	bool bounce;
 	Vector3D<float> BounceDir;
 	void deceasingHealth(int num);
@@ -50,8 +48,12 @@ public:
 	bool isDead();
 	void setStats(int health, int moneysteal);
 	
+
+
 	void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
 	void render(int mapOffset_x, int mapOffset_y);
+
+	//void update(int herox, int heroy, float dt);
 
 	void drawzombie(int x, int y);
 	vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
