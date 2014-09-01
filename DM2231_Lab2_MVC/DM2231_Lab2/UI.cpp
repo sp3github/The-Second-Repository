@@ -73,8 +73,6 @@ void UI::RenderUI(StateType States)
 		glPopMatrix();
 
 		WhiteHealth();
-
-
 		RedHealth();
 		
 		break;

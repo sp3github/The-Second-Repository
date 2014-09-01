@@ -8,6 +8,7 @@
 #include "PlayerInfo.h"
 #include "bullet.h"
 #include "Zombies.h"
+#include "Obstacle.h"
 
 class CEntityFactory
 {

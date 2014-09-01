@@ -1,6 +1,7 @@
 #pragma once
 #include "Header.h"
 #include <vector>
+#include "vector3D.h"
 
 
 enum Entity{
@@ -10,6 +11,7 @@ enum Entity{
  PLAYER ,
  BULLET,
  ZOMBIE,
+ OBSTACLE,
 };
 
 
@@ -33,13 +35,23 @@ public:
 	int tile_size;
 
 	virtual void update(float dt);
-	virtual void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
-	virtual void render(int mapOffset_x, int mapOffset_y);
 
-	virtual vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	virtual void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
+	virtual void update(int zombiecount);
+	virtual void update(int herox, int heroy, float dt);
+
+	virtual void render(int mapOffset_x, int mapOffset_y);
+	virtual void renderN(int mapOffset_x, int mapOffset_y);
+	virtual void renderF(int mapOffset_x, int mapOffset_y);
+	virtual void renderS(int mapOffset_x, int mapOffset_y);
+
+	virtual  vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+
 
 	int hp;
-	
+	Vector3D<float> pos;
+	Vector3D<float> vel;
+
 	Entity ID;
 };
 

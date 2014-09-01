@@ -3,8 +3,14 @@
 #include "Header.h"
 #include "Entity.h"
 #include <time.h>
+#include "MVCtime.h"
 
-#define PI 3.142;
+enum ZombieStates
+{
+	normal,
+	fast,
+	slow
+};
 
 class CZombies : public CEntity
 {
@@ -29,6 +35,9 @@ private:
 
 	int i;
 
+	bool bounce;
+	Vector3D<float> BounceDir;
+
 public:
 	CZombies(void);
 	~CZombies(void);
@@ -36,17 +45,26 @@ public:
     //CZombies( unsigned int w, unsigned int a, unsigned int d, int h, int st, float spd);
 
 	int CalculateDistance(int hero_x, int hero_y);
-	void update();
 
 	void deceasingHealth(int num);
 	int getHealth();
+	int getZombieCount();
 	int getMoneySteal();
 	bool isDead();
 	void setStats(int health, int moneysteal);
 	
+
 	void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
 	void render(int mapOffset_x, int mapOffset_y);
+
+
 	void drawzombie(int x, int y);
+	vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
+	mvcTime * Timer;
+	int TimeIndex;
 
+	int zombie;
+
+	void setZombie(ZombieStates zombieState);
 };
