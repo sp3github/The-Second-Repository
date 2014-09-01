@@ -35,9 +35,6 @@ private:
 
 	int i;
 
-
-
-
 public:
 	CZombies(void);
 	~CZombies(void);
@@ -53,13 +50,12 @@ public:
 	bool isDead();
 	void setStats(int health, int moneysteal);
 	
-
 	void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
 	void render(int mapOffset_x, int mapOffset_y);
 
-
 	void drawzombie(int x, int y);
 	vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+
 
 	mvcTime * Timer;
 	int TimeIndex;
