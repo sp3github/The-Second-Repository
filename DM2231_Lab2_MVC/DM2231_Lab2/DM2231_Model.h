@@ -13,6 +13,8 @@
 #include "gun.h"
 #include "MVCtime.h"
 #include "Zombies.h"
+#include "Obstacle.h"
+
 #define PI 3.1415f
 
 class DM2231_Model
@@ -34,9 +36,10 @@ public:
 	CEntity * theHeroEntity;
 
 	gun thegun;
-	CZombies thezombie;
 
 	Collision theCollision;
+
+	CObstacle * theObstacle;
 
 	float AnglefromHerotoMouse();
 
@@ -44,4 +47,8 @@ public:
 	void ConstrainHero();
 
 	mvcTime * time;
+
+	/*int zombiecount;
+	int getZombieCount();
+	void update(int zombiecount);*/
 };

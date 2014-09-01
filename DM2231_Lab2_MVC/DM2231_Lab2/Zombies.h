@@ -4,7 +4,12 @@
 #include "Entity.h"
 #include <time.h>
 
-#define PI 3.142;
+enum ZombieStates
+{
+	normal,
+	fast,
+	slow
+};
 
 class CZombies : public CEntity
 {
@@ -28,7 +33,6 @@ private:
 	const int hero_y;
 
 	int i;
-
 public:
 	CZombies(void);
 	~CZombies(void);
@@ -40,13 +44,18 @@ public:
 
 	void deceasingHealth(int num);
 	int getHealth();
+	int getZombieCount();
 	int getMoneySteal();
 	bool isDead();
 	void setStats(int health, int moneysteal);
 	
 	void update(int herox, int heroy, float dt);
-	void render(int mapOffset_x, int mapOffset_y);
+	void renderN(int mapOffset_x, int mapOffset_y);
+	void renderF(int mapOffset_x, int mapOffset_y);
+	void renderS(int mapOffset_x, int mapOffset_y);
 	void drawzombie(int x, int y);
 
+	int zombie;
 
+	void setZombie(ZombieStates zombieState);
 };

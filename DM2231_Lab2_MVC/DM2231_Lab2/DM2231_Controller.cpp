@@ -36,7 +36,6 @@ bool DM2231_Controller::Init(void)
 	else
 		theView->setFullScreen( true );
 
-
 	theModel->TestMap.LoadLevel(1);
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(PLAYER));
 	theModel->ArrayofEntities.back()->SetPos(100,300);
@@ -52,12 +51,19 @@ bool DM2231_Controller::Init(void)
 	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(HEALTH));
 	theModel->ArrayofEntities.back()->SetPos(300,300);
 
-	for (int zombie = 0; zombie < 5; zombie++)
+	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(OBSTACLE));
+	theModel->ArrayofEntities.back()->SetPos(300,300);
+	theModel->theObstacle = (dynamic_cast<CObstacle*>(theModel->ArrayofEntities.back()));
+
+
+	for (theModel->theObstacle->setZombieCount(0); theModel->theObstacle->getZombieCount() < 12 ; theModel->theObstacle->zombiecount++)
 	{
 		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
 
-		cout << "ZombieCount:" << zombie << endl;
+		cout << "CONTROLLER_ZOMBIECOUNT:" << theModel->theObstacle->zombiecount << endl;
 	}
+
+
 
 	return true;
 }
@@ -75,8 +81,6 @@ BOOL DM2231_Controller::RunMainLoop(void)
 	{
 		return false;									// Quit If Window Was Not Created
 	}
-
-
 
 	while(!done) // Loop That Runs While done=FALSE
 	{
@@ -167,11 +171,38 @@ bool DM2231_Controller::ProcessInput(void)
 			{
 				theModel->thegun.SetGun(shotgun);
 			}
+
+			if (theView->GetKeys('4'))
+			{
+				
+			}
+			if (theView->GetKeys('5'))
+			{
+				
+			}
+			if (theView->GetKeys('6'))
+
+			{
+				
+			}
+			
+			if (theView->GetKeys('z'))
+			{
+				theModel->theObstacle->zombiecount--;
+				
+
+			}
+			if (theView->GetKeys('x'))
+			{
+				theModel->theObstacle->zombiecount++;
+				
+			}
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
 				//theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
 				//theModel->theBullet.FireBullet();
+				
 			}
 			break;
 		}

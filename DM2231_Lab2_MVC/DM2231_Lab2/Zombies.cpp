@@ -1,3 +1,4 @@
+
 #include "Zombies.h"
 
 CZombies::CZombies(void)
@@ -12,6 +13,7 @@ CZombies::CZombies(void)
 	Set_X(rand()% 800);
 	Set_Y(rand()% 600);  
 	
+	zombie = 0;
 }
 
 CZombies::~CZombies(void)
@@ -79,12 +81,13 @@ void CZombies::update(int herox, int heroy, float dt)
 
 	Set_X(pos.x);
 	Set_Y(pos.y);
+
 }
 
-void CZombies::render(int mapOffset_x, int mapOffset_y)
+void CZombies::renderN(int mapOffset_x, int mapOffset_y)
 {	
 	//Zombies
-	cout << "zombies" << endl;
+	cout << "NORMAL" << endl;
 	glPushMatrix();
 	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
 	glEnable(GL_TEXTURE_2D);		
@@ -97,4 +100,47 @@ void CZombies::render(int mapOffset_x, int mapOffset_y)
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
+}
+
+void CZombies::renderF(int mapOffset_x, int mapOffset_y)
+{	
+	//Zombies
+	cout << "FAST" << endl;
+	glPushMatrix();
+	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
+	glEnable(GL_TEXTURE_2D);	
+	glScalef(0.5,0.5,0.5);
+	glColor3f(0,1,0);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,0); glVertex2f(0,0);
+	glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
+	glTexCoord2f(1,1); glVertex2f(0,tile_size);
+	glTexCoord2f(0,1); glVertex2f(tile_size,0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+}
+
+void CZombies::renderS(int mapOffset_x, int mapOffset_y)
+{	
+	//Zombies
+	cout << "SLOW" << endl;
+	glPushMatrix();
+	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
+	glEnable(GL_TEXTURE_2D);
+	glScalef(1.5,1.5,1.5);
+	glColor3f(0,1,0);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,0); glVertex2f(0,0);
+	glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
+	glTexCoord2f(1,1); glVertex2f(0,tile_size);
+	glTexCoord2f(0,1); glVertex2f(tile_size,0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+}
+
+void CZombies::setZombie(ZombieStates zombieState)
+{
+	
 }

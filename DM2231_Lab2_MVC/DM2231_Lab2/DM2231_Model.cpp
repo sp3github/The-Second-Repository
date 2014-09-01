@@ -52,10 +52,15 @@ void DM2231_Model::Update(void)
 			go->update(theHero->GetX(), theHero->GetY(), time->getDelta());
 		}
 
+		if (go->ID == OBSTACLE)
+		{
+			theObstacle = (dynamic_cast<CObstacle*>(*it));
+			theObstacle->update();
+			theObstacle->setZombieCount(8);
+		}
+		
 		go->update(time->getDelta());
 	}
-
-
 }
 
 float DM2231_Model::AnglefromHerotoMouse()
@@ -74,4 +79,5 @@ void DM2231_Model::ConstrainHero()
 	theHero->ConstrainHero(LEFT_BORDER, TestMap.getNumOfTiles_ScreenWidth() * TILE_SIZE,
 		25, TestMap.getNumOfTiles_ScreenHeight() *TILE_SIZE,300,500,200,400,
 		1.0f, TestMap.mapOffset_x, TestMap.mapOffset_y, TestMap.getNumOfTiles_ScreenHeight() * TILE_SIZE, TestMap.getNumOfTiles_ScreenWidth() * TILE_SIZE);
+
 }
