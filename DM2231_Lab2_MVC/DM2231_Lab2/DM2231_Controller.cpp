@@ -56,16 +56,17 @@ bool DM2231_Controller::Init(void)
 	theModel->thegun.SetArray(theModel->ArrayofEntities);
 	theModel->thegun.SetFactory(theModel->theEntityFactory);
 	
-	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(OBSTACLE));
+	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(CASINO));
 	theModel->ArrayofEntities.back()->SetPos(300,300);
-	theModel->theObstacle = (dynamic_cast<CObstacle*>(theModel->ArrayofEntities.back()));
+	theModel->theCasino = (dynamic_cast<Casino*>(theModel->ArrayofEntities.back()));
 
 
-	for (theModel->theObstacle->setZombieCount(0); theModel->theObstacle->getZombieCount() < 12 ; theModel->theObstacle->zombiecount++)
+	for (theModel->setZombieCount(0); theModel->getZombieCount() < theModel->zombie; theModel->zombiecount++)
 	{
 		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
 
-		cout << "CONTROLLER_ZOMBIECOUNT:" << theModel->theObstacle->zombiecount << endl;
+		cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << theModel->zombie << endl;
+		
 	}
 
 
@@ -176,31 +177,14 @@ bool DM2231_Controller::ProcessInput(void)
 			{
 				theModel->thegun.SetGun(shotgun);
 			}
-
-			if (theView->GetKeys('4'))
-			{
-				
-			}
-			if (theView->GetKeys('5'))
-			{
-				
-			}
-			if (theView->GetKeys('6'))
-
-			{
-				
-			}
 			
 			if (theView->GetKeys('z'))
 			{
-				theModel->theObstacle->zombiecount--;
-				
-
+				theModel->zombie--;
 			}
 			if (theView->GetKeys('x'))
 			{
-				theModel->theObstacle->zombiecount++;
-				
+				theModel->zombie++;
 			}
 			if(theView->LMKeyDown)
 			{

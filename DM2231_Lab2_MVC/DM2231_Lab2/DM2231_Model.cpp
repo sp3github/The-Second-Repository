@@ -6,6 +6,7 @@
 DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 {
 	time = mvcTime::getInstance();
+	zombie = 5;
 	//theUI = new UI;
 }
 
@@ -63,7 +64,7 @@ void DM2231_Model::Update(void)
 				CEntity * other = (*i);
 				if (go != other)
 				{
-					cout << go->ID << endl;
+					//cout << go->ID << endl;
 					if (!theCollision.CheckCollision(go, other, false, false, false, false)) //Checks if it has collided go with other
 					{
 						i = go->CollisionEvent(*other, ArrayofEntities);	//Run collision code, setting i to the iterator which is returned.
@@ -81,7 +82,14 @@ void DM2231_Model::Update(void)
 				}
 			}
 
-
+			if (go->ID == OBSTACLE)
+			{
+				//theObstacle = (dynamic_cast<CObstacle*>(*it));
+				//UpdateLimit();
+				
+			}
+		
+			go->update(time->getDelta());
 		}
 
 		////if (//if zombie count = 0 )
@@ -94,17 +102,46 @@ void DM2231_Model::Update(void)
 		//	// When life count = 0, go to 'Defeat' page -> Credit
 		//	//theHero->hp = 0;
 		//}
-
-		if (go->ID == OBSTACLE)
-		{
-			theObstacle = (dynamic_cast<CObstacle*>(*it));
-			theObstacle->update();
-			theObstacle->setZombieCount(8);
-		}
-		
-		go->update(time->getDelta());
-
+		updateZombieCount();
+		UpdateLimit();
 	}
+}
+
+void DM2231_Model::UpdateLimit()
+{
+	if (zombiecount  <= 3)
+	{
+		zombiecount = 3;
+	}
+
+	if (zombiecount >= 11)
+	{
+		zombiecount = 11;
+	}
+}
+
+int DM2231_Model::getZombieCount()
+{
+	return zombiecount;
+}
+
+void DM2231_Model::setZombieCount(int z)
+{
+	zombiecount = z;
+}
+
+void DM2231_Model::updateZombieCount()
+{
+	auto it = ArrayofEntities.begin();
+	int Counter = 0;
+	for( it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+	{
+		if((*it)->ID == ZOMBIE)
+		{
+			Counter++;
+		}
+	}
+	zombiecount = Counter;
 }
 
 float DM2231_Model::AnglefromHerotoMouse()
@@ -125,3 +162,4 @@ void DM2231_Model::ConstrainHero()
 		1.0f, TestMap.mapOffset_x, TestMap.mapOffset_y, TestMap.getNumOfTiles_ScreenHeight() * TILE_SIZE, TestMap.getNumOfTiles_ScreenWidth() * TILE_SIZE);
 
 }
+
