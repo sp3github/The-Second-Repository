@@ -41,6 +41,17 @@ void UI::RenderUI(StateType States)
 		glPopMatrix();
 
 		glPushMatrix();
+		glBegin(GL_QUADS);
+			glColor3f(1.0f, 0.0f, 0.0f);
+			glVertex2f(71.0f, 62.0f);
+			glVertex2f(169.0f*PlayerHP, 62.0f);
+			glVertex2f(169.0f*PlayerHP, 91.0f);
+			glVertex2f(71.0f, 91.0f);
+		glEnd();
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glPopMatrix();
+
+		glPushMatrix();
 		glBegin(GL_LINE_STRIP);
 			glColor3f(1.0f, 1.0f, 1.0f);
 			glVertex2f(170.0f, 61.0f);
@@ -58,16 +69,7 @@ void UI::RenderUI(StateType States)
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glPopMatrix();
 
-		glPushMatrix();
-		glBegin(GL_QUADS);
-			glColor3f(1.0f, 0.0f, 0.0f);
-			glVertex2f(71.0f, 62.0f);
-			glVertex2f(169.0f*PlayerHP, 62.0f);
-			glVertex2f(169.0f*PlayerHP, 91.0f);
-			glVertex2f(71.0f, 91.0f);
-		glEnd();
-		glColor3f(1.0f, 1.0f, 1.0f);
-		glPopMatrix();
+		
 		
 		break;
 
