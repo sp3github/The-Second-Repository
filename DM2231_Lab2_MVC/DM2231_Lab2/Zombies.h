@@ -43,7 +43,6 @@ public:
 	bool bounce;
 	Vector3D<float> BounceDir;
 	int CalculateDistance(int hero_x, int hero_y);
-	void update();
 
 	void deceasingHealth(int num);
 	int getHealth();

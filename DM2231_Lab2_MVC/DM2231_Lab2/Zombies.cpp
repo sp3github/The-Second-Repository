@@ -58,10 +58,6 @@ int CZombies::CalculateDistance(int hero_x, int hero_y)
 	return ( (hero_x - GetX()) * (hero_x - GetX()) + (hero_x - GetY()) * (hero_x - GetY()));
 }
 
-void CZombies::update()
-{	
-
-}
 
 void CZombies::setStats(int health, int moneysteal)
 {
@@ -189,6 +185,7 @@ vector<CEntity*>::iterator  CZombies::CollisionEvent(CEntity &other, vector<CEnt
 
 			}
 }
+
 
 
 
