@@ -34,6 +34,7 @@ public:
 
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
+	CZombies * theZombie;
 
 	gun thegun;
 
@@ -48,7 +49,13 @@ public:
 
 	mvcTime * time;
 
+	int IndexTime[10];
+
+	bool SetTimeDefeat;
+
+	void SetStart();
+
 	/*int zombiecount;
 	int getZombieCount();
-	void update(int zombiecount);*/
+	void update(int zombiecount);
 };

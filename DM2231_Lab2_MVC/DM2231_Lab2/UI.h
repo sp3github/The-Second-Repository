@@ -6,10 +6,10 @@ class UI
 {
 private:
 	void *font_style;
+	float PlayerHP;
 public:
 	enum StateType{
-	PAUSE = 0,
-	LEVEL,
+	LEVEL = 0,
 	STARTSCREEN,
 	SUBPAGE,
 	CREDIT,
@@ -20,6 +20,14 @@ public:
 
 	UI(void);
 	~UI(void);
+	
+	void SetHP(float currentHP, float maxHP);
+
+	float GetHP(void);
+
+	void RedHealth(void);
+
+	void WhiteHealth(void);
 
 	void RenderUI(StateType States);
 

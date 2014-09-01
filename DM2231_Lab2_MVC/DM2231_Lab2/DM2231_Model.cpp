@@ -7,6 +7,8 @@ DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 {
 	time = mvcTime::getInstance();
 	//theUI = new UI;
+	IndexTime[0] = time->insertNewTime(3000);
+	SetTimeDefeat = false;
 }
 
 DM2231_Model::~DM2231_Model(void)
@@ -81,20 +83,34 @@ void DM2231_Model::Update(void)
 				break;
 			}
 		}
-
-	if(theState.states::win)
-	{
-		// When zombie count = 0, go to 'Win' page -> Credit
-	}
-	else if(theState.states::defeat)
-	{
-		// When life count = 0, go to 'Defeat' page -> Credit
-		theHero->hp = 0;
-	}
-	theHero->update();
-
+	theHero->update(time->getDelta());
+	theUI.SetHP(theHero->hp, 100);
 
 		
+	}
+	else if(theState.theState == theState.defeat)
+	{
+		if(!SetTimeDefeat)
+		{
+			time->resetTime(IndexTime[0]);
+			SetTimeDefeat = true;
+		}
+		else if(time->testTime(IndexTime[0]))
+		{
+			theState.theState = theState.credit;
+
+			SetTimeDefeat = false;
+			ArrayofEntities.clear();
+			SetStart();
+
+		}
+
+		
+	}
+
+	if(theState.theState == theState.credit)
+	{
+		time->resetTime(IndexTime[0]);
 	}
 }
 
@@ -114,4 +130,30 @@ void DM2231_Model::ConstrainHero()
 	theHero->ConstrainHero(LEFT_BORDER, TestMap.getNumOfTiles_ScreenWidth() * TILE_SIZE,
 		25, TestMap.getNumOfTiles_ScreenHeight() *TILE_SIZE,300,500,200,400,
 		1.0f, TestMap.mapOffset_x, TestMap.mapOffset_y, TestMap.getNumOfTiles_ScreenHeight() * TILE_SIZE, TestMap.getNumOfTiles_ScreenWidth() * TILE_SIZE);
+}
+
+void DM2231_Model::SetStart()
+{
+	TestMap.LoadLevel(1);
+	TestMap.LoadItems(ArrayofEntities,theEntityFactory);
+
+	for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+	{
+		if ((*it)->ID == PLAYER)
+		{
+			theHeroEntity = (*it);
+			theHero = (dynamic_cast<CPlayerInfo*>(*it));
+			break;
+		}
+	}
+
+	thegun.SetPlayer(*theHero);
+	thegun.SetArray(ArrayofEntities);
+	thegun.SetFactory(theEntityFactory);
+	
+
+	for (int zombie = 0; zombie < 2; zombie++)
+	{
+		ArrayofEntities.push_back(theEntityFactory.Create(ZOMBIE));
+	}
 }
