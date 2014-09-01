@@ -58,5 +58,5 @@ public:
 
 	/*int zombiecount;
 	int getZombieCount();
-	void update(int zombiecount); */
+	void update(int zombiecount);*/
 };

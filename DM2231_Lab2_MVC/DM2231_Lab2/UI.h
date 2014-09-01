@@ -25,13 +25,7 @@ public:
 
 	float GetHP(void);
 
-	void RedHealth(void);
-
-	void WhiteHealth(void);
-
 	void RenderUI(StateType States);
-
-	int DetermineState(int choice);
 
 	void printw (float x, float y, float z, char* format, ...);
 

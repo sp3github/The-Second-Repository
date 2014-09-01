@@ -124,6 +124,7 @@ void DM2231_Model::Update(void)
 					SetTimeCredit = true;
 				}
 				else
+
 					if(time->testTime(IndexTime[0]))
 					{
 						theState.theState = theState.menu;
@@ -132,6 +133,7 @@ void DM2231_Model::Update(void)
 						SetStart();
 					}
             }
+
 
 }
 

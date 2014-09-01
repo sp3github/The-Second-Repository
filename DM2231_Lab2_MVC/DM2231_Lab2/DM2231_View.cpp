@@ -67,19 +67,21 @@ BOOL DM2231_View::Draw(void)
 			// Credit page -> Menu
 			theModel->theUI.RenderUI(theUI->CREDIT);
 			// Input Timer here
-			//theModel->theUI.RenderUI(theUI->STARTSCREEN);
+
 			break;
 		}
 	case (theModel->theState.states::win) :
 		{
 			theModel->theUI.RenderUI(theUI->WIN);
 			// Input Timer here
+
 			break;
 		}
 	case (theModel->theState.states::defeat) :
 		{
 			theModel->theUI.RenderUI(theUI->DEFEAT);
 			// Input Timer here
+
 			break;
 		}
 
