@@ -62,7 +62,7 @@ void CEntity::render(int mapOffset_x, int mapOffset_y)
 
  vector<CEntity*>::iterator CEntity::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
-
+	return theArray.begin();
 }
 
 void CEntity::renderN(int mapOffset_x, int mapOffset_y)
