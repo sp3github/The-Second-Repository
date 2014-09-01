@@ -261,12 +261,14 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 	case ZOMBIE:
 		{
 			this->hp -= 10;
+			if(this->hp < 0)
+				hp = 0;
 
 			CZombies * zombie;
 			zombie = (dynamic_cast<CZombies*>(&other));
 
 			zombie->bounce = true;
-			zombie->BounceDir = ((zombie->pos) - (this->pos)).Normalize() * zombie->movementspeed;
+			zombie->BounceDir = ((zombie->pos) - (Vector3D<float>(GetX(),GetY()))).Normalize() * zombie->movementspeed;
 		
 			zombie->Timer->resetTime(zombie->TimeIndex);
 			zombie->Timer->changeLimit(zombie->TimeIndex, 500);

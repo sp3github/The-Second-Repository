@@ -38,6 +38,12 @@ private:
 	virtual LRESULT CALLBACK MsgProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 	static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 
+
+	GLuint	base;				// Base Display List For The Font Set
+	GLvoid BuildFont(GLvoid);
+	GLvoid KillFont(GLvoid);
+	GLvoid glPrint(const char *fmt, ...);
+
 public:
 	// Check if the player wants to quit the game
 	bool isQuitGame(void);

@@ -7,10 +7,10 @@ DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 {
 	time = mvcTime::getInstance();
 
-	zombie = 5;
-	IndexTime[0] = time->insertNewTime(3000);
+	IndexTime = time->insertNewTime(3000);
 	SetTimeDefeat = false;
 	SetTimeCredit = false;
+	SetTimeWin = false;
 }
 
 DM2231_Model::~DM2231_Model(void)
@@ -48,9 +48,7 @@ void DM2231_Model::Update(void)
 
 			go->update(time->getDelta());
 		}
-		
-		updateZombieCount();
-		UpdateLimit();
+		theUI.SetHP(theHero->hp,100);
 
 		for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
 		{
@@ -80,9 +78,12 @@ void DM2231_Model::Update(void)
 			}
 		}
 
-		//(if zombie count = 0 )
+		if(getZombieCount() == 0)
 		{
-			//theState.theState = theState.win;
+			if(level == 5)
+				theState.theState = theState.win;
+			else
+				theState.theState = theState.PageToLearnShop;
 		}
 		if (theHero->hp <= 0)
 		{
@@ -94,62 +95,71 @@ void DM2231_Model::Update(void)
 	{
 		if(!SetTimeDefeat)
 		{
-			time->resetTime(IndexTime[0]);
+			time->resetTime(IndexTime);
 			SetTimeDefeat = true;
 		}
-		else if(time->testTime(IndexTime[0]))
+		else if(time->testTime(IndexTime))
 		{
 			TestMap.mapOffset_x = 0;
 			TestMap.mapOffset_y = 0;
 			theState.theState = theState.credit;
-			//Remember set to credit
 			SetTimeDefeat = false;
 			ArrayofEntities.clear();
 			theHero->Init();
-			SetStart();
+		}
+	}
+	else if(theState.theState == theState.win)
+	{
+		if(!SetTimeWin)
+		{
+			time->resetTime(IndexTime);
+			SetTimeWin = true;
+		}
+		else if(time->testTime(IndexTime))
+		{
+			theState.theState = theState.shop;
+			SetTimeWin = false;
+			ArrayofEntities.clear();
 		}
 	}
 	else if(theState.theState == theState.credit)
 	{
 		if(!SetTimeCredit)
 		{
-
+			time->resetTime(IndexTime);
+			SetTimeCredit = true;
 		}
-		else if(time->testTime(IndexTime[0]))
+		else if(time->testTime(IndexTime))
 		{
+			level += 1;
 			theState.theState = theState.menu;
 			SetTimeCredit = false;
 			ArrayofEntities.clear();
-			SetStart();
+			SetStart(level);
+		}
+	}
+	else if(theState.theState == theState.PageToLearnShop)
+	{
+		if(!SetTimePageToLearnShop)
+		{
+			time->resetTime(IndexTime);
+			SetTimePageToLearnShop = true;
+		}
+		else if(time->testTime(IndexTime))
+		{
+			theState.theState = theState.shop;
+			SetTimePageToLearnShop = false;
+			ArrayofEntities.clear();
 		}
 	}
 
 }
 
-void DM2231_Model::UpdateLimit()
-{
-	if (zombiecount  <= 3)
-	{
-		zombiecount = 3;
-	}
 
-	if (zombiecount >= 11)
-	{
-		zombiecount = 11;
-	}
-}
+
+
 
 int DM2231_Model::getZombieCount()
-{
-	return zombiecount;
-}
-
-void DM2231_Model::setZombieCount(int z)
-{
-	zombiecount = z;
-}
-
-void DM2231_Model::updateZombieCount()
 {
 	auto it = ArrayofEntities.begin();
 	int Counter = 0;
@@ -160,7 +170,7 @@ void DM2231_Model::updateZombieCount()
 			Counter++;
 		}
 	}
-	zombiecount = Counter;
+	return Counter;
 }
 
 float DM2231_Model::AnglefromHerotoMouse()
@@ -181,9 +191,9 @@ void DM2231_Model::ConstrainHero()
 		1.0f, TestMap.mapOffset_x, TestMap.mapOffset_y, TestMap.getNumOfTiles_ScreenHeight() * TILE_SIZE, TestMap.getNumOfTiles_ScreenWidth() * TILE_SIZE);
 }
 
-void DM2231_Model::SetStart()
+void DM2231_Model::SetStart(int level)
 {
-	TestMap.LoadLevel(1);
+	TestMap.LoadLevel(level);
 	TestMap.LoadItems(ArrayofEntities,theEntityFactory);
 
 	for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)

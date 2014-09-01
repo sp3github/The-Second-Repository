@@ -25,9 +25,10 @@ public:
 
 	float GetHP(void);
 
-	void RenderUI(StateType States);
+	void RenderUI(StateType States,const GLuint &base);
 
-	void printw (float x, float y, float z, char* format, ...);
+
+	void printw (float x, float y, float z,const GLuint &base, char* format, ...);
 
 	loadTGA theTexture;
 };
