@@ -65,21 +65,21 @@ BOOL DM2231_View::Draw(void)
 			// Credit page -> Menu
 			theModel->theUI.RenderUI(theUI->CREDIT);
 			// Input Timer here
-			//theModel->theState.theState=theModel->theState.menu;
+
 			break;
 		}
 	case (theModel->theState.states::win) :
 		{
 			theModel->theUI.RenderUI(theUI->WIN);
 			// Input Timer here
-			theModel->theState.theState=theModel->theState.credit;
+
 			break;
 		}
 	case (theModel->theState.states::defeat) :
 		{
 			theModel->theUI.RenderUI(theUI->DEFEAT);
 			// Input Timer here
-			//theModel->theState.theState=theModel->theState.credit;
+
 			break;
 		}
 

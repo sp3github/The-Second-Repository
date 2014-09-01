@@ -60,6 +60,7 @@ public:
 	int IndexTime[10];
 
 	bool SetTimeDefeat;
+	bool SetTimeCredit;
 
 	void SetStart();
 
