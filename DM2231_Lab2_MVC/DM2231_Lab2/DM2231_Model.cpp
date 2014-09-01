@@ -82,8 +82,6 @@ void DM2231_Model::Update(void)
 			}
 
 
-			//Fix for the end of vector problem
-			//if( it == ArrayofEntities.end())
 		}
 
 		////if (//if zombie count = 0 )
@@ -96,6 +94,16 @@ void DM2231_Model::Update(void)
 		//	// When life count = 0, go to 'Defeat' page -> Credit
 		//	//theHero->hp = 0;
 		//}
+
+		if (go->ID == OBSTACLE)
+		{
+			theObstacle = (dynamic_cast<CObstacle*>(*it));
+			theObstacle->update();
+			theObstacle->setZombieCount(8);
+		}
+		
+		go->update(time->getDelta());
+
 	}
 }
 
@@ -115,4 +123,5 @@ void DM2231_Model::ConstrainHero()
 	theHero->ConstrainHero(LEFT_BORDER, TestMap.getNumOfTiles_ScreenWidth() * TILE_SIZE,
 		25, TestMap.getNumOfTiles_ScreenHeight() *TILE_SIZE,300,500,200,400,
 		1.0f, TestMap.mapOffset_x, TestMap.mapOffset_y, TestMap.getNumOfTiles_ScreenHeight() * TILE_SIZE, TestMap.getNumOfTiles_ScreenWidth() * TILE_SIZE);
+
 }

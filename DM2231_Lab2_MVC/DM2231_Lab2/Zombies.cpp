@@ -1,3 +1,4 @@
+
 #include "Zombies.h"
 
 CZombies::CZombies(void)
@@ -11,12 +12,16 @@ CZombies::CZombies(void)
 {
 	Set_X(rand()% 800);
 	Set_Y(rand()% 600);  
+
 	vel.Set(0.5,0.5,0.0);
 	movementspeed = 0;
 	pos.Set(GetX(), GetY());
 	Timer = mvcTime::getInstance();
 	TimeIndex = Timer->insertNewTime(50);
 	bounce = false;
+
+	
+	zombie = 0;
 }
 
 CZombies::~CZombies(void)
@@ -66,6 +71,7 @@ void CZombies::setStats(int health, int moneysteal)
 }
 void CZombies::update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt)
 {
+
 	if (bounce)
 	{
 		if (Timer->testTime(TimeIndex))
@@ -102,11 +108,35 @@ void CZombies::update(int herox, int heroy, int mapOffset_x, int mapOffset_y, fl
 			Set_Y(pos.y);
 		}
 	}
+
+	Vector3D<float> vel;
+	Vector3D<float> pos;
+
+	vel.Set(0.5,0.5,0.5);
+
+	Vector3D<float> HeroPos(herox,heroy);
+	Vector3D<float> ZombiePos(GetX(), GetY());
+
+	Vector3D<float> theDiff((HeroPos * dt) - ZombiePos*dt);
+
+	theDiff.Normalize();
+	vel += theDiff;
+	
+	pos.Set(GetX(),GetY());
+	pos += vel;
+
+	Set_X(pos.x);
+	Set_Y(pos.y);
+
+
 }
 
-void CZombies::render(int mapOffset_x, int mapOffset_y)
+void CZombies::renderN(int mapOffset_x, int mapOffset_y)
 {	
 	//Zombies
+
+	cout << "NORMAL" << endl;
+
 	glPushMatrix();
 	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
 	glEnable(GL_TEXTURE_2D);		
@@ -158,4 +188,47 @@ vector<CEntity*>::iterator  CZombies::CollisionEvent(CEntity &other, vector<CEnt
 				}
 
 			}
+}
+
+void CZombies::renderF(int mapOffset_x, int mapOffset_y)
+{	
+	//Zombies
+	cout << "FAST" << endl;
+	glPushMatrix();
+	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
+	glEnable(GL_TEXTURE_2D);	
+	glScalef(0.5,0.5,0.5);
+	glColor3f(0,1,0);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,0); glVertex2f(0,0);
+	glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
+	glTexCoord2f(1,1); glVertex2f(0,tile_size);
+	glTexCoord2f(0,1); glVertex2f(tile_size,0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+}
+
+void CZombies::renderS(int mapOffset_x, int mapOffset_y)
+{	
+	//Zombies
+	cout << "SLOW" << endl;
+	glPushMatrix();
+	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
+	glEnable(GL_TEXTURE_2D);
+	glScalef(1.5,1.5,1.5);
+	glColor3f(0,1,0);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0,0); glVertex2f(0,0);
+	glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
+	glTexCoord2f(1,1); glVertex2f(0,tile_size);
+	glTexCoord2f(0,1); glVertex2f(tile_size,0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+}
+
+void CZombies::setZombie(ZombieStates zombieState)
+{
+	
 }

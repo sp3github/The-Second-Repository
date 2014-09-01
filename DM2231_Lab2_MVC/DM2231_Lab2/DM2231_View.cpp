@@ -51,6 +51,9 @@ BOOL DM2231_View::Draw(void)
 			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
 			{
 				(*it)->render(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
+				(*it)->renderN(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
+				(*it)->renderF(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
+				(*it)->renderS(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
 			}
 			theModel->thegun.render();
 			break;
