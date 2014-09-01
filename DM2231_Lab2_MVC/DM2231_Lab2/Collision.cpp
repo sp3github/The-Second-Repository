@@ -32,14 +32,17 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 	//Variables for the sides of the collision
 
 	//Calculate the sides of rect A 
-	Atile_left_x = go->GetX();
-	Atile_right_x = go->GetX() + go->tile_size; 
-	Atile_top_y =  go->GetY() ; 
-	Atile_bottom_y = go->GetY() + go->tile_size;
+
 
 	//Check against other entities.
 	if(other == NULL)
 	{
+		
+		Atile_left_x = go->GetX();
+	Atile_right_x = go->GetX() + go->tile_size; 
+	Atile_top_y =  go->GetY() ; 
+	Atile_bottom_y = go->GetY() + go->tile_size;
+
 		//Now check if move against wall
 	if(m_bCheckUpwards)
 		return WallCollision( Atile_left_x, Atile_right_x, Atile_top_y - go->movementspeed, Atile_bottom_y - go->movementspeed);
@@ -53,13 +56,33 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 		return WallCollision(Atile_left_x, Atile_right_x, Atile_top_y, Atile_bottom_y);
 	}
 
-	else if ((go->ID == Entity::PLAYER && other->ID != BULLET) || (go->ID == BULLET && other->ID != PLAYER))
-
+	else if ((go->ID == PLAYER && other->ID != BULLET) || (go->ID == BULLET && other->ID != PLAYER) || (go->ID == ZOMBIE))
 	{
-		Btile_left_x = other->GetX() - theMap->mapOffset_x;
-		Btile_right_x = other->GetX() + other->tile_size - theMap->mapOffset_x;
-		Btile_top_y = other->GetY() - theMap->mapOffset_y;
-		Btile_bottom_y = other->GetY() + other->tile_size - theMap->mapOffset_y;
+		if (go->ID == ZOMBIE && other->ID == ZOMBIE)	//forward checking for zombie
+		{
+
+			Atile_left_x = go->GetX() - theMap->mapOffset_x;
+			Atile_right_x = go->GetX() + go->tile_size - theMap->mapOffset_x;
+			Atile_top_y = go->GetY() - theMap->mapOffset_y ;
+			Atile_bottom_y = go->GetY() + go->tile_size - theMap->mapOffset_y ;
+
+			Btile_left_x = other->GetX() - theMap->mapOffset_x ;
+			Btile_right_x = other->GetX() + other->tile_size - theMap->mapOffset_x ;
+			Btile_top_y = other->GetY() - theMap->mapOffset_y;
+			Btile_bottom_y = other->GetY() + other->tile_size - theMap->mapOffset_y ;
+		}
+		else
+		{
+			Atile_left_x = go->GetX() ;
+			Atile_right_x = go->GetX() + go->tile_size;
+			Atile_top_y = go->GetY(); 
+			Atile_bottom_y = go->GetY() + go->tile_size ;
+
+			Btile_left_x = other->GetX() - theMap->mapOffset_x;
+			Btile_right_x = other->GetX() + other->tile_size - theMap->mapOffset_x;
+			Btile_top_y = other->GetY() - theMap->mapOffset_y;
+			Btile_bottom_y = other->GetY() + other->tile_size - theMap->mapOffset_y;
+		}
 
 
 		if(!(Btile_left_x > Atile_right_x
@@ -67,7 +90,7 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 			|| Btile_top_y > Atile_bottom_y
 			|| Btile_bottom_y < Atile_top_y ))
 		{
-			return false;
+ 			return false;
 		}
 	}
 	return true;

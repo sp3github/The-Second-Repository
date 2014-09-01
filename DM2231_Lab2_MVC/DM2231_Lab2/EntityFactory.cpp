@@ -52,6 +52,12 @@ CEntity* CEntityFactory::Create(Entity id)
 			theNewItems->ID = ZOMBIE;
 		}
 		break;
+	case OBSTACLE:
+		{
+			theNewItems = new CObstacle;
+			theNewItems->ID = OBSTACLE;
+
+		}
 	default:
 		{
 

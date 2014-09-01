@@ -19,7 +19,7 @@ DM2231_Controller::DM2231_Controller(DM2231_Model* theModel, DM2231_View* theVie
 	this->theModel = theModel;
 	this->theView = theView;
 	Init();
-	time = mvcTime::getInstance();
+	timer = mvcTime::getInstance();
 }
 
 DM2231_Controller::~DM2231_Controller(void)
@@ -30,12 +30,13 @@ DM2231_Controller::~DM2231_Controller(void)
 
 bool DM2231_Controller::Init(void)
 {
+	srand(time(NULL));
+
 	// Ask The User Which Screen Mode They Prefer
 	if (MessageBox(NULL,"Would You Like To Run In Fullscreen Mode?", "Start FullScreen?",MB_YESNO|MB_ICONQUESTION)==IDNO)
 		theView->setFullScreen( false );
 	else
 		theView->setFullScreen( true );
-
 
 	theModel->TestMap.LoadLevel(1);
 	theModel->TestMap.LoadItems(theModel->ArrayofEntities, theModel->theEntityFactory);
@@ -55,13 +56,19 @@ bool DM2231_Controller::Init(void)
 	theModel->thegun.SetArray(theModel->ArrayofEntities);
 	theModel->thegun.SetFactory(theModel->theEntityFactory);
 	
+	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(OBSTACLE));
+	theModel->ArrayofEntities.back()->SetPos(300,300);
+	theModel->theObstacle = (dynamic_cast<CObstacle*>(theModel->ArrayofEntities.back()));
 
-	for (int zombie = 0; zombie < 5; zombie++)
+
+	for (theModel->theObstacle->setZombieCount(0); theModel->theObstacle->getZombieCount() < 12 ; theModel->theObstacle->zombiecount++)
 	{
 		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
 
-		cout << "ZombieCount:" << zombie << endl;
+		cout << "CONTROLLER_ZOMBIECOUNT:" << theModel->theObstacle->zombiecount << endl;
 	}
+
+
 
 	return true;
 }
@@ -79,8 +86,6 @@ BOOL DM2231_Controller::RunMainLoop(void)
 	{
 		return false;									// Quit If Window Was Not Created
 	}
-
-
 
 	while(!done) // Loop That Runs While done=FALSE
 	{
@@ -100,7 +105,7 @@ BOOL DM2231_Controller::RunMainLoop(void)
 		{
 			if (ProcessInput())
 			{
-				time->updateTime();
+				timer->updateTime();
 				theModel->Update();
 				theView->Draw();
 			}
@@ -171,11 +176,38 @@ bool DM2231_Controller::ProcessInput(void)
 			{
 				theModel->thegun.SetGun(shotgun);
 			}
+
+			if (theView->GetKeys('4'))
+			{
+				
+			}
+			if (theView->GetKeys('5'))
+			{
+				
+			}
+			if (theView->GetKeys('6'))
+
+			{
+				
+			}
+			
+			if (theView->GetKeys('z'))
+			{
+				theModel->theObstacle->zombiecount--;
+				
+
+			}
+			if (theView->GetKeys('x'))
+			{
+				theModel->theObstacle->zombiecount++;
+				
+			}
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
 				//theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
 				//theModel->theBullet.FireBullet();
+				
 			}
 			break;
 		}
