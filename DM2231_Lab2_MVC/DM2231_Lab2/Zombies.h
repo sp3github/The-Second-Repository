@@ -38,12 +38,14 @@ private:
 	bool bounce;
 	Vector3D<float> BounceDir;
 
+
 public:
 	CZombies(void);
 	~CZombies(void);
 	//Overloaded Constructor
     //CZombies( unsigned int w, unsigned int a, unsigned int d, int h, int st, float spd);
-
+	bool bounce;
+	Vector3D<float> BounceDir;
 	int CalculateDistance(int hero_x, int hero_y);
 
 	void deceasingHealth(int num);

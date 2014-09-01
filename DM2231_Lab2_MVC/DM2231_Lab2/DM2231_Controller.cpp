@@ -38,35 +38,8 @@ bool DM2231_Controller::Init(void)
 	else
 		theView->setFullScreen( true );
 
-	theModel->TestMap.LoadLevel(1);
-	theModel->TestMap.LoadItems(theModel->ArrayofEntities, theModel->theEntityFactory);
 
-	for (auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
-	{
-		if ((*it)->ID == PLAYER)
-		{
-			theModel->theHeroEntity = (*it);
-			theModel->theHero = (dynamic_cast<CPlayerInfo*>(*it));
-			break;
-		}
-	}
-
-
-	theModel->thegun.SetPlayer(*theModel->theHero);
-	theModel->thegun.SetArray(theModel->ArrayofEntities);
-	theModel->thegun.SetFactory(theModel->theEntityFactory);
-	
-	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(OBSTACLE));
-	theModel->ArrayofEntities.back()->SetPos(300,300);
-	theModel->theObstacle = (dynamic_cast<CObstacle*>(theModel->ArrayofEntities.back()));
-
-
-	for (theModel->theObstacle->setZombieCount(0); theModel->theObstacle->getZombieCount() < 12 ; theModel->theObstacle->zombiecount++)
-	{
-		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
-
-		cout << "CONTROLLER_ZOMBIECOUNT:" << theModel->theObstacle->zombiecount << endl;
-	}
+	theModel->SetStart();
 
 
 
