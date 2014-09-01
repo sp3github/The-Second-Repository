@@ -35,7 +35,9 @@ public:
 
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
-	
+
+	CZombies * theZombie;
+
 	gun thegun;
 	Casino * theCasino;
 	Collision theCollision;
@@ -49,10 +51,18 @@ public:
 
 	mvcTime * time;
 
+
 	int zombiecount;
 	int zombie;
 
 	void setZombieCount(int z);
+
+	int IndexTime[10];
+
+	bool SetTimeDefeat;
+
+	void SetStart();
+
 	int getZombieCount();
 	void UpdateLimit();
 	void updateZombieCount();

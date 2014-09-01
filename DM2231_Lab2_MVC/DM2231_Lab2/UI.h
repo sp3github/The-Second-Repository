@@ -6,10 +6,10 @@ class UI
 {
 private:
 	void *font_style;
+	float PlayerHP;
 public:
 	enum StateType{
-	PAUSE = 0,
-	LEVEL,
+	LEVEL = 0,
 	STARTSCREEN,
 	SUBPAGE,
 	CREDIT,
@@ -20,10 +20,12 @@ public:
 
 	UI(void);
 	~UI(void);
+	
+	void SetHP(float currentHP, float maxHP);
+
+	float GetHP(void);
 
 	void RenderUI(StateType States);
-
-	int DetermineState(int choice);
 
 	void printw (float x, float y, float z, char* format, ...);
 

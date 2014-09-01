@@ -38,6 +38,7 @@ bool DM2231_Controller::Init(void)
 	else
 		theView->setFullScreen( true );
 
+
 	theModel->TestMap.LoadLevel(1);
 	theModel->TestMap.LoadItems(theModel->ArrayofEntities, theModel->theEntityFactory);
 
@@ -69,6 +70,9 @@ bool DM2231_Controller::Init(void)
 		
 	}
 
+
+
+	theModel->SetStart();
 
 
 	return true;

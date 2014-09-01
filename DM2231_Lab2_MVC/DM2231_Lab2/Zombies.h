@@ -38,16 +38,14 @@ private:
 	bool bounce;
 	Vector3D<float> BounceDir;
 
-
 public:
 	CZombies(void);
 	~CZombies(void);
 	//Overloaded Constructor
     //CZombies( unsigned int w, unsigned int a, unsigned int d, int h, int st, float spd);
-
 	int CalculateDistance(int hero_x, int hero_y);
-	void update();
-
+	bool bounce;
+	Vector3D<float> BounceDir;
 	void deceasingHealth(int num);
 	int getHealth();
 	int getZombieCount();
@@ -55,6 +53,7 @@ public:
 	bool isDead();
 	void setStats(int health, int moneysteal);
 	
+
 
 	void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
 	void render(int mapOffset_x, int mapOffset_y);
