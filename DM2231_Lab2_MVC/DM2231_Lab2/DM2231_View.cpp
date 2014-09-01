@@ -67,21 +67,19 @@ BOOL DM2231_View::Draw(void)
 			// Credit page -> Menu
 			theModel->theUI.RenderUI(theUI->CREDIT);
 			// Input Timer here
-			theModel->theUI.RenderUI(theUI->STARTSCREEN);
+			//theModel->theUI.RenderUI(theUI->STARTSCREEN);
 			break;
 		}
 	case (theModel->theState.states::win) :
 		{
 			theModel->theUI.RenderUI(theUI->WIN);
 			// Input Timer here
-			theModel->theUI.RenderUI(theUI->CREDIT);
 			break;
 		}
 	case (theModel->theState.states::defeat) :
 		{
 			theModel->theUI.RenderUI(theUI->DEFEAT);
 			// Input Timer here
-			theModel->theUI.RenderUI(theUI->CREDIT);
 			break;
 		}
 
@@ -395,8 +393,8 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
 		return false;
-	/*if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Credit.tga"))
-		return false;*/
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Credit.tga"))
+		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.winTexture[0], "Images/Win.tga"))
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.defeatTexture[0], "Images/Defeat.tga"))

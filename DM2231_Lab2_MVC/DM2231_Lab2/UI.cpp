@@ -158,6 +158,7 @@ void UI::RenderUI(StateType States)
 	case SUBPAGE:
 		glPushMatrix();
 			glEnable(GL_BLEND);
+			glEnable(GL_TEXTURE_2D);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glBindTexture(GL_TEXTURE_2D, theTexture.subpageTexture[0].texID);
 			glPushMatrix();
@@ -175,6 +176,7 @@ void UI::RenderUI(StateType States)
 	case CREDIT:
 		glPushMatrix();
 			glEnable(GL_BLEND);
+			glEnable(GL_TEXTURE_2D);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glBindTexture(GL_TEXTURE_2D, theTexture.creditTexture[0].texID);
 			glPushMatrix();
@@ -192,6 +194,7 @@ void UI::RenderUI(StateType States)
 	case WIN:
 		glPushMatrix();
 			glEnable(GL_BLEND);
+			glEnable(GL_TEXTURE_2D);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glBindTexture(GL_TEXTURE_2D, theTexture.winTexture[0].texID);
 			glPushMatrix();
@@ -207,8 +210,11 @@ void UI::RenderUI(StateType States)
 		break;
 
 	case DEFEAT:
+		glColor3f(1,1,1);
+		glEnable(GL_TEXTURE_2D);
 		glPushMatrix();
 			glEnable(GL_BLEND);
+	
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glBindTexture(GL_TEXTURE_2D, theTexture.defeatTexture[0].texID);
 			glPushMatrix();
@@ -221,11 +227,13 @@ void UI::RenderUI(StateType States)
 			glDisable(GL_BLEND);
 		glPopMatrix();
 		glDisable(GL_TEXTURE_2D);
+		glColor3f(0,0,0);
 		break;
 
 	case SHOP:
 		glPushMatrix();
 			glEnable(GL_BLEND);
+			glEnable(GL_TEXTURE_2D);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glBindTexture(GL_TEXTURE_2D, theTexture.shopTexture[0].texID);
 			glPushMatrix();
