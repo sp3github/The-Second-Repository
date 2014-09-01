@@ -45,7 +45,6 @@ BOOL DM2231_View::Draw(void)
 		}
 	case (theModel->theState.states::level):
 		{
-			theModel->theUI.RenderUI(theUI->LEVEL);
 			theModel->TestMap.RenderTileMap();
 
 			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
@@ -53,6 +52,7 @@ BOOL DM2231_View::Draw(void)
 				(*it)->render(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
 			}
 			theModel->thegun.render();
+			theModel->theUI.RenderUI(theUI->LEVEL);
 			break;
 		}
 	case (theModel->theState.states::shop) :
@@ -391,13 +391,11 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
 		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
+	/*if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Credit.tga"))
+		return false;*/
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.winTexture[0], "Images/Win.tga"))
 		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Credit.tga"))
-		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Win.tga"))
-		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Defeat.tga"))
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.defeatTexture[0], "Images/Defeat.tga"))
 		return false;
 
 	return TRUE; // Success

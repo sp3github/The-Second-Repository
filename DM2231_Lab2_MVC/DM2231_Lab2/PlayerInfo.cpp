@@ -8,7 +8,7 @@ CPlayerInfo::CPlayerInfo(void)
 	HeroRotation = 0;
 	tile_size = 24;
 
-	hp = 0;
+	hp = 100;
 	ammo = 0;
 
 	time = mvcTime::getInstance();

@@ -30,7 +30,7 @@ void DM2231_Model::Update(void)
 	{
 
 		theHero->HeroRotation = AnglefromHerotoMouse();
-		ConstrainHero();	
+		ConstrainHero();
 		TestMap.Update();
 
 		for(auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
@@ -82,19 +82,22 @@ void DM2231_Model::Update(void)
 			}
 		}
 
-	if(theState.states::win)
-	{
-		// When zombie count = 0, go to 'Win' page -> Credit
-	}
-	else if(theState.states::defeat)
-	{
-		// When life count = 0, go to 'Defeat' page -> Credit
-		theHero->hp = 0;
-	}
+	//if()
+	//{
+	//	// When zombie count = 0, go to 'Win' page -> Credit
+	//	//theZombie
+	//	theState.theState == State::win
+	//}
+	//else if(theHero->hp == 0)
+	//{
+	//	// When life count = 0, go to 'Defeat' page -> Credit
+	//	
+	//	theState.theState == State::defeat
+	//}
 	theHero->update();
 
+	theUI.SetHP(theHero->hp, 100);
 
-		
 	}
 }
 

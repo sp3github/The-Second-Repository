@@ -32,10 +32,12 @@ public:
 
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
+	CZombies * theZombie;
 
 	gun thegun;
 
 	Collision theCollision;
+
 
 	float AnglefromHerotoMouse();
 
