@@ -38,7 +38,10 @@ bool DM2231_Controller::Init(void)
 	else
 		theView->setFullScreen( true );
 
+
 	theModel->SetStart();
+
+
 
 	return true;
 }
@@ -56,8 +59,6 @@ BOOL DM2231_Controller::RunMainLoop(void)
 	{
 		return false;									// Quit If Window Was Not Created
 	}
-
-
 
 	while(!done) // Loop That Runs While done=FALSE
 	{
@@ -148,11 +149,38 @@ bool DM2231_Controller::ProcessInput(void)
 			{
 				theModel->thegun.SetGun(shotgun);
 			}
+
+			if (theView->GetKeys('4'))
+			{
+				
+			}
+			if (theView->GetKeys('5'))
+			{
+				
+			}
+			if (theView->GetKeys('6'))
+
+			{
+				
+			}
+			
+			if (theView->GetKeys('z'))
+			{
+				theModel->theObstacle->zombiecount--;
+				
+
+			}
+			if (theView->GetKeys('x'))
+			{
+				theModel->theObstacle->zombiecount++;
+				
+			}
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
 				//theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
 				//theModel->theBullet.FireBullet();
+				
 			}
 			break;
 		}

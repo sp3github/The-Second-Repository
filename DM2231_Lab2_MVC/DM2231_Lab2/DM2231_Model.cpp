@@ -84,8 +84,6 @@ void DM2231_Model::Update(void)
 			}
 
 
-			//Fix for the end of vector problem
-			//if( it == ArrayofEntities.end())
 		}
 
 		//if (//if zombie count = 0 )
@@ -123,6 +121,7 @@ void DM2231_Model::Update(void)
 	if(theState.theState == theState.credit)
 	{
 		time->resetTime(IndexTime[0]);
+
 	}
 }
 
