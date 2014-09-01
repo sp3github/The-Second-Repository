@@ -4,7 +4,6 @@
 UI::UI(void)
 {
 	font_style = GLUT_BITMAP_TIMES_ROMAN_24;
-	//theTexture=new loadTGA;
 }
 
 
@@ -17,24 +16,6 @@ void UI::RenderUI(StateType States)
 	switch(States)
 	{
 	case LEVEL:
-		//glPushMatrix();
-		//	glColor3f(1.0f , 1.0f, 1.0f);
-		//	glEnable(GL_TEXTURE_2D);
-		//	glEnable(GL_BLEND);
-		//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		//	glBindTexture(GL_TEXTURE_2D, theTexture.levelTexture[0].texID);
-		//	glPushMatrix();
-		//		glBegin(GL_QUADS);
-		//			glTexCoord2f(0,0); glVertex2f(0, 600);
-		//			glTexCoord2f(1,0); glVertex2f(800, 600);
-		//			glTexCoord2f(1,1); glVertex2f(800, 0);
-		//			glTexCoord2f(0,1); glVertex2f(0, 0);
-		//	glPopMatrix();
-		//	glDisable(GL_BLEND);
-		//	glDisable(GL_TEXTURE_2D);
-		//glColor3f(0.0f , 0.0f ,0.0f);
-		//glPopMatrix();
-
 		glPushMatrix();
 			glColor3f(1.0f, 0.0f, 0.0f);
 			printw(26.0f, 86.0f, 0.0f, "HP: ");

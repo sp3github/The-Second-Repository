@@ -37,15 +37,12 @@ void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
 	glTranslatef(static_cast<float>(tile_size * 0.5), static_cast<float>(tile_size * 0.5),0);
 	glRotatef(HeroRotation,0,0,1);
 	glTranslatef(static_cast<float>(-tile_size * 0.5), static_cast<float>(-tile_size * 0.5), 0);
-	//glTranslatef(-20, -20,0);
 	glEnable( GL_TEXTURE_2D );
 	glEnable( GL_BLEND );
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glRotatef(HeroRotation,0,0,1);
 
 	glColor3f(1,0,0);
-	//glBindTexture(GL_TEXTURE_2D, HeroTexture[1].texID);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.25 * heroAnimationCounter, 1); glVertex2f(0, 0);
 	glTexCoord2f(0.25 * heroAnimationCounter, 0); glVertex2f(0, tile_size);

@@ -56,7 +56,4 @@ public:
 
 	void SetStart();
 
-	/*int zombiecount;
-	int getZombieCount();
-	void update(int zombiecount);*/
 };

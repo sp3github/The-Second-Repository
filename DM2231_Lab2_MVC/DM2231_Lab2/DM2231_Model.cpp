@@ -6,7 +6,6 @@
 DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 {
 	time = mvcTime::getInstance();
-	//theUI = new UI;
 	IndexTime[0] = time->insertNewTime(3000);
 	SetTimeDefeat = false;
 	SetTimeCredit = false;
@@ -14,10 +13,6 @@ DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 
 DM2231_Model::~DM2231_Model(void)
 {
-	//if(theUI)
-	//{
-	//	delete theUI;
-	//}
 }
 
 // Update the model
@@ -59,7 +54,6 @@ void DM2231_Model::Update(void)
                     {
                             CEntity * go = NULL;
                             go = (*it) ;
-                            //theHero->update();
                             for (auto i = ArrayofEntities.begin(); i != ArrayofEntities.end();)
                             {
                                     //Collision for entities. Collision Event returns the iterator after an element is erased.
@@ -71,7 +65,6 @@ void DM2231_Model::Update(void)
                                             {
                                                     i = go->CollisionEvent(*other, ArrayofEntities);        //Run collision code, setting i to the iterator which is returned.
                                                     return;
-                                                    //break;
                                             }
                                             else
                                             {
@@ -87,7 +80,7 @@ void DM2231_Model::Update(void)
      
                     }
      
-                    //if (//if zombie count = 0 )
+					//(if zombie count = 0 )
                     {
                             //theState.theState = theState.win;
                     }

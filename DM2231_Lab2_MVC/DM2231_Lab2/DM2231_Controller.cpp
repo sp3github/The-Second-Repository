@@ -175,8 +175,6 @@ bool DM2231_Controller::ProcessInput(void)
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
-				//theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
-				//theModel->theBullet.FireBullet();
 				
 			}
 			break;
