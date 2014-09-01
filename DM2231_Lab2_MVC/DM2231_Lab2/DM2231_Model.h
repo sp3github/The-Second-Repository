@@ -43,4 +43,9 @@ public:
 	void ConstrainHero();
 
 	mvcTime * time;
+	int IndexTime[10];
+
+	bool SetTimeDefeat;
+
+	void SetStart();
 };

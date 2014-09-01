@@ -1,28 +1,31 @@
 #include "PlayerInfo.h"
 #include <iostream>
+#include "Zombies.h"
 
 CPlayerInfo::CPlayerInfo(void)
+{
+	Init();
+}
+
+CPlayerInfo::~CPlayerInfo(void)
+{
+
+}
+
+// Initialise this class instance
+void CPlayerInfo::Init(void)
 {
 	heroAnimationCounter = 0;
 	movementspeed = 5;
 	HeroRotation = 0;
 	tile_size = 24;
 
-	hp = 0;
+	hp = 100;
 	ammo = 0;
 
 	time = mvcTime::getInstance();
 	index = time->insertNewTime(5000);
 	time->setActive(false,index);
-}
-
-CPlayerInfo::~CPlayerInfo(void)
-{
-}
-
-// Initialise this class instance
-void CPlayerInfo::Init(void)
-{
 }
 
 /****************************************************************************************************
@@ -257,9 +260,18 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 		break;
 	case ZOMBIE:
 		{
-			hp -= 10;
-			auto it = theArray.begin();
-			for(it = theArray.begin(); it != theArray.end(); it++)
+			this->hp -= 10;
+
+			CZombies * zombie;
+			zombie = (dynamic_cast<CZombies*>(&other));
+
+			zombie->bounce = true;
+			zombie->BounceDir = ((zombie->pos) - (this->pos)).Normalize() * zombie->movementspeed;
+		
+			zombie->Timer->resetTime(zombie->TimeIndex);
+			zombie->Timer->changeLimit(zombie->TimeIndex, 50);
+
+			for(auto it = theArray.begin(); it != theArray.end(); it++)
 			{
 				if((*it) == this)
 				{

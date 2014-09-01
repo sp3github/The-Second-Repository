@@ -29,15 +29,15 @@ private:
 	const int hero_y;
 
 	int i;
-	bool bounce;
-	Vector3D<float> BounceDir;
+
 
 public:
 	CZombies(void);
 	~CZombies(void);
 	//Overloaded Constructor
     //CZombies( unsigned int w, unsigned int a, unsigned int d, int h, int st, float spd);
-
+	bool bounce;
+	Vector3D<float> BounceDir;
 	int CalculateDistance(int hero_x, int hero_y);
 	void update();
 

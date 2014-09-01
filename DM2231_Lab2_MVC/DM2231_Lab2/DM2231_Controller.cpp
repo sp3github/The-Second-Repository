@@ -38,30 +38,7 @@ bool DM2231_Controller::Init(void)
 	else
 		theView->setFullScreen( true );
 
-
-	theModel->TestMap.LoadLevel(1);
-	theModel->TestMap.LoadItems(theModel->ArrayofEntities, theModel->theEntityFactory);
-
-	for (auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
-	{
-		if ((*it)->ID == PLAYER)
-		{
-			theModel->theHeroEntity = (*it);
-			theModel->theHero = (dynamic_cast<CPlayerInfo*>(*it));
-			break;
-		}
-	}
-
-
-	theModel->thegun.SetPlayer(*theModel->theHero);
-	theModel->thegun.SetArray(theModel->ArrayofEntities);
-	theModel->thegun.SetFactory(theModel->theEntityFactory);
-	
-
-	for (int zombie = 0; zombie < 2; zombie++)
-	{
-		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
-	}
+	theModel->SetStart();
 
 	return true;
 }
