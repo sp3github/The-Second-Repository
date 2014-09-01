@@ -184,7 +184,10 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 	case HEALTH:
 		{
 			this->hp += 10;
-
+			if(this->hp < 0)
+			{
+				this->hp = 0;
+			}
 			if(this->hp > 100)
 			{
 				this->hp = 100;
@@ -269,7 +272,7 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 			zombie->BounceDir = ((zombie->pos) - (this->pos)).Normalize() * zombie->movementspeed;
 		
 			zombie->Timer->resetTime(zombie->TimeIndex);
-			zombie->Timer->changeLimit(zombie->TimeIndex, 50);
+			zombie->Timer->changeLimit(zombie->TimeIndex, 500);
 
 			for(auto it = theArray.begin(); it != theArray.end(); it++)
 			{

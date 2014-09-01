@@ -85,23 +85,11 @@ void DM2231_Model::Update(void)
 		}
 	theHero->update(time->getDelta());
 	theUI.SetHP(theHero->hp, 100);
-	//if()
-	//{
-	//	// When zombie count = 0, go to 'Win' page -> Credit
-	//	//theZombie
-	//	theState.theState == State::win
-	//}
-	//else if(theHero->hp == 0)
-	//{
-	//	// When life count = 0, go to 'Defeat' page -> Credit
-	//	
-	//	theState.theState == State::defeat
-	//}
 
-		//if (//if zombie count = 0 )
+		/*if (//if zombie count = 0 )
 		{
-			//theState.theState = theState.win;
-		}
+			theState.theState = theState.win;
+		}*/
 		if (theHero->hp <= 0)
 		{
 			theState.theState = theState.defeat;
@@ -119,15 +107,15 @@ void DM2231_Model::Update(void)
 		}
 		else if(time->testTime(IndexTime[0]))
 		{
+			TestMap.mapOffset_x = 0;
+			TestMap.mapOffset_y = 0;
 			theState.theState = theState.credit;
-
+			//Remember set to credit
 			SetTimeDefeat = false;
 			ArrayofEntities.clear();
+			theHero->Init();
 			SetStart();
-
 		}
-		
-
 	}
 
 	if(theState.theState == theState.credit)

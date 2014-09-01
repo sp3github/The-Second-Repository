@@ -38,10 +38,7 @@ bool DM2231_Controller::Init(void)
 	else
 		theView->setFullScreen( true );
 
-
 	theModel->SetStart();
-
-
 
 	return true;
 }
