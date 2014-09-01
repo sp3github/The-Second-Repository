@@ -49,9 +49,13 @@ public:
 	float prevreload;
 	float startReloadTime;
 
+
+
 	float GunRenderOffset_x;
 	float GunRenderOffset_y;
 
+
+	
 	void render();
 
 	bool SetPlayer(CPlayerInfo &theHero);

@@ -115,6 +115,7 @@
     <ClCompile Include="PlayerInfo.cpp" />
     <ClCompile Include="Slowdown.cpp" />
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SpecialZombie.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Zombies.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="Slowdown.h" />
     <ClInclude Include="Sound.h" />
+    <ClInclude Include="SpecialZombie.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="vector3D.h" />

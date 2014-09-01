@@ -35,7 +35,7 @@ public:
 	int mapFineOffset_x, mapFineOffset_y;
 
 	void Update();
-	bool LoadItems(vector<CEntity*> &theArray, CEntityFactory &theFac );
+	bool LoadItems(vector<CEntity*> &theArray,CEntityFactory &theFac );
 private:
 	int theScreen_Height;
 	int theScreen_Width;

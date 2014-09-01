@@ -164,7 +164,7 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 	cout<<"My X Pos is: "<<GetX()<<endl;
 }
 
-void CPlayerInfo::update(float dt)
+void CPlayerInfo::update()
 {
 	if(time->testTime(index))
 	{
@@ -261,7 +261,7 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 			auto it = theArray.begin();
 			for(it = theArray.begin(); it != theArray.end(); it++)
 			{
-				if((*it) == this)
+				if((*it) == &other)
 				{
 					return it + 1;
 				}

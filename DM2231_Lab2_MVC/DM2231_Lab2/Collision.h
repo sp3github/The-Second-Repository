@@ -8,9 +8,8 @@ class Collision
 	
 public:
 
-
-	Collision(void);
 	Collision(CMap &theMap, vector<CEntity*> & theArray);
+	Collision(void);
 	~Collision(void);
 
 	CMap * theMap;

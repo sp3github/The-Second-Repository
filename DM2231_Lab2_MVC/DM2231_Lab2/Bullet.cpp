@@ -52,8 +52,8 @@ void bullet::render(int mapOffset_x, int mapOffset_y)
 
 void bullet::update(float dt)
 {
-	pos.Set(GetX(),GetY());
-
+	Vector3D<float> pos(GetX(),GetY());
+	Vector3D<float> vel;
 
 	vel.Set(cos(HeroRotationRad), sin(HeroRotationRad));
 	vel.Normalize();
@@ -64,13 +64,22 @@ void bullet::update(float dt)
 	Set_Y(pos.y);
 }
 
-vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+vector<CEntity*>::iterator bullet::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	switch (other.ID)
 	{
 	case HEALTH:
 		{
+			for (auto it = theArray.begin(); it != theArray.end();it++)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+				if (go == &other)
+				{
+					return it + 1;
+				}
 
+			}
 			break;
 		}
 	case ZOMBIE:
@@ -95,15 +104,12 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 				}
 			}
 
-			//delete this;//Delete the bullet
-			this->~bullet();
-			theArray.erase(theArray.begin() + bulletindex);
+			this->~bullet();//Delete the bullet
+			//theArray.erase(theArray.begin() + bulletindex);
 			
-			index -= 1;
 
 			if(other.hp <= 0)
 			{
-				//delete &other;
 				other.~CEntity();
 				it = theArray.erase(theArray.begin() + index); //delete from array.
 				
@@ -118,14 +124,4 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 	default:
 		break;
 	}
-	for (auto it = theArray.begin(); it != theArray.end();it++)
-			{
-				CEntity *go = NULL;
-				go = (*it);
-				if (go == &other)
-				{
-					return it + 1;
-				}
-
-			}
 }

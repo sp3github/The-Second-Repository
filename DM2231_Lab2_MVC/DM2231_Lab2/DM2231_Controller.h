@@ -28,7 +28,7 @@ public:
 	// Handle to the view
 	DM2231_View* theView;
 
-	mvcTime * timer;
+	mvcTime * time;
 
 protected:
 	HWND handle;                                            // window handle to map window to controller

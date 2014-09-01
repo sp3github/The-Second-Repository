@@ -168,7 +168,7 @@ void CMap::RenderTileMap(void)
 			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-			if (theScreenMap[tileOffset_y + i][tileOffset_x + k] == 1)
+			if (theScreenMap[tileOffset_y + i][tileOffset_x + k] == 0)
 				glColor3f(0,0,0);
 			//	glBindTexture(GL_TEXTURE_2D, TileMapTexture[theMap->theScreenMap[i][tileOffset_x + k]].texID);
 			//else if (theMap->theScreenMap[i][tileOffset_x + k] == 2)
@@ -226,11 +226,6 @@ bool CMap::LoadItems(vector<CEntity*> &theArray, CEntityFactory &theFac)
 				theArray.push_back(theFac.Create(SLOWDOWN));
 				theArray.back()->SetPos(j * TILE_SIZE, i * TILE_SIZE);
 				break;
-			case 6:
-				theArray.push_back(theFac.Create(ZOMBIE));
-				theArray.back()->SetPos(j * TILE_SIZE, i * TILE_SIZE);
-				break;
-
 			case 10:
 			case 11:
 			case 12:

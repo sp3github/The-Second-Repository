@@ -12,6 +12,7 @@ gun::gun()
 
 }
 
+
 gun::~gun()
 {
 }
@@ -59,9 +60,9 @@ void gun::FireGun()
 		{
 			currentBullet -= 1;	//Take away one bullet
 			//DO BULLET STUFF HERE
-			theArrayofEntities->insert(theArrayofEntities->begin(),(theFactory->Create(BULLET)));
-			theArrayofEntities->front()->SetPos(theHero->GetX(), theHero->GetY());
-			thePointertoBullet = (dynamic_cast<bullet*> (theArrayofEntities->front()));
+			theArrayofEntities->push_back(theFactory->Create(BULLET));
+			theArrayofEntities->back()->SetPos(theHero->GetX(), theHero->GetY());
+			thePointertoBullet = (dynamic_cast<bullet*> (theArrayofEntities->back()));
 			thePointertoBullet->SetAngle(theHero->HeroRotation);
 			thePointertoBullet->SetPower(power);
 		}

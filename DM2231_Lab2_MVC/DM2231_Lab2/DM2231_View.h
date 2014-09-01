@@ -51,5 +51,4 @@ public:
 	bool GetKeys(char s);
 
 	bool LMKeyDown;
-	bool RMKeyDown;
 };
