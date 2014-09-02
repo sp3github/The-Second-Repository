@@ -10,7 +10,8 @@ UI::UI(void)
 UI::~UI(void)
 {
 }
-GLvoid UI::printw(float x, float y, float z,const GLuint &base, char *fmt, ...)					// Custom GL "Print" Routine
+
+GLvoid UI::printw(float x, float y, float z,const GLuint &base,const char *fmt, ...)					// Custom GL "Print" Routine
 {
 	glPushMatrix();
 	glRasterPos3f (x, y, z);
@@ -30,6 +31,8 @@ GLvoid UI::printw(float x, float y, float z,const GLuint &base, char *fmt, ...)	
 	glPopAttrib();										// Pops The Display List Bits
 	glPopMatrix();
 }
+
+
 void UI::RenderUI(StateType States, const GLuint&base)
 {
 	switch(States)
@@ -37,18 +40,7 @@ void UI::RenderUI(StateType States, const GLuint&base)
 	case LEVEL:
 		glPushMatrix();
 			glColor3f(1.0f, 0.0f, 0.0f);
-			printw(26.0f, 86.0f, 0.0f, base,"HP: ");
-		glPopMatrix();
-
-		glPushMatrix();
-		glBegin(GL_QUADS);
-			glColor3f(1.0f, 0.0f, 0.0f);
-			glVertex2f(71.0f, 62.0f);
-			glVertex2f(169.0f*PlayerHP, 62.0f);
-			glVertex2f(169.0f*PlayerHP, 91.0f);
-			glVertex2f(71.0f, 91.0f);
-		glEnd();
-		glColor3f(1.0f, 1.0f, 1.0f);
+			printw(26.0f, 86.0f, 0.0f, base,"Hp: ");
 		glPopMatrix();
 
 		glPushMatrix();
@@ -68,6 +60,18 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		glEnd();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glPopMatrix();
+
+		glPushMatrix();
+		glBegin(GL_QUADS);
+			glColor3f(1.0f, 0.0f, 0.0f);
+			glVertex2f(71.0f, 62.0f);
+			glVertex2f(169.0f*PlayerHP, 62.0f);
+			glVertex2f(169.0f*PlayerHP, 91.0f);
+			glVertex2f(71.0f, 91.0f);
+		glEnd();
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glPopMatrix();
+		
 		break;
 
 	case STARTSCREEN:

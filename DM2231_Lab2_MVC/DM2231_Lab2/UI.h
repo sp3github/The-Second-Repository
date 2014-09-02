@@ -20,7 +20,7 @@ public:
 
 	UI(void);
 	~UI(void);
-	
+
 	void SetHP(float currentHP, float maxHP);
 
 	float GetHP(void);
@@ -28,7 +28,7 @@ public:
 	void RenderUI(StateType States,const GLuint &base);
 
 
-	void printw (float x, float y, float z,const GLuint &base, char* format, ...);
+	void printw (float x, float y, float z,const GLuint &base, const char* format, ...);
 
 	loadTGA theTexture;
 };

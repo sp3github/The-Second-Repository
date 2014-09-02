@@ -6,11 +6,13 @@
 DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 {
 	time = mvcTime::getInstance();
-
 	IndexTime = time->insertNewTime(3000);
 	SetTimeDefeat = false;
 	SetTimeCredit = false;
 	SetTimeWin = false;
+
+	//zombie
+	zombie = 5;
 }
 
 DM2231_Model::~DM2231_Model(void)
@@ -20,168 +22,9 @@ DM2231_Model::~DM2231_Model(void)
 // Update the model
 void DM2231_Model::Update(void)
 {
-	theHero->HeroRotation = AnglefromHerotoMouse();
-	ConstrainHero();
-	TestMap.Update();
 
 	if (theState.theState == State::level)
 	{
-		theHero->HeroRotation = AnglefromHerotoMouse();
-		ConstrainHero();
-		TestMap.Update();
-
-		//UPDATE THE MAP
-		for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
-		{
-			CEntity * go = (*it);
-			if (go->ID == BULLET)//Checl bullet against environment
-			{
-				if (!theCollision.CheckCollision(go, NULL, false, false, false, false, true))
-				{
-					ArrayofEntities.erase(it);
-					go->~CEntity();
-					break;
-				}
-			}
-
-			if (go->ID == ZOMBIE)
-			{
-				go->update(theHero->GetX(), theHero->GetY(), TestMap.mapOffset_x, TestMap.mapOffset_y, time->getDelta());
-			}
-
-			go->update(time->getDelta());
-		}
-
-		//CHECK FOR COLLISION
-		for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
-		{
-			CEntity * go = NULL;
-			go = (*it) ;
-			//theHero->update();
-			for (auto i = ArrayofEntities.begin(); i != ArrayofEntities.end();)
-			{
-				//Collision for entities. Collision Event returns the iterator after an element is erased.
-				CEntity * other = (*i);
-				if (go != other)
-				{
-					cout << go->ID << endl;
-					if (!theCollision.CheckCollision(go, other, false, false, false, false)) //Checks if it has collided go with other
-
-         theHero->HeroRotation = AnglefromHerotoMouse();
-            ConstrainHero();
-            TestMap.Update();
-     
-            if (theState.theState == State::level)
-            {
-     
-                    theHero->HeroRotation = AnglefromHerotoMouse();
-                    ConstrainHero();
-                    TestMap.Update();
-     
-                    for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
-                    {
-                            CEntity * go = (*it);
-                            if (go->ID == BULLET)//Checl bullet against environment
-                            {
-                                    if (!theCollision.CheckCollision(go, NULL, false, false, false, false, true))
-                                    {
-                                            ArrayofEntities.erase(it);
-                                            go->~CEntity();
-                                            break;
-                                    }
-                            }
-     
-                            if (go->ID == ZOMBIE)
-                            {
-                                    go->update(theHero->GetX(), theHero->GetY(), TestMap.mapOffset_x, TestMap.mapOffset_y, time->getDelta());
-                            }
-     
-                            go->update(time->getDelta());
-                    }
-     
-                    for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
-                    {
-                            CEntity * go = NULL;
-                            go = (*it) ;
-                            //theHero->update();
-                            for (auto i = ArrayofEntities.begin(); i != ArrayofEntities.end();)
-                            {
-                                    //Collision for entities. Collision Event returns the iterator after an element is erased.
-                                    CEntity * other = (*i);
-                                    if (go != other)
-                                    {
-                                            cout << go->ID << endl;
-                                            if (!theCollision.CheckCollision(go, other, false, false, false, false)) //Checks if it has collided go with other
-                                            {
-                                                    i = go->CollisionEvent(*other, ArrayofEntities);        //Run collision code, setting i to the iterator which is returned.
-                                                    return;
-                                                    //break;
-                                            }
-                                            else
-                                            {
-                                                    i++;
-                                            }
-                                    }
-                                    else
-                                    {
-                                            i++;
-                                    }
-                            }
-     
-     
-                    }
-     
-                    //if (//if zombie count = 0 )
-                    {
-                            //theState.theState = theState.win;
-                    }
-                    if (theHero->hp <= 0)
-                    {
-                            theState.theState = theState.defeat;
-                            // When life count = 0, go to 'Defeat' page -> Credit
-                            //theHero->hp = 0;
-                    }
-                   
-            }
-            else if(theState.theState == theState.defeat)
-            {
-                    if(!SetTimeDefeat)
-                    {
-                            time->resetTime(IndexTime[0]);
-                            SetTimeDefeat = true;
-                    }
-                    else if(time->testTime(IndexTime[0]))
-                    {
-                            theState.theState = theState.credit;
-                            SetTimeDefeat = false;
-                           
-                    }
-                   
-     
-            }
-     
-            if(theState.theState == theState.credit)
-            {
-				if(!SetTimeCredit)
-				{
-
-	if (theState.theState == State::level)
-	{
-
-					if (!theCollision.CheckCollision(go, other, false, false, false, false))
-					{
-						i = go->CollisionEvent(*other, ArrayofEntities);        //Run collision code, setting i to the iterator which is returned.
-						return;
-						//break;
-					}
-					else
-					{
-						i++;
-					}
-				}
-				else
-				{
-					i++;
 
 		theHero->HeroRotation = AnglefromHerotoMouse();
 		ConstrainHero();
@@ -237,9 +80,6 @@ void DM2231_Model::Update(void)
 			}
 		}
 
-		//if (//if zombie count = 0 )
-		{
-			//theState.theState = theState.win;
 		if(getZombieCount() == 0)
 		{
 			if(level == 5)
@@ -255,21 +95,6 @@ void DM2231_Model::Update(void)
 	}
 	else if(theState.theState == theState.defeat)
 	{
-		//if(!SetTimeDefeat)
-		//{
-		//	time->resetTime(IndexTime[0]);
-		//	SetTimeDefeat = true;
-		//}
-		//else if(time->testTime(IndexTime[0]))
-		//{
-		//	theState.theState = theState.credit;
-
-		//	SetTimeDefeat = false;
-		//	ArrayofEntities.clear();
-		//	SetStart();
-		//}
-
-
 		if(!SetTimeDefeat)
 		{
 			time->resetTime(IndexTime);
@@ -315,10 +140,6 @@ void DM2231_Model::Update(void)
 			SetStart(level);
 		}
 	}
-
-	theUI.SetHP(theHero->hp,100);
-
-	zombiecount = Counter;
 	else if(theState.theState == theState.PageToLearnShop)
 	{
 		if(!SetTimePageToLearnShop)
@@ -336,10 +157,6 @@ void DM2231_Model::Update(void)
 
 }
 
-
-
-
-
 int DM2231_Model::getZombieCount()
 {
 	auto it = ArrayofEntities.begin();
@@ -352,6 +169,15 @@ int DM2231_Model::getZombieCount()
 		}
 	}
 	return Counter;
+}
+
+void DM2231_Model::setZombieCount(int z)
+{	
+	zombiecount = z;
+}
+
+void DM2231_Model::UpdateLimit()
+{
 }
 
 float DM2231_Model::AnglefromHerotoMouse()
@@ -389,9 +215,29 @@ void DM2231_Model::SetStart(int level)
 	thegun.SetPlayer(*theHero);
 	thegun.SetArray(ArrayofEntities);
 	thegun.SetFactory(theEntityFactory);
-	for (int zombie = 0; zombie < 2; zombie++)
+
+	for (int zombie = 0; zombie < 5 ; zombie++)
 	{
 		ArrayofEntities.push_back(theEntityFactory.Create(ZOMBIE));
 	}
+
+	ArrayofEntities.push_back(theEntityFactory.Create(CASINO));
+	ArrayofEntities.back()->SetPos(300,300);
+	
+	//CHECKING	
+	cout << "Zombies: " << zombie << endl;
 }
 
+//void DM2231_Model::PrintName(float x, float y, float z, const GLuint &base, char *fmt, ...)
+//{
+//		glBegin(GL_QUADS);
+//			glColor4f(1.0f, 1.0f, 1.0f, 0.8f);
+//			glVertex2f(71.0f, 62.0f);
+//			glVertex2f(169.0f, 62.0f);
+//			glVertex2f(169.0f, 91.0f);
+//			glVertex2f(71.0f, 91.0f);
+//		glEnd();
+//		
+//		
+//		ui->printw(theHero->GetX(), theHero->GetY(), 0, base,theHero->playername.c_str());
+//}

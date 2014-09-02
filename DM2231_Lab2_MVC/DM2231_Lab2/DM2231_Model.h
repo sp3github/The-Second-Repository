@@ -14,6 +14,10 @@
 #include "MVCtime.h"
 #include "Zombies.h"
 #include "Obstacle.h"
+#include <string>
+#include <iostream>
+
+using namespace std;
 
 
 #define PI 3.1415f
@@ -33,6 +37,8 @@ public:
 	vector<CEntity*> ArrayofEntities;
 	CEntityFactory theEntityFactory;
 
+	UI * ui;//printing 
+
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
 
@@ -50,9 +56,6 @@ public:
 	void ConstrainHero();
 
 	mvcTime * time;
-
-	void setZombieCount(int z);
-
 	short int IndexTime;
 
 	bool SetTimeDefeat;
@@ -62,7 +65,15 @@ public:
 
 	void SetStart(int level);
 
-	int getZombieCount();
-
 	short level;
+
+	//zombie
+	int zombie;
+	int zombiecount;
+	void setZombieCount(int z);
+	int getZombieCount();
+	void UpdateLimit();
+
+	//name
+	//void PrintName(float x, float y, float z, const GLuint &base, char *fmt, ...);
 };

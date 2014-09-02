@@ -4,6 +4,7 @@
 #include "DM2231_Model.h"
 #include "Mouse.h"
 
+
 class DM2231_View
 {
 public:
@@ -16,8 +17,6 @@ public:
 	BOOL CreateGLWindow(char* title, int width, int height, int bits);
 	GLvoid ReSizeGLScene(GLsizei width, GLsizei height);		// Resize And Initialize The GL Window
 	GLvoid KillGLWindow(GLvoid);
-
-
 
 private:
 	DM2231_Model* theModel;
@@ -55,7 +54,11 @@ public:
 	void setFullScreen(bool m_bFullScreen);
 
 	bool GetKeys(char s);
+	void SetKeys(char g);
 
 	bool LMKeyDown;
 	bool RMKeyDown;
+
+	//name
+	void PrintName(float x, float y, float z, const GLuint &base, char *fmt, ...);
 };

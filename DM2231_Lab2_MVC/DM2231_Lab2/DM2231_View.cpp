@@ -95,10 +95,13 @@ BOOL DM2231_View::Draw(void)
 	case (theModel->theState.states::menu):
 		{
 			theModel->theUI.RenderUI(theUI->STARTSCREEN, base);
+			glRasterPos3f (20,600,1);
+			glPrint(theModel->theHero->playername.c_str());
 			break;
 		}
 	case (theModel->theState.states::level):
 		{
+			theModel->theHero->GetBase(base);
 			theModel->TestMap.RenderTileMap();
 
 			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
@@ -412,8 +415,6 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	m_iWindows_Width = width; 
 	m_iWindows_Height = height;
 
-
-
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.menuTexture[0],"Images/Menu.tga"))
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.levelTexture[0], "Images/Level.tga"))
@@ -430,6 +431,7 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.defeatTexture[0], "Images/Defeat.tga"))
 		return false;
+
 
 	return TRUE; // Success
 }
@@ -585,3 +587,9 @@ bool DM2231_View::GetKeys(char s)
 	else 
 		return false;
 }
+
+void DM2231_View::SetKeys(char g)
+{
+	keys[g] = false;
+	keys[g-32] = false;
+}	

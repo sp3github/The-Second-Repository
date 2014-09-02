@@ -31,8 +31,35 @@ void CPlayerInfo::Init(void)
 /****************************************************************************************************
    Draw the hero
  ****************************************************************************************************/
-void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
+GLvoid CPlayerInfo::printw(float x, float y, float z,const GLuint &base,const char *fmt, ...)					// Custom GL "Print" Routine
+{
 	glPushMatrix();
+	glRasterPos3f (x, y, z);
+	char		text[256];								// Holds Our String
+	va_list		ap;										// Pointer To List Of Arguments
+
+	if (fmt == NULL)									// If There's No Text
+		return;											// Do Nothing
+
+	va_start(ap, fmt);									// Parses The String For Variables
+	vsprintf(text, fmt, ap);						// And Converts Symbols To Actual Numbers
+	va_end(ap);											// Results Are Stored In Text
+
+	glPushAttrib(GL_LIST_BIT);							// Pushes The Display List Bits
+	glListBase(base - 32);								// Sets The Base Character to 32
+	glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);	// Draws The Display List Text
+	glPopAttrib();										// Pops The Display List Bits
+	glPopMatrix();
+}
+void CPlayerInfo::GetBase(const GLuint &base)
+{
+	this->base = base;
+}
+void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) 
+{	
+
+	glPushMatrix();
+	
 	glTranslatef(static_cast<float>(GetX()), static_cast<float>(GetY()), 0);
 	glTranslatef(static_cast<float>(tile_size * 0.5), static_cast<float>(tile_size * 0.5),0);
 	glRotatef(HeroRotation,0,0,1);
@@ -43,7 +70,6 @@ void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glColor3f(1,0,0);
-	//glBindTexture(GL_TEXTURE_2D, heroTexture[0].texID);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.25 * heroAnimationCounter, 1); glVertex2f(0, 0);
 	glTexCoord2f(0.25 * heroAnimationCounter, 0); glVertex2f(0, tile_size);
@@ -55,6 +81,12 @@ void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
 	glDisable( GL_BLEND );
 	glDisable( GL_TEXTURE_2D );
 	glPopMatrix();
+
+	glPushMatrix();
+	glColor3f(1,0,0);
+	printw(GetX()-25,GetY(),0,base,playername.c_str());
+	glPopMatrix();
+	
 }
 
 // Set Animation Counter of the player

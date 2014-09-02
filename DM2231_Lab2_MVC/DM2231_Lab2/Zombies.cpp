@@ -133,21 +133,18 @@ void CZombies::render(int mapOffset_x, int mapOffset_y)
 {	
 	//Zombies
 
-	cout << "NORMAL" << endl;
+	cout << "Zombie" << endl;
 
 	glPushMatrix();
 	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
+	glEnable(GL_TEXTURE_2D);		
 	glColor3f(0,1,0);
-	//glBindTexture(GL_TEXTURE_2D, zombieTexture[0].texID);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0,0); glVertex2f(0,0);
 	glTexCoord2f(1,1); glVertex2f(0,tile_size);
 	glTexCoord2f(1,0); glVertex2f(tile_size,tile_size);
 	glTexCoord2f(0,1); glVertex2f(tile_size,0);
 	glEnd();
-	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 }

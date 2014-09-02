@@ -6,7 +6,7 @@ using namespace std;
 Sound::Sound(void)
 : theSoundEngine(NULL)
 , Menu(NULL)
-, Shop(NULL)
+, Subpage(NULL)
 , Level(NULL)
 , Pistol(NULL)
 , Shotgun(NULL)
@@ -16,9 +16,8 @@ Sound::Sound(void)
 , Health(NULL)
 , Ammo(NULL)
 , Slowdown(NULL)
-, Credit(NULL)
+, Score(NULL)
 , Zombie(NULL)
-, Mouse(NULL)
 {
 }
 
@@ -35,7 +34,7 @@ bool Sound::InitSound(void)
 			return false;		// Error starting up the sound engine
 }
 
-void Sound::RenderSound(SoundType Sounds)
+void Sound::PlaySound(SoundType Sounds)
 {
 	switch(Sounds)
 	{
@@ -55,19 +54,19 @@ void Sound::RenderSound(SoundType Sounds)
 		}
 		break;
 
-		case SHOP:
+		case SUBPAGE:
 		// Plays sub page sound
-		if(Shop == NULL)
+		if(Subpage == NULL)
 		{
-			Shop = theSoundEngine->play2D(("Sound/Subpage.wav"), false, true);
+			Subpage = theSoundEngine->play2D(("Sound/Subpage.wav"), false, true);
 		}
-		if (Shop->getIsPaused() == true)
+		if (Subpage->getIsPaused() == true)
 		{
-			Shop->setIsPaused(false);
+			Subpage->setIsPaused(false);
 		}
-		else if (Shop->isFinished() == true)
+		else if (Subpage->isFinished() == true)
 		{
-			Shop = NULL;
+			Subpage = NULL;
 		}
 		break;
 
@@ -215,19 +214,19 @@ void Sound::RenderSound(SoundType Sounds)
 		}
 		break;
 
-		case CREDIT:
+		case SCORE:
 		// Plays the score page sound
-		if(Credit == NULL)
+		if(Score == NULL)
 		{
-			Credit = theSoundEngine->play2D(("Sound/Score.wav"), false, true);
+			Score = theSoundEngine->play2D(("Sound/Score.wav"), false, true);
 		}
-		if (Credit->getIsPaused() == true)
+		if (Score->getIsPaused() == true)
 		{
-			Credit->setIsPaused(false);
+			Score->setIsPaused(false);
 		}
-		else if (Credit->isFinished() == true)
+		else if (Score->isFinished() == true)
 		{
-			Credit = NULL;
+			Score = NULL;
 		}
 		break;
 
@@ -244,22 +243,6 @@ void Sound::RenderSound(SoundType Sounds)
 		else if (Zombie->isFinished() == true)
 		{
 			Zombie = NULL;
-		}
-		break;
-
-		case MOUSE:
-		// Plays mouse clicking sound
-		if(Mouse == NULL)
-		{
-			Mouse = theSoundEngine->play2D(("Sound/Mouse.wav"), false, true);
-		}
-		if  (Mouse->getIsPaused() == true)
-		{
-			Mouse->setIsPaused(false);
-		}
-		else if (Mouse->isFinished() == true)
-		{
-			Mouse = NULL;
 		}
 		break;
 	}

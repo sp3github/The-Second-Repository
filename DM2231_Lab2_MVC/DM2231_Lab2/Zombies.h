@@ -32,15 +32,10 @@ private:
 
 	const int hero_x;
 	const int hero_y;
-
-	int i;
-
 public:
 	CZombies(void);
 	~CZombies(void);
 	//Overloaded Constructor
-
-	TextureImage zombieTexture[1];
 
 	int CalculateDistance(int hero_x, int hero_y);
 
@@ -63,7 +58,6 @@ public:
 	void drawzombie(int x, int y);
 	vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
-	
 	mvcTime * Timer;
 	int TimeIndex;
 	bool Collided;

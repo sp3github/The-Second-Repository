@@ -3,16 +3,22 @@
 #include <vector>
 #include "Entity.h"
 #include "MVCtime.h"
+#include <string>
+#include <iostream>
+
+using namespace std;
 
 class CPlayerInfo : public CEntity
 {
 public:
 	CPlayerInfo(void);
 	~CPlayerInfo(void);
+	GLuint base;
+	void GetBase(const GLuint &base);
 
 	float HeroRotation;
 
-	TextureImage heroTexture[1];
+	TextureImage HeroTexture[3];
 
 	// Render the Hero onto the screen
 	void render(int mapOffset_x, int mapOffset_y);
@@ -42,6 +48,7 @@ public:
 
 	int ammo;
 
+	string playername;
 private:
 
 	bool heroAnimationInvert;
@@ -49,4 +56,6 @@ private:
 
 	mvcTime *time;
 	int index;
+	GLvoid printw(float x, float y, float z,const GLuint &base,const char *fmt, ...);
+
 };
