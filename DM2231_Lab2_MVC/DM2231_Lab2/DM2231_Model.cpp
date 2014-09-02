@@ -6,11 +6,13 @@
 DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 {
 	time = mvcTime::getInstance();
+	level = 1;
 
 	IndexTime = time->insertNewTime(3000);
 	SetTimeDefeat = false;
 	SetTimeCredit = false;
 	SetTimeWin = false;
+	SetTimePageToLearnShop = false;
 }
 
 DM2231_Model::~DM2231_Model(void)
@@ -60,7 +62,6 @@ void DM2231_Model::Update(void)
 				CEntity * other = (*i);
 				if (go != other)
 				{
-					cout << go->ID << endl;
 					if (!theCollision.CheckCollision(go, other, false, false, false, false)) //Checks if it has collided go with other
 					{
 						i = go->CollisionEvent(*other, ArrayofEntities);        //Run collision code, setting i to the iterator which is returned.
@@ -81,9 +82,17 @@ void DM2231_Model::Update(void)
 		if(getZombieCount() == 0)
 		{
 			if(level == 5)
+			{
+				DeleteVectorButHero();
 				theState.theState = theState.win;
+			}
 			else
+			{
+				DeleteVectorButHero();
+				level += 1;
+				SetStart(level);
 				theState.theState = theState.PageToLearnShop;
+			}
 		}
 		if (theHero->hp <= 0)
 		{
@@ -97,6 +106,7 @@ void DM2231_Model::Update(void)
 		{
 			time->resetTime(IndexTime);
 			SetTimeDefeat = true;
+			
 		}
 		else if(time->testTime(IndexTime))
 		{
@@ -104,8 +114,6 @@ void DM2231_Model::Update(void)
 			TestMap.mapOffset_y = 0;
 			theState.theState = theState.credit;
 			SetTimeDefeat = false;
-			ArrayofEntities.clear();
-			theHero->Init();
 		}
 	}
 	else if(theState.theState == theState.win)
@@ -117,9 +125,8 @@ void DM2231_Model::Update(void)
 		}
 		else if(time->testTime(IndexTime))
 		{
-			theState.theState = theState.shop;
+			theState.theState = theState.PageToLearnShop;
 			SetTimeWin = false;
-			ArrayofEntities.clear();
 		}
 	}
 	else if(theState.theState == theState.credit)
@@ -131,11 +138,8 @@ void DM2231_Model::Update(void)
 		}
 		else if(time->testTime(IndexTime))
 		{
-			level += 1;
 			theState.theState = theState.menu;
 			SetTimeCredit = false;
-			ArrayofEntities.clear();
-			SetStart(level);
 		}
 	}
 	else if(theState.theState == theState.PageToLearnShop)
@@ -149,7 +153,6 @@ void DM2231_Model::Update(void)
 		{
 			theState.theState = theState.shop;
 			SetTimePageToLearnShop = false;
-			ArrayofEntities.clear();
 		}
 	}
 
@@ -210,7 +213,21 @@ void DM2231_Model::SetStart(int level)
 	thegun.SetFactory(theEntityFactory);
 	for (int zombie = 0; zombie < 2; zombie++)
 	{
-		ArrayofEntities.push_back(theEntityFactory.Create(ZOMBIE));
+		//ArrayofEntities.push_back(theEntityFactory.Create(ZOMBIE));
 	}
 }
 
+void DM2231_Model::DeleteVectorButHero()
+{
+	for(auto it = ArrayofEntities.begin(); it != ArrayofEntities.end();)
+	{
+		if((*it)->ID != PLAYER)
+		{
+			it = ArrayofEntities.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+}

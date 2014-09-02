@@ -52,11 +52,10 @@ CEntity* CEntityFactory::Create(Entity id)
 			theNewItems->ID = ZOMBIE;
 		}
 		break;
-	case CASINO:
+	case BUILDING:
 		{
-			theNewItems = new Casino;
-			theNewItems->ID = CASINO;
-
+			theNewItems = new Building;
+			theNewItems->ID = BUILDING;
 		}
 		break;
 	default:

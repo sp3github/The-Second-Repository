@@ -50,7 +50,6 @@ bool CMap::LoadMap(const string mapName)
 		printf("Map (%s) has been successfully loaded!\n", mapName.c_str());
 		return true;
 	}
-
 	return false;
 }
 
@@ -138,6 +137,9 @@ void CMap::LoadLevel(int level)
 		LoadMap("Levels\\MapDesign2.csv");
 
 		break;
+	case 2:
+		LoadMap("Levels\\MapDesign3.csv");
+		break;
 	default:
 		break;
 	}
@@ -206,8 +208,25 @@ bool CMap::LoadItems(vector<CEntity*> &theArray, CEntityFactory &theFac)
 			switch (theScreenMap[i][j])
 			{
 			case 2:
-				theArray.push_back(theFac.Create(PLAYER));
-				theArray.back()->SetPos(j * TILE_SIZE, i * TILE_SIZE);
+				{
+					bool Found = false;
+					CEntity * hero = NULL;
+					for(auto it = theArray.begin(); it != theArray.end(); it++)
+					{
+						if((*it)->ID == PLAYER)
+						{
+							Found = true;
+							hero = (*it);
+							break;
+						}
+					}
+					if(!Found)
+					{
+						theArray.push_back(theFac.Create(PLAYER));
+						hero = theArray.back();
+					}
+					hero->SetPos(j * TILE_SIZE, i * TILE_SIZE);
+				}
 				break;
 			case 3:
 				theArray.push_back(theFac.Create(HEALTH));
@@ -225,11 +244,13 @@ bool CMap::LoadItems(vector<CEntity*> &theArray, CEntityFactory &theFac)
 				theArray.push_back(theFac.Create(ZOMBIE));
 				theArray.back()->SetPos(j * TILE_SIZE, i * TILE_SIZE);
 				break;
-
+			//case 1:
 			case 10:
 			case 11:
 			case 12:
 			case 13:
+				theArray.push_back(theFac.Create(BUILDING));
+				theArray.back()->SetPos(j * TILE_SIZE, i * TILE_SIZE);
 				break;
 			default:
 				break;

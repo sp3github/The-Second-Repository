@@ -68,11 +68,6 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 {
 	switch (other.ID)
 	{
-	case HEALTH:
-		{
-
-			break;
-		}
 	case ZOMBIE:
 		{
 			other.hp -= power * 0.01;//Effect
@@ -114,6 +109,23 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 			it = theArray.begin() + index;
 			return it;
 			
+		}
+	case BUILDING:
+		{
+			int Counter, bulletindex;
+			auto it = theArray.begin();
+			for (it = theArray.begin(), Counter = 0; it != theArray.end();it++, Counter++)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+				if(this == go)
+				{
+					bulletindex = Counter;
+					break;
+				}
+			}
+			this->~bullet();
+			return theArray.erase(theArray.begin() + bulletindex);
 		}
 	default:
 		break;

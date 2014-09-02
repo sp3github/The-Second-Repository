@@ -9,7 +9,7 @@ public:
 	CAmmo(void);
 	~CAmmo(void);
 
-	void update();
+	void update(float dt);
 	void render(int mapOffset_x, int mapOffset_y);
 
 };

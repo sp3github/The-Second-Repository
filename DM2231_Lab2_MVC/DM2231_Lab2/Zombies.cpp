@@ -13,7 +13,7 @@ CZombies::CZombies(void)
 	Set_Y(rand()% 600);  
 
 	vel.Set(0.5,0.5,0.0);
-	movementspeed = 0;
+	movementspeed = 100;
 	pos.Set(GetX(), GetY());
 	Timer = mvcTime::getInstance();
 	TimeIndex = Timer->insertNewTime(50);
@@ -105,35 +105,10 @@ void CZombies::update(int herox, int heroy, int mapOffset_x, int mapOffset_y, fl
 			Set_Y(pos.y);
 		}
 	}
-
-	Vector3D<float> vel;
-	Vector3D<float> pos;
-
-	vel.Set(0.5,0.5,0.5);
-
-	Vector3D<float> HeroPos(herox,heroy);
-	Vector3D<float> ZombiePos(GetX(), GetY());
-
-	Vector3D<float> theDiff((HeroPos * dt) - ZombiePos*dt);
-
-	if(theDiff.Magnitude() > 0.5)
-		theDiff.Normalize();
-	vel += theDiff;
-	
-	pos.Set(GetX(),GetY());
-	pos += vel;
-
-	Set_X(pos.x);
-	Set_Y(pos.y);
-
-
 }
 
 void CZombies::render(int mapOffset_x, int mapOffset_y)
 {	
-	//Zombies
-
-	cout << "NORMAL" << endl;
 
 	glPushMatrix();
 	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
@@ -181,19 +156,28 @@ vector<CEntity*>::iterator  CZombies::CollisionEvent(CEntity &other, vector<CEnt
 			other.CollisionEvent(*this,theArray);
 			break;
 		}
+	case BUILDING:
+		{
+
+			bounce = true;
+			BounceDir = ((pos) - (Vector3D<float>(GetX(),GetY()))).Normalize() * movementspeed;
+		
+			Timer->resetTime(TimeIndex);
+			Timer->changeLimit(TimeIndex, 500);
+			break;
+		}
 	default:
 		break;
 	}
 	for (auto it = theArray.begin(); it != theArray.end(); it++)
-			{
-				CEntity *go = NULL;
-				go = (*it);
-				if (go == this)
-				{
-					return it + 1;
-				}
-
-			}
+	{
+		CEntity *go = NULL;
+		go = (*it);
+		if (go == this)
+		{
+			return it + 1;
+		}
+	}
 }
 
 void CZombies::setZombie(ZombieStates zombieState)

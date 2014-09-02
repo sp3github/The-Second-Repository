@@ -111,7 +111,9 @@ BOOL DM2231_View::Draw(void)
 		}
 	case (theModel->theState.states::shop) :
 		{
+			
 			theModel->theUI.RenderUI(theUI->SHOP, base);
+			theModel->theUI.RenderUI(theUI->LEVEL,base);
 			break;
 		}
 	case (theModel->theState.states::credit) :

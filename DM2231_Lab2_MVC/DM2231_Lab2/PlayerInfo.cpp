@@ -140,7 +140,6 @@ void CPlayerInfo::moveMeUpDown(bool mode, float timeDiff, float movementspeed)
 	{
 		Set_Y( GetY() + (int) (movementspeed * timeDiff) );
 	}
-	cout<<"My Y Pos is: "<<GetY()<<endl;
 }
 
 void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed)
@@ -161,7 +160,6 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 		if (GetAnimationCounter() > 3)
 			SetAnimationCounter( 0 );
 	}
-	cout<<"My X Pos is: "<<GetX()<<endl;
 }
 
 void CPlayerInfo::update(float dt)
@@ -185,7 +183,7 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 			{
 				this->hp = 0;
 			}
-			if(this->hp > 100)
+			else if(this->hp > 100)
 			{
 				this->hp = 100;
 			}
@@ -263,6 +261,7 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 			this->hp -= 10;
 			if(this->hp < 0)
 				hp = 0;
+			cout<<"HEALTH:"<<this->hp<<endl;
 
 			CZombies * zombie;
 			zombie = (dynamic_cast<CZombies*>(&other));
@@ -272,25 +271,30 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 		
 			zombie->Timer->resetTime(zombie->TimeIndex);
 			zombie->Timer->changeLimit(zombie->TimeIndex, 500);
-
-			for(auto it = theArray.begin(); it != theArray.end(); it++)
-			{
-				if((*it) == this)
-				{
-					return it + 1;
-				}
-			}
 		}
 		break;
+	case BUILDING:
+		{
+			
+			break;
+		}
 	default:
 			for(auto it = theArray.begin(); it != theArray.end(); it++)
 			{
 				CEntity *go = NULL;
 				go = (*it);
 
-				if(go->ID == this->ID && go->GetX() == this->GetX() && go->GetY() == this->GetY())
+				if((*it) = this)
 					return it + 1;
 			}
-		break;
+			break;
+	}
+
+	for(auto it = theArray.begin(); it != theArray.end(); it++)
+	{
+		if((*it) == this)
+		{
+			return it + 1;
+		}
 	}
 }

@@ -215,11 +215,11 @@
     <ClInclude Include="Casino.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Building.h">
-      <Filter>Source Files\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="EntitiesHeader.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

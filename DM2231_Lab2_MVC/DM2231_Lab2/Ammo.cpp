@@ -10,7 +10,7 @@ CAmmo::~CAmmo(void)
 {
 }
 
-void CAmmo::update()
+void CAmmo::update(float dt)
 {
 }
 

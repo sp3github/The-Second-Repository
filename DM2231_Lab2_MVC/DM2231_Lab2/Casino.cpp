@@ -20,7 +20,6 @@ void Casino::Spawn()
 
 void Casino::render(int mapOffset_x, int mapOffset_y)
 {	
-	cout << "CASINO" << endl; 
 	glPushMatrix();
 	glTranslatef(GetX()- mapOffset_x,GetY() - mapOffset_y, 0);
 		glEnable(GL_TEXTURE_2D);

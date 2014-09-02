@@ -65,4 +65,6 @@ public:
 	int getZombieCount();
 
 	short level;
+
+	void DeleteVectorButHero();
 };
