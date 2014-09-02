@@ -50,9 +50,7 @@ BOOL DM2231_View::Draw(void)
 			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
 			{
 				(*it)->render(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
-			//	(*it)->renderN(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
-			//	(*it)->renderF(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
-			//	(*it)->renderS(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
+
 			}
 			theModel->thegun.render();
 			theModel->theUI.RenderUI(theUI->LEVEL);
@@ -67,21 +65,21 @@ BOOL DM2231_View::Draw(void)
 			// Credit page -> Menu
 			theModel->theUI.RenderUI(theUI->CREDIT);
 			// Input Timer here
-			//theModel->theState.theState=theModel->theState.menu;
+
 			break;
 		}
 	case (theModel->theState.states::win) :
 		{
 			theModel->theUI.RenderUI(theUI->WIN);
 			// Input Timer here
-			theModel->theState.theState=theModel->theState.credit;
+
 			break;
 		}
 	case (theModel->theState.states::defeat) :
 		{
 			theModel->theUI.RenderUI(theUI->DEFEAT);
 			// Input Timer here
-			//theModel->theState.theState=theModel->theState.credit;
+
 			break;
 		}
 

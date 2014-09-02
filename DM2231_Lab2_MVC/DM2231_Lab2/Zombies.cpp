@@ -115,7 +115,8 @@ void CZombies::update(int herox, int heroy, int mapOffset_x, int mapOffset_y, fl
 
 	Vector3D<float> theDiff((HeroPos * dt) - ZombiePos*dt);
 
-	theDiff.Normalize();
+	if(theDiff.Magnitude() > 0.5)
+		theDiff.Normalize();
 	vel += theDiff;
 	
 	pos.Set(GetX(),GetY());
@@ -186,10 +187,25 @@ vector<CEntity*>::iterator  CZombies::CollisionEvent(CEntity &other, vector<CEnt
 			}
 }
 
-
-
-
 void CZombies::setZombie(ZombieStates zombieState)
 {
-	
+	//switch (zombieState)
+	//{
+	//case normal:
+	//	{
+	//	
+	//	}
+	//	break;
+	//}
+
+	//case fast:
+	//	{
+	//	
+	//	}
+	//	break;
+
+	//	case slow :
+	//	{
+	//	}
+	//	break;
 }

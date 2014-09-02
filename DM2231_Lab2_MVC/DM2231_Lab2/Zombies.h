@@ -50,8 +50,12 @@ public:
 	bool isDead();
 	void setStats(int health, int moneysteal);
 	
+
+
 	void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
 	void render(int mapOffset_x, int mapOffset_y);
+
+	//void update(int herox, int heroy, float dt);
 
 	void drawzombie(int x, int y);
 	vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);

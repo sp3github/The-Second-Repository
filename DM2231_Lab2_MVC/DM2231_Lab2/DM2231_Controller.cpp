@@ -38,7 +38,42 @@ bool DM2231_Controller::Init(void)
 	else
 		theView->setFullScreen( true );
 
+
+	theModel->TestMap.LoadLevel(1);
+	theModel->TestMap.LoadItems(theModel->ArrayofEntities, theModel->theEntityFactory);
+
+	for (auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
+	{
+		if ((*it)->ID == PLAYER)
+		{
+			theModel->theHeroEntity = (*it);
+			theModel->theHero = (dynamic_cast<CPlayerInfo*>(*it));
+			break;
+		}
+	}
+
+
+	theModel->thegun.SetPlayer(*theModel->theHero);
+	theModel->thegun.SetArray(theModel->ArrayofEntities);
+	theModel->thegun.SetFactory(theModel->theEntityFactory);
+	
+	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(CASINO));
+	theModel->ArrayofEntities.back()->SetPos(300,300);
+	theModel->theCasino = (dynamic_cast<Casino*>(theModel->ArrayofEntities.back()));
+
+
+	for (theModel->setZombieCount(0); theModel->getZombieCount() < theModel->zombie; theModel->zombiecount++)
+	{
+		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
+
+		cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << theModel->zombie << endl;
+		
+	}
+
+
+
 	theModel->SetStart();
+
 
 	return true;
 }
@@ -146,31 +181,14 @@ bool DM2231_Controller::ProcessInput(void)
 			{
 				theModel->thegun.SetGun(shotgun);
 			}
-
-			if (theView->GetKeys('4'))
-			{
-				
-			}
-			if (theView->GetKeys('5'))
-			{
-				
-			}
-			if (theView->GetKeys('6'))
-
-			{
-				
-			}
 			
 			if (theView->GetKeys('z'))
 			{
-				theModel->theObstacle->zombiecount--;
-				
-
+				theModel->zombie--;
 			}
 			if (theView->GetKeys('x'))
 			{
-				theModel->theObstacle->zombiecount++;
-				
+				theModel->zombie++;
 			}
 			if(theView->LMKeyDown)
 			{

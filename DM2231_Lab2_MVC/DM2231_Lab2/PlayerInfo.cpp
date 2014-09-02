@@ -283,5 +283,15 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 			}
 		}
 		break;
+	default:
+			for(auto it = theArray.begin(); it != theArray.end(); it++)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+
+				if(go->ID == this->ID && go->GetX() == this->GetX() && go->GetY() == this->GetY())
+					return it + 1;
+			}
+		break;
 	}
 }
