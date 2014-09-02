@@ -3,7 +3,7 @@
 
 Casino::Casino(void)
 {
-	tile_size = 75;
+	tile_size = 80;
 	maxzombiecount = 5;
 }
 

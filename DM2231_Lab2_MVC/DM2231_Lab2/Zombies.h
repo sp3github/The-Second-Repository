@@ -58,7 +58,6 @@ public:
 	void drawzombie(int x, int y);
 	vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
-	
 	mvcTime * Timer;
 	int TimeIndex;
 	bool Collided;

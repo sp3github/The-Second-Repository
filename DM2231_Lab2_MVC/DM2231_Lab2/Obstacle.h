@@ -1,9 +1,8 @@
 #pragma once
-
+#include "Casino.h"
 #include "EntitiesHeader.h"
 #include "EntityFactory.h"
 #include <vector>
-
 
 class CObstacle : public CEntity 
 {

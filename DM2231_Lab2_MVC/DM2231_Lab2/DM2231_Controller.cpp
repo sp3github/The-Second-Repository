@@ -147,7 +147,6 @@ bool DM2231_Controller::ProcessInput(void)
 			{
 				theModel->thegun.changestate(shotgun);
 			}
-			
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
@@ -170,6 +169,22 @@ bool DM2231_Controller::ProcessInput(void)
 				}
 				theView->LMKeyDown = false;
 			}
+
+			for(int i = 65; i < 90; i++)
+			{
+				if(theView->GetKeys(i))
+				{	
+
+						theModel->theHero->playername.push_back(i);
+						theView->SetKeys(i);
+				}
+
+				if (theView->GetKeys('p'))
+				{
+					theModel->theHero->playername.clear();
+				}
+			}
+
 			break;
 		}
 	case (theModel->theState.states::shop) :

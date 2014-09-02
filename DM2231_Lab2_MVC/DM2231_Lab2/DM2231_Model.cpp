@@ -6,12 +6,15 @@
 DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 {
 	time = mvcTime::getInstance();
+
 	level = 1;
+
 
 	IndexTime = time->insertNewTime(3000);
 	SetTimeDefeat = false;
 	SetTimeCredit = false;
 	SetTimeWin = false;
+
 	SetTimePageToLearnShop = false;
 }
 
@@ -158,10 +161,6 @@ void DM2231_Model::Update(void)
 
 }
 
-
-
-
-
 int DM2231_Model::getZombieCount()
 {
 	auto it = ArrayofEntities.begin();
@@ -174,6 +173,15 @@ int DM2231_Model::getZombieCount()
 		}
 	}
 	return Counter;
+}
+
+void DM2231_Model::setZombieCount(int z)
+{	
+	zombiecount = z;
+}
+
+void DM2231_Model::UpdateLimit()
+{
 }
 
 float DM2231_Model::AnglefromHerotoMouse()
@@ -211,11 +219,19 @@ void DM2231_Model::SetStart(int level)
 	thegun.SetPlayer(*theHero);
 	thegun.SetArray(ArrayofEntities);
 	thegun.SetFactory(theEntityFactory);
-	for (int zombie = 0; zombie < 2; zombie++)
+
+	for (int zombie = 0; zombie < 5 ; zombie++)
 	{
 		//ArrayofEntities.push_back(theEntityFactory.Create(ZOMBIE));
 	}
+
+	ArrayofEntities.push_back(theEntityFactory.Create(CASINO));
+	ArrayofEntities.back()->SetPos(300,300);
+	
+	//CHECKING	
+	cout << "Zombies: " << zombie << endl;
 }
+
 
 void DM2231_Model::DeleteVectorButHero()
 {
@@ -231,3 +247,4 @@ void DM2231_Model::DeleteVectorButHero()
 		}
 	}
 }
+

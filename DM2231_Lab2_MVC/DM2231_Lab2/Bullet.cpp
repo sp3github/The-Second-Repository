@@ -36,7 +36,7 @@ void bullet::render(int mapOffset_x, int mapOffset_y)
 	glEnable(GL_BLEND);
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glColor3f(0, 1, 0);
+	glColor3f(1, 0, 0);
 
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 1); glVertex2f(0, 0);
@@ -68,6 +68,11 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 {
 	switch (other.ID)
 	{
+
+	case HEALTH:
+		{
+			break;
+		}
 	case ZOMBIE:
 		{
 			other.hp -= power * 0.01;//Effect
