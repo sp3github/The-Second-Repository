@@ -39,8 +39,8 @@ bool DM2231_Controller::Init(void)
 		theView->setFullScreen( true );
 
 	theModel->SetStart();
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theHero->heroTexture[0],"Images/Hero.tga"))
-		return false;
+	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theHero->heroTexture[0],"Images/Hero.tga"))
+	//	return false;
 
 	return true;
 }
@@ -139,17 +139,17 @@ bool DM2231_Controller::ProcessInput(void)
 			if (theView->GetKeys('1'))
 			{
 				theModel->thegun.changestate(pistol);
-				//theModel->theSound.RenderSound(Sound::PISTOL);
+				theModel->theSound.RenderSound(Sound::PISTOL);
 			}
 			if (theView->GetKeys('2'))
 			{
 				theModel->thegun.changestate(uzi);
-				//theModel->theSound.RenderSound(Sound::UZI);
+				theModel->theSound.RenderSound(Sound::UZI);
 			}
 			if (theView->GetKeys('3'))
 			{
 				theModel->thegun.changestate(shotgun);
-				//theModel->theSound.RenderSound(Sound::SHOTGUN);
+				theModel->theSound.RenderSound(Sound::SHOTGUN);
 			}
 			
 			if(theView->LMKeyDown)
@@ -185,17 +185,17 @@ bool DM2231_Controller::ProcessInput(void)
 		}
 	case (theModel->theState.states::credit) :
 		{
-			//theModel->theSound.RenderSound(Sound::CREDIT);
+			theModel->theSound.RenderSound(Sound::CREDIT);
 			break;
 		}
 	case (theModel->theState.states::win) :
 		{
-			//theModel->theSound.RenderSound(Sound::CREDIT);
+			theModel->theSound.RenderSound(Sound::CREDIT);
 			break;
 		}
 	case (theModel->theState.states::defeat) :
 		{
-			//theModel->theSound.RenderSound(Sound::CREDIT);
+			theModel->theSound.RenderSound(Sound::CREDIT);
 			break;
 		}
 	case (theModel->theState.states::PageToLearnShop):
