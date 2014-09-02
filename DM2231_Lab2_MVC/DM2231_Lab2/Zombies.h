@@ -39,8 +39,9 @@ public:
 	CZombies(void);
 	~CZombies(void);
 	//Overloaded Constructor
-    //CZombies( unsigned int w, unsigned int a, unsigned int d, int h, int st, float spd);
+
 	int CalculateDistance(int hero_x, int hero_y);
+
 	bool bounce;
 	Vector3D<float> BounceDir;
 	void deceasingHealth(int num);
@@ -60,10 +61,10 @@ public:
 	void drawzombie(int x, int y);
 	vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
-
+	
 	mvcTime * Timer;
 	int TimeIndex;
-
+	bool Collided;
 	int zombie;
 
 	void setZombie(ZombieStates zombieState);

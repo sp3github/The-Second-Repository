@@ -38,41 +38,7 @@ bool DM2231_Controller::Init(void)
 	else
 		theView->setFullScreen( true );
 
-
-	theModel->TestMap.LoadLevel(1);
-	theModel->TestMap.LoadItems(theModel->ArrayofEntities, theModel->theEntityFactory);
-
-	for (auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
-	{
-		if ((*it)->ID == PLAYER)
-		{
-			theModel->theHeroEntity = (*it);
-			theModel->theHero = (dynamic_cast<CPlayerInfo*>(*it));
-			break;
-		}
-	}
-
-
-	theModel->thegun.SetPlayer(*theModel->theHero);
-	theModel->thegun.SetArray(theModel->ArrayofEntities);
-	theModel->thegun.SetFactory(theModel->theEntityFactory);
-	
-	theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(CASINO));
-	theModel->ArrayofEntities.back()->SetPos(300,300);
-	theModel->theCasino = (dynamic_cast<Casino*>(theModel->ArrayofEntities.back()));
-
-
-	for (theModel->setZombieCount(0); theModel->getZombieCount() < theModel->zombie; theModel->zombiecount++)
-	{
-		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
-
-		cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << theModel->zombie << endl;
-		
-	}
-
-
-
-	theModel->SetStart();
+	theModel->SetStart(1);
 
 
 	return true;
@@ -171,30 +137,20 @@ bool DM2231_Controller::ProcessInput(void)
 			}
 			if (theView->GetKeys('1'))
 			{
-				theModel->thegun.SetGun(pistol);
+				theModel->thegun.changestate(pistol);
 			}
 			if (theView->GetKeys('2'))
 			{
-				theModel->thegun.SetGun(uzi);
+				theModel->thegun.changestate(uzi);
 			}
 			if (theView->GetKeys('3'))
 			{
-				theModel->thegun.SetGun(shotgun);
+				theModel->thegun.changestate(shotgun);
 			}
 			
-			if (theView->GetKeys('z'))
-			{
-				theModel->zombie--;
-			}
-			if (theView->GetKeys('x'))
-			{
-				theModel->zombie++;
-			}
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
-				//theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
-				//theModel->theBullet.FireBullet();
 				
 			}
 			break;
@@ -218,6 +174,8 @@ bool DM2231_Controller::ProcessInput(void)
 		}
 	case (theModel->theState.states::shop) :
 		{
+			if(theView->GetKeys('1'))
+				theModel->theState.theState = theModel->theState.level;
 			break;
 		}
 	case (theModel->theState.states::credit) :
@@ -229,6 +187,14 @@ bool DM2231_Controller::ProcessInput(void)
 			break;
 		}
 	case (theModel->theState.states::defeat) :
+		{
+			break;
+		}
+	case (theModel->theState.states::PageToLearnShop):
+		{
+			break;
+		}
+	case (theModel->theState.states::subpage):
 		{
 			break;
 		}

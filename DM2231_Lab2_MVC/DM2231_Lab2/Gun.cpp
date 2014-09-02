@@ -1,14 +1,14 @@
 #include "gun.h"
 gun::gun()
 {
+	BulletState = 0;
+	InitGun();
+
 	GunRenderOffset_x = 20;
 	GunRenderOffset_y = 20;
 	tile_size = 10;
 	time = mvcTime::getInstance();
-	index = time->insertNewTime(MilliSecondPerShot);
-	SetGun(pistol);
-
-
+	index = time->insertNewTime(MilliSecondPerShot[BulletState]);
 
 }
 
@@ -52,30 +52,30 @@ bool gun::SetPlayer(CPlayerInfo &theHero)
 void gun::FireGun()
 {
 
-	if (currentBullet > 0)
+	if (currentBullet[BulletState] > 0)
 	{
 
 		if (time->testTime(index))	//Count time
 		{
-			currentBullet -= 1;	//Take away one bullet
+			currentBullet[BulletState] -= 1;	//Take away one bullet
 			//DO BULLET STUFF HERE
 			theArrayofEntities->insert(theArrayofEntities->begin(),(theFactory->Create(BULLET)));
 			theArrayofEntities->front()->SetPos(theHero->GetX(), theHero->GetY());
 			thePointertoBullet = (dynamic_cast<bullet*> (theArrayofEntities->front()));
 			thePointertoBullet->SetAngle(theHero->HeroRotation);
-			thePointertoBullet->SetPower(power);
+			thePointertoBullet->SetPower(power[BulletState]);
 		}
-		prevshot = currentshot;
+		prevshot[BulletState] = currentshot[BulletState];
 	}
 
-	if (currentBullet <= 0)	//AUTO RELOAD
+	if (currentBullet[BulletState] <= 0)	//AUTO RELOAD
 	{
-		currentreload = static_cast<float>(timeGetTime());
+		currentreload[BulletState] = static_cast<float>(timeGetTime());
 		if (reloadC == false){
-			prevreload = currentreload;
+			prevreload[BulletState] = currentreload[BulletState];
 			reloadC = true;
 		}
-		if (currentreload - prevreload >= reloadtime)
+		if (currentreload[BulletState] - prevreload[BulletState] >= reloadtime[BulletState])
 		{
 			ReloadGun();
 			reloadC = false;;
@@ -88,97 +88,79 @@ void gun::ReloadGun()
 	if (bulletCount >= 0)	//CHECK IF YOU HAVE ENOUGH AMMO
 	{
 
-		if (currentBullet >= bulletCount)		//IF LESS BULLET THAN RELOADABLE COUNT, USE ALL BULLETS LEFT
+		if (currentBullet[BulletState] >= bulletCount[BulletState])		//IF LESS BULLET THAN RELOADABLE COUNT, USE ALL BULLETS LEFT
 		{
-			currentBullet += bulletCount;
-			bulletCount = 0;
+			currentBullet[BulletState] += bulletCount[BulletState];
+			bulletCount[BulletState] = 0;
 		}
 		else
 		{
-			bulletCount = bulletCount - (ReloadBullet - currentBullet);
-			currentBullet = ReloadBullet;//ELSE SET CURRENT BULLET TO 30 AND MINUS OFF BULLET COUNT
+			bulletCount[BulletState] = bulletCount[BulletState] - (ReloadBullet[BulletState] - currentBullet[BulletState]);
+			currentBullet[BulletState] = ReloadBullet[BulletState];//ELSE SET CURRENT BULLET TO 30 AND MINUS OFF BULLET COUNT
 
 		}
 	}
 }
 
-void gun::SetGun(GunStates theState)
+void gun::InitGun()
 {
-	switch (theState)
-	{
-	case pistol:
-		bulletCount = 18;
-		currentBullet = 15;
-		ReloadBullet = 15;
+	StateNow = pistol;
+		bulletCount[0] = 18;
+		currentBullet[0] = 15;
+		ReloadBullet[0] = 15;
 
-		power = 1000;
+		power[0] = 1000;
 		firing = false;
-		prevshot = 0;
-		currentshot = 0;
-		currentreload = 0;
-		prevreload = 0;
-		reloadtime = 100;
+		prevshot[0] = 0;
+		currentshot[0] = 0;
+		currentreload[0] = 0;
+		prevreload[0] = 0;
+		reloadtime[0] = 100;
 		reloadC = false;
 
-		MilliSecondPerShot = 400;
+		MilliSecondPerShot[0] = 400;
 
-		totalbullet = bulletCount + currentBullet;
+		totalbullet[0] = bulletCount[0] + currentBullet[0];
 
-		StateNow = pistol;
 
-		time->resetTime(index);//have a time reference
-		time->changeLimit(index, MilliSecondPerShot);//reset time and change limit
 
-		break;
-	case uzi:
-		bulletCount = 60;
-		currentBullet = 30;
-		ReloadBullet = 30;
+		bulletCount[1] = 60;
+		currentBullet[1] = 30;
+		ReloadBullet[1] = 30;
 
-		power = 2000;
+		power[1] = 2000;
 		firing = false;
-		prevshot = 0;
-		currentshot = 0;
-		currentreload = 0;
-		prevreload = 0;
-		reloadtime = 100;
+		prevshot[1] = 0;
+		currentshot[1] = 0;
+		currentreload[1] = 0;
+		prevreload[1] = 0;
+		reloadtime[1] = 100;
 		reloadC = false;
 
-		MilliSecondPerShot = 150;
+		MilliSecondPerShot[1] = 150;
 
-		totalbullet = bulletCount + currentBullet;
-		StateNow = uzi;
-
-		time->resetTime(index);//have a time reference
-		time->changeLimit(index, MilliSecondPerShot);//reset time and change limit
+		totalbullet[1] = bulletCount[1] + currentBullet[1];
 
 
-		break;
-	case shotgun:
-		bulletCount = 9;
-		currentBullet = 9;
-		ReloadBullet = 9;
 
-		power = 3000;
+
+		bulletCount[2] = 9;
+		currentBullet[2] = 9;
+		ReloadBullet[2] = 9;
+
+		power[2] = 3000;
 		firing = false;
-		prevshot = 0;
-		currentshot = 0;
-		currentreload = 0;
-		prevreload = 0;
-		reloadtime = 100;
+		prevshot[2] = 0;
+		currentshot[2] = 0;
+		currentreload[2] = 0;
+		prevreload[2] = 0;
+		reloadtime[2] = 100;
 		reloadC = false;
 
-		MilliSecondPerShot = 700;
+		MilliSecondPerShot[2] = 700;
 
-		totalbullet = bulletCount + currentBullet;
-		StateNow = shotgun;
+		totalbullet[2] = bulletCount[2] + currentBullet[2];
 
-		time->resetTime(index);//have a time reference
-		time->changeLimit(index, MilliSecondPerShot);//reset time and change limit
-
-
-		break;
-	}
 }
 
 void gun::SetArray(vector<CEntity*> & theArrayofEntities)
@@ -189,4 +171,25 @@ void gun::SetArray(vector<CEntity*> & theArrayofEntities)
 void gun::SetFactory(CEntityFactory & theFactory)
 {
 	this->theFactory = &theFactory;
+}
+
+void gun::changestate(GunStates theState)
+{
+	switch (theState)
+	{
+	case pistol:
+		StateNow = pistol;
+		BulletState = 0;
+		break;
+	case uzi:
+		StateNow = uzi;
+		BulletState = 1;
+		break;
+	case shotgun:
+		StateNow = shotgun;
+		BulletState = 2;
+		break;
+	}
+	time->resetTime(index);//have a time reference
+	time->changeLimit(index, MilliSecondPerShot[BulletState]);//reset time and change limit
 }

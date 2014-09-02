@@ -51,21 +51,18 @@ public:
 
 	mvcTime * time;
 
-
-	int zombiecount;
-	int zombie;
-
 	void setZombieCount(int z);
 
-	int IndexTime[10];
+	short int IndexTime;
 
 	bool SetTimeDefeat;
 	bool SetTimeCredit;
+	bool SetTimeWin;
+	bool SetTimePageToLearnShop;
 
-	void SetStart();
+	void SetStart(int level);
 
 	int getZombieCount();
-	void UpdateLimit();
-	void updateZombieCount();
 
+	short level;
 };

@@ -1,5 +1,58 @@
 #include "DM2231_View.h"
 
+//FROM NEHE
+GLvoid DM2231_View::BuildFont(GLvoid)								// Build Our Bitmap Font
+{
+	HFONT	font;										// Windows Font ID
+	HFONT	oldfont;									// Used For Good House Keeping
+
+	base = glGenLists(96);								// Storage For 96 Characters
+
+	font = CreateFont(-24,							// Height Of Font
+		0,								// Width Of Font
+		0,								// Angle Of Escapement
+		0,								// Orientation Angle
+		FW_BOLD,						// Font Weight
+		FALSE,							// Italic
+		FALSE,							// Underline
+		FALSE,							// Strikeout
+		ANSI_CHARSET,					// Character Set Identifier
+		OUT_TT_PRECIS,					// Output Precision
+		CLIP_DEFAULT_PRECIS,			// Clipping Precision
+		ANTIALIASED_QUALITY,			// Output Quality
+		FF_DONTCARE | DEFAULT_PITCH,		// Family And Pitch
+		"Courier New");					// Font Name
+
+	oldfont = (HFONT)SelectObject(hDC, font);           // Selects The Font We Want
+	wglUseFontBitmaps(hDC, 32, 96, base);				// Builds 96 Characters Starting At Character 32
+	SelectObject(hDC, oldfont);							// Selects The Font We Want
+	DeleteObject(font);									// Delete The Font
+}
+
+GLvoid DM2231_View::KillFont(GLvoid)									// Delete The Font List
+{
+	glDeleteLists(base, 96);							// Delete All 96 Characters
+}
+
+GLvoid DM2231_View::glPrint(const char *fmt, ...)					// Custom GL "Print" Routine
+{
+	char		text[256];								// Holds Our String
+	va_list		ap;										// Pointer To List Of Arguments
+
+	if (fmt == NULL)									// If There's No Text
+		return;											// Do Nothing
+
+	va_start(ap, fmt);									// Parses The String For Variables
+	vsprintf(text, fmt, ap);						// And Converts Symbols To Actual Numbers
+	va_end(ap);											// Results Are Stored In Text
+
+	glPushAttrib(GL_LIST_BIT);							// Pushes The Display List Bits
+	glListBase(base - 32);								// Sets The Base Character to 32
+	glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);	// Draws The Display List Text
+	glPopAttrib();										// Pops The Display List Bits
+}
+//END FROM NEHE
+
 DM2231_View::DM2231_View(DM2231_Model* theModel)
 {
 	this->theModel = theModel;
@@ -26,6 +79,7 @@ DM2231_View::DM2231_View(DM2231_Model* theModel)
 DM2231_View::~DM2231_View(void)
 {
 	this->theModel = NULL;
+	KillFont();
 }
 
 // Draw the view
@@ -40,7 +94,7 @@ BOOL DM2231_View::Draw(void)
 	{
 	case (theModel->theState.states::menu):
 		{
-			theModel->theUI.RenderUI(theUI->STARTSCREEN);
+			theModel->theUI.RenderUI(theUI->STARTSCREEN, base);
 			break;
 		}
 	case (theModel->theState.states::level):
@@ -50,74 +104,50 @@ BOOL DM2231_View::Draw(void)
 			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
 			{
 				(*it)->render(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
-
 			}
 			theModel->thegun.render();
-			theModel->theUI.RenderUI(theUI->LEVEL);
+			theModel->theUI.RenderUI(theUI->LEVEL, base);
 			break;
 		}
 	case (theModel->theState.states::shop) :
 		{
+			theModel->theUI.RenderUI(theUI->SHOP, base);
 			break;
 		}
 	case (theModel->theState.states::credit) :
 		{
 			// Credit page -> Menu
-			theModel->theUI.RenderUI(theUI->CREDIT);
+			theModel->theUI.RenderUI(theUI->CREDIT, base);
 			// Input Timer here
 
 			break;
 		}
 	case (theModel->theState.states::win) :
 		{
-			theModel->theUI.RenderUI(theUI->WIN);
+			theModel->theUI.RenderUI(theUI->WIN, base);
 			// Input Timer here
 
 			break;
 		}
 	case (theModel->theState.states::defeat) :
 		{
-			theModel->theUI.RenderUI(theUI->DEFEAT);
+			theModel->theUI.RenderUI(theUI->DEFEAT, base);
 			// Input Timer here
 
 			break;
 		}
+	case(theModel->theState.states::subpage):
+		{
+			theModel->theUI.RenderUI(theUI->SUBPAGE, base);
+		}
+		break;
+	case (theModel->theState.states::PageToLearnShop):
+		{
 
+		}
+		break;
 	}
 
-	//theModel->TestMap.RenderTileMap();
-
-
-
-
-
-
-	
-	//glTranslatef(-1.5f,0.0f,-6.0f); // Move Left 1.5 Units And Into The Screen 6.0
-	//glRotatef(rtri,0.0f,1.0f,0.0f); // Rotate The Triangle On The Y axis ( NEW )
-	//glBegin(GL_TRIANGLES); // Start Drawing A Triangle
-	//	glColor3f(1.0f,0.0f,0.0f); // Set Top Point Of Triangle To Red
-	//	glVertex3f( 0.0f, 1.0f, 0.0f); // First Point Of The Triangle
-	//	glColor3f(0.0f,1.0f,0.0f); // Set Left Point Of Triangle To Green
-	//	glVertex3f(-1.0f,-1.0f, 0.0f); // Second Point Of The Triangle
-	//	glColor3f(0.0f,0.0f,1.0f); // Set Right Point Of Triangle To Blue
-	//	glVertex3f( 1.0f,-1.0f, 0.0f); // Third Point Of The Triangle
-	//glEnd(); // Done Drawing The Triangle
-
-	//glLoadIdentity(); // Reset The Current Modelview Matrix
-	//glTranslatef(1.5f,0.0f,-6.0f); // Move Right 1.5 Units And Into The Screen 6.0
-	//glRotatef(rquad,1.0f,0.0f,0.0f); // Rotate The Quad On The X axis ( NEW )
-	//glColor3f(0.5f,0.5f,1.0f); // Set The Color To Blue One Time Only
-
-	//glBegin(GL_QUADS); // Draw A Quad
-	//	glVertex3f(-1.0f, 1.0f, 0.0f); // Top Left
-	//	glVertex3f( 1.0f, 1.0f, 0.0f); // Top Right
-	//	glVertex3f( 1.0f,-1.0f, 0.0f); // Bottom Right
-	//	glVertex3f(-1.0f,-1.0f, 0.0f); // Bottom Left
-	//glEnd(); // Done Drawing The Quad
-
-	//rtri+=0.2f; // Increase The Rotation Variable For The Triangle ( NEW )
-	//rquad-=0.15f; // Decrease The Rotation Variable For The Quad ( NEW )
 	theModel->theOrtho2DSetUp.SetHUD(false);
 
 	SwapBuffers(hDC); // Swap Buffers (Double Buffering)
@@ -141,6 +171,7 @@ int DM2231_View::InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	glEnable(GL_DEPTH_TEST); // Enables Depth Testing
 	glDepthFunc(GL_LEQUAL); // The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
+	BuildFont();
 	return TRUE; // Initialization Went OK
 }
 
@@ -482,12 +513,6 @@ LRESULT CALLBACK DM2231_View::MsgProc( HWND hWnd, // Handle For This Window
 		}
 	case WM_MOUSEWHEEL:
 		{
-			//if ((short)HIWORD(wParam) < 0)
-			// {
-			//	nZoom--;
-			// }
-			//else
-			//	nZoom++;
 			 return 1;
 		}
 

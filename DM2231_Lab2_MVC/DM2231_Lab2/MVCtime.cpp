@@ -69,7 +69,6 @@ int mvcTime::insertNewTime(int limit)//create a time keeper. All the variables n
 	Ntime->previousTime=timeGetTime();
 	Ntime->timeInterval=0;
 	timer.push_back(Ntime);
-	//std::cout<<"new time inserted at"<<timer.size();
 	return timer.size()-1;
 }
 

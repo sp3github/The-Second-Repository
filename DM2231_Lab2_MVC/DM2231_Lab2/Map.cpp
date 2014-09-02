@@ -170,11 +170,6 @@ void CMap::RenderTileMap(void)
 
 			if (theScreenMap[tileOffset_y + i][tileOffset_x + k] == 1)
 				glColor3f(0,0,0);
-			//	glBindTexture(GL_TEXTURE_2D, TileMapTexture[theMap->theScreenMap[i][tileOffset_x + k]].texID);
-			//else if (theMap->theScreenMap[i][tileOffset_x + k] == 2)
-			//	glBindTexture(GL_TEXTURE_2D, TileMapTexture[theMap->theScreenMap[i][tileOffset_x + k]].texID);
-			//else
-			//	glBindTexture(GL_TEXTURE_2D, TileMapTexture[0].texID);
 
 			glBegin(GL_QUADS);
 				glTexCoord2f(0,1); glVertex2f(0,0);
@@ -235,8 +230,6 @@ bool CMap::LoadItems(vector<CEntity*> &theArray, CEntityFactory &theFac)
 			case 11:
 			case 12:
 			case 13:
-				//theArray.push_back(theFac.Create(CASINO));
-				//theArray.back()->SetPos(x * TILE_SIZE, y * TILE_SIZE);
 				break;
 			default:
 				break;

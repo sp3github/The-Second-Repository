@@ -8,7 +8,6 @@ CZombies::CZombies(void)
 , REPEL(0)
 , hero_x(0)
 , hero_y(0)
-, i(0)
 {
 	Set_X(rand()% 800);
 	Set_Y(rand()% 600);  
@@ -19,7 +18,7 @@ CZombies::CZombies(void)
 	Timer = mvcTime::getInstance();
 	TimeIndex = Timer->insertNewTime(50);
 	bounce = false;
-
+	Collided = false;
 	
 	zombie = 0;
 }
@@ -73,12 +72,14 @@ void CZombies::update(int herox, int heroy, int mapOffset_x, int mapOffset_y, fl
 		if (Timer->testTime(TimeIndex))
 		{
 			bounce = false;
+			Collided = false;
 		}
 		else
 		{
 			pos += BounceDir * dt;
 			Set_X(pos.x);
 			Set_Y(pos.y);
+			Collided = true;
 		}
 	}
 	else
@@ -155,22 +156,30 @@ vector<CEntity*>::iterator  CZombies::CollisionEvent(CEntity &other, vector<CEnt
 
 	case ZOMBIE:
 		{
-			CZombies * zombie;
-			zombie = (dynamic_cast<CZombies*>(&other));
+			if(!Collided)
+			{
+				CZombies * zombie;
+				zombie = (dynamic_cast<CZombies*>(&other));
 
-			bounce = true;
-			zombie->bounce = true;
+				bounce = true;
+				zombie->bounce = true;
 
-			this->BounceDir = ((this->pos) - (zombie->pos)).Normalize() * movementspeed;
-			zombie->BounceDir = ((zombie->pos) - (this->pos)).Normalize() * zombie->movementspeed;
-		
-			Timer->resetTime(TimeIndex);
-			zombie->Timer->resetTime(zombie->TimeIndex);
-			Timer->changeLimit(TimeIndex, 50);
-			zombie->Timer->changeLimit(zombie->TimeIndex, 50);
+				this->BounceDir = ((this->pos) - (zombie->pos)).Normalize() * movementspeed;
+				zombie->BounceDir = ((zombie->pos) - (this->pos)).Normalize() * zombie->movementspeed;
 
+				Timer->resetTime(TimeIndex);
+				zombie->Timer->resetTime(zombie->TimeIndex);
+				Timer->changeLimit(TimeIndex, 50);
+				zombie->Timer->changeLimit(zombie->TimeIndex, 50);
+				Collided = true;
+			}
 			break;
 
+		}
+	case PLAYER:
+		{
+			other.CollisionEvent(*this,theArray);
+			break;
 		}
 	default:
 		break;
