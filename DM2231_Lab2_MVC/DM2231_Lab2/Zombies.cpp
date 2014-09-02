@@ -1,3 +1,4 @@
+
 #include "Zombies.h"
 
 CZombies::CZombies(void)
@@ -7,16 +8,19 @@ CZombies::CZombies(void)
 , REPEL(0)
 , hero_x(0)
 , hero_y(0)
-, i(0)
 {
 	Set_X(rand()% 800);
 	Set_Y(rand()% 600);  
+
 	vel.Set(0.5,0.5,0.0);
-	movementspeed = 0;
+	movementspeed = 100;
 	pos.Set(GetX(), GetY());
 	Timer = mvcTime::getInstance();
 	TimeIndex = Timer->insertNewTime(50);
 	bounce = false;
+	Collided = false;
+	
+	zombie = 0;
 }
 
 CZombies::~CZombies(void)
@@ -53,10 +57,6 @@ int CZombies::CalculateDistance(int hero_x, int hero_y)
 	return ( (hero_x - GetX()) * (hero_x - GetX()) + (hero_x - GetY()) * (hero_x - GetY()));
 }
 
-void CZombies::update()
-{	
-
-}
 
 void CZombies::setStats(int health, int moneysteal)
 {
@@ -66,17 +66,20 @@ void CZombies::setStats(int health, int moneysteal)
 }
 void CZombies::update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt)
 {
+
 	if (bounce)
 	{
 		if (Timer->testTime(TimeIndex))
 		{
 			bounce = false;
+			Collided = false;
 		}
 		else
 		{
 			pos += BounceDir * dt;
 			Set_X(pos.x);
 			Set_Y(pos.y);
+			Collided = true;
 		}
 	}
 	else
@@ -106,7 +109,7 @@ void CZombies::update(int herox, int heroy, int mapOffset_x, int mapOffset_y, fl
 
 void CZombies::render(int mapOffset_x, int mapOffset_y)
 {	
-	//Zombies
+
 	glPushMatrix();
 	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
 	glEnable(GL_TEXTURE_2D);		
@@ -121,41 +124,72 @@ void CZombies::render(int mapOffset_x, int mapOffset_y)
 	glPopMatrix();
 }
 
-vector<CEntity*>::iterator  CZombies::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+void  CZombies::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	switch (other.ID)
 	{
 
 	case ZOMBIE:
 		{
-			CZombies * zombie;
-			zombie = (dynamic_cast<CZombies*>(&other));
+			if(!Collided)
+			{
+				CZombies * zombie;
+				zombie = (dynamic_cast<CZombies*>(&other));
 
-			bounce = true;
-			zombie->bounce = true;
+				bounce = true;
+				zombie->bounce = true;
 
-			this->BounceDir = ((this->pos) - (zombie->pos)).Normalize() * movementspeed;
-			zombie->BounceDir = ((zombie->pos) - (this->pos)).Normalize() * zombie->movementspeed;
-		
-			Timer->resetTime(TimeIndex);
-			zombie->Timer->resetTime(zombie->TimeIndex);
-			Timer->changeLimit(TimeIndex, 50);
-			zombie->Timer->changeLimit(zombie->TimeIndex, 50);
+				this->BounceDir = ((this->pos) - (zombie->pos)).Normalize() * movementspeed;
+				zombie->BounceDir = ((zombie->pos) - (this->pos)).Normalize() * zombie->movementspeed;
 
+				Timer->resetTime(TimeIndex);
+				zombie->Timer->resetTime(zombie->TimeIndex);
+				Timer->changeLimit(TimeIndex, 50);
+				zombie->Timer->changeLimit(zombie->TimeIndex, 50);
+				Collided = true;
+			}
 			break;
 
+		}
+	case PLAYER:
+		{
+			other.CollisionEvent(*this,theArray);
+			break;
+		}
+	case BUILDING:
+		{
+
+			bounce = true;
+			BounceDir = ((pos) - (Vector3D<float>(GetX(),GetY()))).Normalize() * movementspeed;
+		
+			Timer->resetTime(TimeIndex);
+			Timer->changeLimit(TimeIndex, 500);
+			break;
 		}
 	default:
 		break;
 	}
-	for (auto it = theArray.begin(); it != theArray.end(); it++)
-			{
-				CEntity *go = NULL;
-				go = (*it);
-				if (go == this)
-				{
-					return it + 1;
-				}
+}
 
-			}
+void CZombies::setZombie(ZombieStates zombieState)
+{
+	//switch (zombieState)
+	//{
+	//case normal:
+	//	{
+	//	
+	//	}
+	//	break;
+	//}
+
+	//case fast:
+	//	{
+	//	
+	//	}
+	//	break;
+
+	//	case slow :
+	//	{
+	//	}
+	//	break;
 }

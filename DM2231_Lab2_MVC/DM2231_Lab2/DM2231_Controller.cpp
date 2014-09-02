@@ -38,30 +38,8 @@ bool DM2231_Controller::Init(void)
 	else
 		theView->setFullScreen( true );
 
+	theModel->SetStart(1);
 
-	theModel->TestMap.LoadLevel(1);
-	theModel->TestMap.LoadItems(theModel->ArrayofEntities, theModel->theEntityFactory);
-
-	for (auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
-	{
-		if ((*it)->ID == PLAYER)
-		{
-			theModel->theHeroEntity = (*it);
-			theModel->theHero = (dynamic_cast<CPlayerInfo*>(*it));
-			break;
-		}
-	}
-
-
-	theModel->thegun.SetPlayer(*theModel->theHero);
-	theModel->thegun.SetArray(theModel->ArrayofEntities);
-	theModel->thegun.SetFactory(theModel->theEntityFactory);
-	
-
-	for (int zombie = 0; zombie < 2; zombie++)
-	{
-		theModel->ArrayofEntities.push_back(theModel->theEntityFactory.Create(ZOMBIE));
-	}
 
 	return true;
 }
@@ -79,8 +57,6 @@ BOOL DM2231_Controller::RunMainLoop(void)
 	{
 		return false;									// Quit If Window Was Not Created
 	}
-
-
 
 	while(!done) // Loop That Runs While done=FALSE
 	{
@@ -137,7 +113,47 @@ bool DM2231_Controller::ProcessInput(void)
 
 	switch (theModel->theState.theState)
 	{
-	case (theModel->theState.states::level):
+	case (theModel->theState.State::EnterName):
+		{
+			for(int i = 65; i < 90; i++)
+			{
+				if(theView->GetKeys(i))
+				{	
+					theModel->theHero->playername.push_back(i);
+					theView->SetKeys(i);
+				}
+
+				if (theView->GetKeys('p'))
+				{
+					theModel->theHero->playername.clear();
+				}
+			}
+			break;
+		}
+	case (theModel->theState.State::storyins):
+	{
+												 break;
+	}
+
+	case (theModel->theState.State::menu):
+		{
+			if(theView->LMKeyDown)
+			{
+				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 220 && theModel->theMouseInfo.MousePos.y <= 260)
+				{
+					theModel->theState.theState = theModel->theState.level;
+				}
+				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 270 && theModel->theMouseInfo.MousePos.y <= 310)
+				{
+					m_bContinueLoop=false;
+					return false;
+				}
+				theView->LMKeyDown = false;
+			}
+
+
+		}
+	case (theModel->theState.State::level):
 		{
 			if (theView->GetKeys('w'))
 			{
@@ -161,54 +177,46 @@ bool DM2231_Controller::ProcessInput(void)
 			}
 			if (theView->GetKeys('1'))
 			{
-				theModel->thegun.SetGun(pistol);
+				theModel->thegun.changestate(pistol);
 			}
 			if (theView->GetKeys('2'))
 			{
-				theModel->thegun.SetGun(uzi);
+				theModel->thegun.changestate(uzi);
 			}
 			if (theView->GetKeys('3'))
 			{
-				theModel->thegun.SetGun(shotgun);
+				theModel->thegun.changestate(shotgun);
 			}
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
-				//theView->LMKeyDown = false; //Uncomment this if you want to fire while holding down
-				//theModel->theBullet.FireBullet();
+				
 			}
 			break;
 		}
-	case (theModel->theState.states::menu):
+	case(theModel->theState.State::PageToLearnShop):
+	{
+													   break;
+	}
+	case (theModel->theState.State::shop) :
 		{
-			if(theView->LMKeyDown)
-			{
-				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 220 && theModel->theMouseInfo.MousePos.y <= 260)
-				{
-					theModel->theState.theState = theModel->theState.level;
-				}
-				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 270 && theModel->theMouseInfo.MousePos.y <= 310)
-				{
-					m_bContinueLoop=false;
-					return false;
-				}
-				theView->LMKeyDown = false;
-			}
+			if(theView->GetKeys('1'))
+				theModel->theState.theState = theModel->theState.level;
 			break;
 		}
-	case (theModel->theState.states::shop) :
+	case (theModel->theState.State::credit) :
 		{
 			break;
 		}
-	case (theModel->theState.states::credit) :
+	case (theModel->theState.State::win) :
 		{
 			break;
 		}
-	case (theModel->theState.states::win) :
+	case (theModel->theState.State::defeat) :
 		{
 			break;
 		}
-	case (theModel->theState.states::defeat) :
+	case (theModel->theState.State::subpagelevel) :
 		{
 			break;
 		}

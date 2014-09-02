@@ -1,5 +1,5 @@
+#pragma once
 #include "EntityFactory.h"
-#include <stdlib.h>
 
 CEntityFactory::CEntityFactory(void)
 {
@@ -12,44 +12,50 @@ CEntityFactory::~CEntityFactory(void)
 
 CEntity* CEntityFactory::Create(Entity id)
 {
-	CEntity* theNewItems = NULL;
-
+	//CEntity* theNewItems = NULL;
+	//std::shared_ptr<CEntity> theNewItems;
 	switch(id)
 	{
 	case HEALTH:
 		{
-			theNewItems = new CHealth;
+			std::shared_ptr<CEntity> theNewItems (new CHealth);
 			theNewItems->ID = HEALTH;
 		}
 		break;
 	case AMMO:
 		{
-			theNewItems = new CAmmo;
+			std::shared_ptr<CEntity> theNewItems(new CAmmo);
 			theNewItems->ID = AMMO;
 		}
 		break;
 	case SLOWDOWN:
 		{
-			theNewItems = new CSlowdown;
+			std::shared_ptr<CEntity> theNewItems(new CSlowdown);
 			theNewItems->ID = SLOWDOWN;
 		}
 		break;
 	case PLAYER:
 		{
-			theNewItems = new CPlayerInfo;
+			std::shared_ptr<CEntity> theNewItems(new CPlayerInfo);
 			theNewItems->ID = PLAYER;
 		}
 		break;
 	case BULLET:
 		{
-			theNewItems = new bullet;
+			std::shared_ptr<CEntity> theNewItems(new bullet);
 			theNewItems->ID = BULLET;
 		}
 		break;
 	case ZOMBIE:
 		{
-			theNewItems = new CZombies;
+			std::shared_ptr<CEntity> theNewItems(new CZombies);
 			theNewItems->ID = ZOMBIE;
+		}
+		break;
+	case BUILDING:
+		{
+			std::shared_ptr<CEntity> theNewItems(new Building);
+			theNewItems->ID = BUILDING;
 		}
 		break;
 	default:
@@ -58,6 +64,4 @@ CEntity* CEntityFactory::Create(Entity id)
 		}
 		break;
 	}
-	
-	return theNewItems;
 }
