@@ -40,6 +40,8 @@ public:
 	~CZombies(void);
 	//Overloaded Constructor
 
+	TextureImage zombieTexture[1];
+
 	int CalculateDistance(int hero_x, int hero_y);
 
 	bool bounce;

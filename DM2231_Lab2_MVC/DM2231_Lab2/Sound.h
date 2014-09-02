@@ -11,7 +11,7 @@ public:
 	*/
 	enum SoundType{
 	MENU = 0,
-	SUBPAGE,
+	SHOP,
 	LEVEL,
 	PISTOL,
 	SHOTGUN,
@@ -21,8 +21,9 @@ public:
 	HEALTH,
 	AMMO,
 	SLOWDOWN,
-	SCORE,
+	CREDIT,
 	ZOMBIE,
+	MOUSE
 	};
 
 	Sound(void);
@@ -33,7 +34,7 @@ public:
 	*/
 	ISoundEngine* theSoundEngine;
 	ISound* Menu;
-	ISound* Subpage;
+	ISound* Shop;
 	ISound* Level;
 	ISound* Pistol;
 	ISound* Shotgun;
@@ -43,8 +44,9 @@ public:
 	ISound* Health;
 	ISound* Ammo;
 	ISound* Slowdown;
-	ISound* Score;
+	ISound* Credit;
 	ISound* Zombie;
+	ISound* Mouse;
 
 	/*
 		Function to initialise all the sound
@@ -54,5 +56,5 @@ public:
 	/*
 		Function to play the sound
 	*/
-	void PlaySound (SoundType Sounds);
+	void RenderSound (SoundType Sounds);
 };

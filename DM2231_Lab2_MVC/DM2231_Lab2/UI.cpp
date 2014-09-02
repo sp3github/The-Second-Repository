@@ -68,9 +68,6 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		glEnd();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glPopMatrix();
-
-		
-		
 		break;
 
 	case STARTSCREEN:
