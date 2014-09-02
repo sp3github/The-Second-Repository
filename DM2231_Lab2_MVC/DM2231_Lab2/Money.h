@@ -2,8 +2,7 @@
 
 class CMoney
 {
-private:
-	int money;
+
 public:
 	CMoney(void);
 	~CMoney(void);

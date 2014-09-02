@@ -11,6 +11,9 @@ enum Entity{
  PLAYER ,
  BULLET,
  ZOMBIE,
+ OBSTACLE,
+ CASINO,
+ BUILDING,
 };
 
 
@@ -34,10 +37,15 @@ public:
 	int tile_size;
 
 	virtual void update(float dt);
+
 	virtual void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
+	virtual void update(int zombiecount);
+	//virtual void update(int herox, int heroy, float dt);
+
 	virtual void render(int mapOffset_x, int mapOffset_y);
 
-	virtual  vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	virtual void CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	bool Destroy;
 
 	int hp;
 	Vector3D<float> pos;

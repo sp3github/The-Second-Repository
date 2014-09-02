@@ -1,14 +1,26 @@
 #include "PlayerInfo.h"
 #include <iostream>
+#include "Zombies.h"
 
 CPlayerInfo::CPlayerInfo(void)
+{
+	Init();
+}
+
+CPlayerInfo::~CPlayerInfo(void)
+{
+
+}
+
+// Initialise this class instance
+void CPlayerInfo::Init(void)
 {
 	heroAnimationCounter = 0;
 	movementspeed = 5;
 	HeroRotation = 0;
 	tile_size = 24;
 
-	hp = 0;
+	hp = 100;
 	ammo = 0;
 
 	time = mvcTime::getInstance();
@@ -16,33 +28,48 @@ CPlayerInfo::CPlayerInfo(void)
 	time->setActive(false,index);
 }
 
-CPlayerInfo::~CPlayerInfo(void)
-{
-}
-
-// Initialise this class instance
-void CPlayerInfo::Init(void)
-{
-}
-
 /****************************************************************************************************
    Draw the hero
  ****************************************************************************************************/
-void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
+GLvoid CPlayerInfo::printw(float x, float y, float z,const GLuint &base,const char *fmt, ...)					// Custom GL "Print" Routine
+{
 	glPushMatrix();
+	glRasterPos3f (x, y, z);
+	char		text[256];								// Holds Our String
+	va_list		ap;										// Pointer To List Of Arguments
+
+	if (fmt == NULL)									// If There's No Text
+		return;											// Do Nothing
+
+	va_start(ap, fmt);									// Parses The String For Variables
+	vsprintf(text, fmt, ap);						// And Converts Symbols To Actual Numbers
+	va_end(ap);											// Results Are Stored In Text
+
+	glPushAttrib(GL_LIST_BIT);							// Pushes The Display List Bits
+	glListBase(base - 32);								// Sets The Base Character to 32
+	glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);	// Draws The Display List Text
+	glPopAttrib();										// Pops The Display List Bits
+	glPopMatrix();
+}
+void CPlayerInfo::GetBase(const GLuint &base)
+{
+	this->base = base;
+}
+void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) 
+{	
+
+	glPushMatrix();
+	
 	glTranslatef(static_cast<float>(GetX()), static_cast<float>(GetY()), 0);
 	glTranslatef(static_cast<float>(tile_size * 0.5), static_cast<float>(tile_size * 0.5),0);
 	glRotatef(HeroRotation,0,0,1);
 	glTranslatef(static_cast<float>(-tile_size * 0.5), static_cast<float>(-tile_size * 0.5), 0);
-	//glTranslatef(-20, -20,0);
 	glEnable( GL_TEXTURE_2D );
 	glEnable( GL_BLEND );
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glRotatef(HeroRotation,0,0,1);
 
 	glColor3f(1,0,0);
-	//glBindTexture(GL_TEXTURE_2D, HeroTexture[1].texID);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.25 * heroAnimationCounter, 1); glVertex2f(0, 0);
 	glTexCoord2f(0.25 * heroAnimationCounter, 0); glVertex2f(0, tile_size);
@@ -54,6 +81,12 @@ void CPlayerInfo::render(int mapOffset_x, int mapOffset_y) {
 	glDisable( GL_BLEND );
 	glDisable( GL_TEXTURE_2D );
 	glPopMatrix();
+
+	glPushMatrix();
+	glColor3f(1,0,0);
+	printw(GetX()-25,GetY(),0,base,playername.c_str());
+	glPopMatrix();
+	
 }
 
 // Set Animation Counter of the player
@@ -140,7 +173,6 @@ void CPlayerInfo::moveMeUpDown(bool mode, float timeDiff, float movementspeed)
 	{
 		Set_Y( GetY() + (int) (movementspeed * timeDiff) );
 	}
-	cout<<"My Y Pos is: "<<GetY()<<endl;
 }
 
 void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed)
@@ -161,7 +193,6 @@ void CPlayerInfo::moveMeLeftRight(bool mode, float timeDiff, float movementspeed
 		if (GetAnimationCounter() > 3)
 			SetAnimationCounter( 0 );
 	}
-	cout<<"My X Pos is: "<<GetX()<<endl;
 }
 
 void CPlayerInfo::update(float dt)
@@ -174,34 +205,23 @@ void CPlayerInfo::update(float dt)
 	}
 }
 
-vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+void CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	switch(other.ID)
 	{
 	case HEALTH:
 		{
 			this->hp += 10;
-
-			if(this->hp > 100)
+			if(this->hp < 0)
+			{
+				this->hp = 0;
+			}
+			else if(this->hp > 100)
 			{
 				this->hp = 100;
 			}
 
-			for(auto it = theArray.begin(); it != theArray.end();)
-			{
-				CEntity *go = NULL;
-				go = (*it);
-				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
-				{
-					go->~CEntity();
-					it = theArray.erase(it);
-					return it;
-				}
-				else
-				{
-					it++;
-				}
-			}	
+			other.Destroy = true;
 		}
 		break;
 	case AMMO:
@@ -213,22 +233,7 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 				this->ammo = 36;
 			}
 
-			for(auto it = theArray.begin(); it != theArray.end();)
-			{
-				CEntity *go = NULL;
-				go = (*it);
-
-				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
-				{
-					go->~CEntity();
-					it = theArray.erase(it);
-					return it;
-				}
-				else
-				{
-					it++;
-				}
-			}
+			other.Destroy = true;
 		}
 		break;
 	case SLOWDOWN:
@@ -237,36 +242,32 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 			time->setActive(true,index);
 			
 
-			for(auto it = theArray.begin(); it != theArray.end();)
-			{
-				CEntity *go = NULL;
-				go = (*it);
-
-				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
-				{
-					go->~CEntity();
-					it = theArray.erase(it);
-					return it;
-				}
-				else
-				{
-					it++;
-				}
-			}
+			other.Destroy = true;
 		}
 		break;
 	case ZOMBIE:
 		{
-			hp -= 10;
-			auto it = theArray.begin();
-			for(it = theArray.begin(); it != theArray.end(); it++)
-			{
-				if((*it) == this)
-				{
-					return it + 1;
-				}
-			}
+			this->hp -= 5;
+			if(this->hp < 0)
+				hp = 0;
+			cout<<"HEALTH:"<<this->hp<<endl;
+
+			CZombies * zombie;
+			zombie = (dynamic_cast<CZombies*>(&other));
+
+			zombie->bounce = true;
+			zombie->BounceDir = ((zombie->pos) - (Vector3D<float>(GetX(),GetY()))).Normalize() * zombie->movementspeed;
+		
+			zombie->Timer->resetTime(zombie->TimeIndex);
+			zombie->Timer->changeLimit(zombie->TimeIndex, 500);
 		}
 		break;
+	case BUILDING:
+		{
+			
+			break;
+		}
+	default:
+			break;
 	}
 }

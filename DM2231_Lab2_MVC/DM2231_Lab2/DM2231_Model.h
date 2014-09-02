@@ -13,6 +13,13 @@
 #include "gun.h"
 #include "MVCtime.h"
 #include "Zombies.h"
+#include "Obstacle.h"
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+
 #define PI 3.1415f
 
 class DM2231_Model
@@ -30,12 +37,18 @@ public:
 	vector<CEntity*> ArrayofEntities;
 	CEntityFactory theEntityFactory;
 
+	UI * ui;//printing 
+
 	CPlayerInfo * theHero;
 	CEntity * theHeroEntity;
 
-	gun thegun;
+	CZombies * theZombie;
 
+	gun thegun;
+	Casino * theCasino;
 	Collision theCollision;
+
+	CObstacle * theObstacle;
 
 	float AnglefromHerotoMouse();
 
@@ -43,4 +56,24 @@ public:
 	void ConstrainHero();
 
 	mvcTime * time;
+	short int IndexTime;
+
+	bool SetTimeDefeat;
+	bool SetTimeCredit;
+	bool SetTimeWin;
+	bool SetTimePageToLearnShop;
+
+	void SetStart(int level);
+
+	short level;
+
+	//zombie
+	int zombie;
+	int zombiecount;
+	void setZombieCount(int z);
+	int getZombieCount();
+	void UpdateLimit();
+
+	void DeleteVectorButHero();
+	void Collision();
 };

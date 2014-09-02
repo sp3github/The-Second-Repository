@@ -1,22 +1,24 @@
-#include "Ammo.h"
+#include "Building.h"
 
 
-CAmmo::CAmmo(void)
+Building::Building(void)
 {
+	tile_size = 24;
+	vel.Set(0,0,0);
 }
 
 
-CAmmo::~CAmmo(void)
+Building::~Building(void)
 {
 }
 
-void CAmmo::update(float dt)
+void Building::update(float dt)
 {
-}
 
-void CAmmo::render(int mapOffset_x, int mapOffset_y)
+}
+void Building::render(int mapOffset_x, int mapOffset_y)
 {
-	glPushMatrix();
+		glPushMatrix();
 		glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
 		glEnable( GL_TEXTURE_2D );
 		glEnable( GL_BLEND );

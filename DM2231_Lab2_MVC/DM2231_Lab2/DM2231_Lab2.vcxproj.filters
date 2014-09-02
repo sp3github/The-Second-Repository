@@ -25,9 +25,6 @@
     <Filter Include="Header Files\Entity\Item">
       <UniqueIdentifier>{f2ae53a4-7982-40a0-a70d-47582c6585c4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Misc">
-      <UniqueIdentifier>{e73fab7a-53cf-4127-b27e-e750e2d488c4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Framework">
       <UniqueIdentifier>{7cd10495-3b33-4b00-bb79-a6f264236f20}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,9 @@
     </Filter>
     <Filter Include="Header Files\Framework">
       <UniqueIdentifier>{eefdbf4c-c68b-4980-b922-01c133342f73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc">
+      <UniqueIdentifier>{e73fab7a-53cf-4127-b27e-e750e2d488c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -67,9 +67,6 @@
       <Filter>Source Files\Entity\Items</Filter>
     </ClCompile>
     <ClCompile Include="bullet.cpp">
-      <Filter>Source Files\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="gun.cpp">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Items.cpp">
@@ -120,6 +117,15 @@
     <ClCompile Include="Sound.cpp">
       <Filter>Source Files\Framework</Filter>
     </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Casino.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="gun.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DM2231_Controller.h">
@@ -138,9 +144,6 @@
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="EntityFactory.h">
-      <Filter>Header Files\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="gun.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Items.h">
@@ -205,6 +208,18 @@
     </ClInclude>
     <ClInclude Include="Header.h">
       <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Casino.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="EntitiesHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="gun.h">
+      <Filter>Header Files\Misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,26 +1,28 @@
 #pragma once
-#include "Entity.h"
-#include "Header.h"
-#include "Vector3D.h"
-class CObstacle : public CEntity
-{
-private:
+#include "Casino.h"
+#include "EntitiesHeader.h"
+#include "EntityFactory.h"
+#include <vector>
 
+class CObstacle : public CEntity 
+{
 
 public:
 	CObstacle(void);
 	~CObstacle(void);
-	
-	int getZombiecount();
+
+	std::vector<CEntity*> * theArrayofEntities;
+	CEntityFactory * theFactory;
+
 	Vector3D<float> vel;
 	Vector3D<float> pos;
-	bool Spawn();
-	void update(int ZombieCount);
-	void render(int mapOffset_x, int mapOffset_y);
-	
-	//void update();
+
+	int tile_size;
 
 	int zombiecount;
-	bool spawn;
-	int maxzombiecount;
+	int getZombieCount();
+	void setZombieCount(int z);
+
+	void SetArray(vector<CEntity *> & theArrayofEntities);
+	void SetFactory(CEntityFactory & theFactory);
 };

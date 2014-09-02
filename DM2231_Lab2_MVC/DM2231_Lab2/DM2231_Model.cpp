@@ -6,97 +6,165 @@
 DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 {
 	time = mvcTime::getInstance();
-	//theUI = new UI;
+
+	level = 1;
+
+
+	IndexTime = time->insertNewTime(3000);
+	SetTimeDefeat = false;
+	SetTimeCredit = false;
+	SetTimeWin = false;
+
+	SetTimePageToLearnShop = false;
 }
 
 DM2231_Model::~DM2231_Model(void)
 {
-	//if(theUI)
-	//{
-	//	delete theUI;
-	//}
 }
 
 // Update the model
 void DM2231_Model::Update(void)
 {
-	theHero->HeroRotation = AnglefromHerotoMouse();
-	ConstrainHero();
-	TestMap.Update();
-
-	if (theState.theState == State::level)
+	switch (theState.theState)
 	{
 
-		theHero->HeroRotation = AnglefromHerotoMouse();
-		ConstrainHero();
-		TestMap.Update();
-
-		for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+	case State::level:
 		{
-			CEntity * go = (*it);
-			if (go->ID == BULLET)//Checl bullet against environment
+
+			theHero->HeroRotation = AnglefromHerotoMouse();
+			ConstrainHero();
+			TestMap.Update();
+
+			for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
 			{
-				if (!theCollision.CheckCollision(go, NULL, false, false, false, false, true))
+				CEntity * go = (*it);
+				if (go->ID == BULLET)//Checl bullet against environment
 				{
-					ArrayofEntities.erase(it);
-					go->~CEntity();
-					break;
+					if (!theCollision.CheckCollision(go, NULL, false, false, false, false, true))
+					{
+						ArrayofEntities.erase(it);
+						go->~CEntity();
+						break;
+					}
 				}
-			}
 
-			if (go->ID == ZOMBIE)
-			{
-				go->update(theHero->GetX(), theHero->GetY(), TestMap.mapOffset_x, TestMap.mapOffset_y, time->getDelta());
-			}
-
-			go->update(time->getDelta());
-		}
-
-		for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
-		{
-			CEntity * go = NULL;
-			go = (*it) ;
-			//theHero->update();
-			for (auto i = ArrayofEntities.begin(); i != ArrayofEntities.end();)
-			{
-				//Collision for entities. Collision Event returns the iterator after an element is erased.
-				CEntity * other = (*i);
-				if (go != other)
+				if (go->ID == ZOMBIE)
 				{
-					cout << go->ID << endl;
-					if (!theCollision.CheckCollision(go, other, false, false, false, false)) //Checks if it has collided go with other
-					{
-						i = go->CollisionEvent(*other, ArrayofEntities);	//Run collision code, setting i to the iterator which is returned.
-						return;
-						//break;
-					}
-					else
-					{
-						i++;
-					}
+					go->update(theHero->GetX(), theHero->GetY(), TestMap.mapOffset_x, TestMap.mapOffset_y, time->getDelta());
+				}
+
+				go->update(time->getDelta());
+			}
+			theUI.SetHP(theHero->hp, 100);
+
+			Collision();
+
+			if (getZombieCount() == 0)
+			{
+				DeleteVectorButHero();
+				if (level == 3)
+				{
+
+					theState.theState = theState.win;
 				}
 				else
 				{
-					i++;
+					level += 1;
+					SetStart(level);
+					theState.theState = theState.PageToLearnShop;
 				}
 			}
-
-
-			//Fix for the end of vector problem
-			//if( it == ArrayofEntities.end())
+			if (theHero->hp <= 0)
+			{
+				theState.theState = theState.defeat;
+			}
 		}
+		break;
+	case State::defeat:
+		{
+			if (!SetTimeDefeat)
+			{
+				time->resetTime(IndexTime);
+				SetTimeDefeat = true;
 
-		////if (//if zombie count = 0 )
-		//{
-		//	theState.theState = theState.win;
-		//}
-		////else if (theHero->hp <= 0)
-		//{
-		//	theState.theState = theState.defeat;
-		//	// When life count = 0, go to 'Defeat' page -> Credit
-		//	//theHero->hp = 0;
-		//}
+			}
+			else if (time->testTime(IndexTime))
+			{
+				TestMap.mapOffset_x = 0;
+				TestMap.mapOffset_y = 0;
+				theState.theState = theState.credit;
+				SetTimeDefeat = false;
+			}
+			break;
+		}
+	case State::win:
+		{
+			if (!SetTimeWin)
+			{
+				time->resetTime(IndexTime);
+				SetTimeWin = true;
+			}
+			else if (time->testTime(IndexTime))
+			{
+				theState.theState = theState.PageToLearnShop;
+				SetTimeWin = false;
+			}
+			break;
+		}
+	case State::credit:
+		{
+			if (!SetTimeCredit)
+			{
+				time->resetTime(IndexTime);
+				SetTimeCredit = true;
+			}
+			else if (time->testTime(IndexTime))
+			{
+				theState.theState = theState.menu;
+				SetTimeCredit = false;
+			}
+			break;
+		}
+	case State::PageToLearnShop:
+		{
+			if (!SetTimePageToLearnShop)
+			{
+				time->resetTime(IndexTime);
+				SetTimePageToLearnShop = true;
+			}
+			else if (time->testTime(IndexTime))
+			{
+				theState.theState = theState.shop;
+				SetTimePageToLearnShop = false;
+			}
+		}
+		break;
+	default:
+		break;
 	}
+}
+
+int DM2231_Model::getZombieCount()
+{
+	auto it = ArrayofEntities.begin();
+	int Counter = 0;
+	for( it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+	{
+		if((*it)->ID == ZOMBIE)
+		{
+			Counter++;
+		}
+	}
+	return Counter;
+}
+
+void DM2231_Model::setZombieCount(int z)
+{	
+	zombiecount = z;
+}
+
+void DM2231_Model::UpdateLimit()
+{
 }
 
 float DM2231_Model::AnglefromHerotoMouse()
@@ -115,4 +183,80 @@ void DM2231_Model::ConstrainHero()
 	theHero->ConstrainHero(LEFT_BORDER, TestMap.getNumOfTiles_ScreenWidth() * TILE_SIZE,
 		25, TestMap.getNumOfTiles_ScreenHeight() *TILE_SIZE,300,500,200,400,
 		1.0f, TestMap.mapOffset_x, TestMap.mapOffset_y, TestMap.getNumOfTiles_ScreenHeight() * TILE_SIZE, TestMap.getNumOfTiles_ScreenWidth() * TILE_SIZE);
+}
+
+void DM2231_Model::SetStart(int level)
+{
+	TestMap.LoadLevel(level);
+	TestMap.LoadItems(ArrayofEntities,theEntityFactory);
+
+	for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+	{
+		if ((*it)->ID == PLAYER)
+		{
+			theHeroEntity = (*it);
+			theHero = (dynamic_cast<CPlayerInfo*>(*it));
+			break;
+		}
+	}
+	thegun.SetPlayer(*theHero);
+	thegun.SetArray(ArrayofEntities);
+	thegun.SetFactory(theEntityFactory);
+
+	//for (int zombie = 0; zombie < 5 ; zombie++)
+	{
+		//ArrayofEntities.push_back(theEntityFactory.Create(ZOMBIE));
+	}
+}
+
+
+void DM2231_Model::DeleteVectorButHero()
+{
+	for(auto it = ArrayofEntities.begin(); it != ArrayofEntities.end();)
+	{
+		if((*it)->ID != PLAYER)
+		{
+			it = ArrayofEntities.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+}
+
+void DM2231_Model::Collision()
+{
+	for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+	{
+		CEntity * go = NULL;
+		go = (*it);
+		for (auto i = ArrayofEntities.begin(); i != ArrayofEntities.end(); i++)
+		{
+			//Do collision event to all entities.
+			CEntity * other = (*i);
+			if (go != other)
+			{
+				if (!theCollision.CheckCollision(go, other, false, false, false, false)) //Checks if it has collided go with other
+				{
+					go->CollisionEvent(*other, ArrayofEntities);        //Run collision code,
+				}
+			}
+		}
+	}
+	//If collision sets something to be destroyed, destroy it here.
+	for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end();)
+	{
+		CEntity * go = NULL;
+		go = (*it);
+		if (go->Destroy)
+		{
+			go->~CEntity();
+			it = ArrayofEntities.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
 }
