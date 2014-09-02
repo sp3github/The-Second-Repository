@@ -56,7 +56,7 @@ public:
 	//void update(int herox, int heroy, float dt);
 
 	void drawzombie(int x, int y);
-	vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	vector<std::shared_ptr<CEntity>>::iterator  CollisionEvent(CEntity &other,vector<std::shared_ptr<CEntity>> & theArray);
 
 	mvcTime * Timer;
 	int TimeIndex;

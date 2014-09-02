@@ -34,7 +34,7 @@
     <Filter Include="Header Files\Framework">
       <UniqueIdentifier>{eefdbf4c-c68b-4980-b922-01c133342f73}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Framework\Misc">
+    <Filter Include="Source Files\Misc">
       <UniqueIdentifier>{e73fab7a-53cf-4127-b27e-e750e2d488c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -85,22 +85,22 @@
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Bet.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Money.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="State.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="loadTGA.cpp">
       <Filter>Source Files\Framework</Filter>

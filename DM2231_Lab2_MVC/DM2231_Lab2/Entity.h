@@ -44,7 +44,7 @@ public:
 
 	virtual void render(int mapOffset_x, int mapOffset_y);
 
-	virtual  vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	virtual  vector<std::shared_ptr<CEntity>>::iterator CollisionEvent(CEntity &other, vector<std::shared_ptr<CEntity>> & theArray);
 
 
 	int hp;

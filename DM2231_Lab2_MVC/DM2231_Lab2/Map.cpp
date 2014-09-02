@@ -199,7 +199,7 @@ void CMap::Update()
 		tileOffset_y = getNumOfTiles_MapHeight() - getNumOfTiles_ScreenHeight();
 }
 
-bool CMap::LoadItems(vector<CEntity*> &theArray, CEntityFactory &theFac)
+bool CMap::LoadItems(vector<std::shared_ptr<CEntity>> &theArray, CEntityFactory &theFac)
 {
 	for (int i = 0; i <getNumOfTiles_MapHeight(); ++i)
 	{
@@ -211,7 +211,7 @@ bool CMap::LoadItems(vector<CEntity*> &theArray, CEntityFactory &theFac)
 				{
 					bool Found = false;
 					CEntity * hero = NULL;
-					for(auto it = theArray.begin(); it != theArray.end(); it++)
+					for(vector<std::shared_ptr<CEntity>>::iterator it = theArray.begin(); it != theArray.end(); it++)
 					{
 						if((*it)->ID == PLAYER)
 						{

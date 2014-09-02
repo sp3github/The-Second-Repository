@@ -33,7 +33,7 @@ void DM2231_Model::Update(void)
 		ConstrainHero();
 		TestMap.Update();
 
-		for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+		for (vector<std::shared_ptr<CEntity>>::iterator it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
 		{
 			CEntity * go = (*it);
 			if (go->ID == BULLET)//Checl bullet against environment
@@ -55,11 +55,11 @@ void DM2231_Model::Update(void)
 		}
 		theUI.SetHP(theHero->hp,100);
 
-		for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+		for (vector<std::shared_ptr<CEntity>>::iterator it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
 		{
 			CEntity * go = NULL;
 			go = (*it) ;
-			for (auto i = ArrayofEntities.begin(); i != ArrayofEntities.end();)
+			for (vector<std::shared_ptr<CEntity>>::iterator i = ArrayofEntities.begin(); i != ArrayofEntities.end();)
 			{
 				//Collision for entities. Collision Event returns the iterator after an element is erased.
 				CEntity * other = (*i);
@@ -68,7 +68,7 @@ void DM2231_Model::Update(void)
 					if (!theCollision.CheckCollision(go, other, false, false, false, false)) //Checks if it has collided go with other
 					{
 						i = go->CollisionEvent(*other, ArrayofEntities);        //Run collision code, setting i to the iterator which is returned.
-						return;
+						//return;
 					}
 					else
 					{
@@ -163,7 +163,7 @@ void DM2231_Model::Update(void)
 
 int DM2231_Model::getZombieCount()
 {
-	auto it = ArrayofEntities.begin();
+	vector<std::shared_ptr<CEntity>>::iterator it = ArrayofEntities.begin();
 	int Counter = 0;
 	for( it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
 	{
@@ -207,7 +207,7 @@ void DM2231_Model::SetStart(int level)
 	TestMap.LoadLevel(level);
 	TestMap.LoadItems(ArrayofEntities,theEntityFactory);
 
-	for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+	for (vector<std::shared_ptr<CEntity>>::iterator it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
 	{
 		if ((*it)->ID == PLAYER)
 		{
@@ -220,22 +220,16 @@ void DM2231_Model::SetStart(int level)
 	thegun.SetArray(ArrayofEntities);
 	thegun.SetFactory(theEntityFactory);
 
-	for (int zombie = 0; zombie < 5 ; zombie++)
+	//for (int zombie = 0; zombie < 5 ; zombie++)
 	{
 		//ArrayofEntities.push_back(theEntityFactory.Create(ZOMBIE));
 	}
-
-	ArrayofEntities.push_back(theEntityFactory.Create(CASINO));
-	ArrayofEntities.back()->SetPos(300,300);
-	
-	//CHECKING	
-	cout << "Zombies: " << zombie << endl;
 }
 
 
 void DM2231_Model::DeleteVectorButHero()
 {
-	for(auto it = ArrayofEntities.begin(); it != ArrayofEntities.end();)
+	for(vector<std::shared_ptr<CEntity>>::iterator it = ArrayofEntities.begin(); it != ArrayofEntities.end();)
 	{
 		if((*it)->ID != PLAYER)
 		{

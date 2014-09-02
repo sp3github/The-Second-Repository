@@ -44,7 +44,7 @@ public:
 	void moveMeUpDown(bool mode, float timeDiff, float movementspeed);
 	void moveMeLeftRight(bool mode, float timeDiff, float movementspeed);
 
-	vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	vector<std::shared_ptr<CEntity>>::iterator CollisionEvent(CEntity &other, vector<std::shared_ptr<CEntity>> & theArray);
 
 	int ammo;
 

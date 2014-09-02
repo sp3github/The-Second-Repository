@@ -64,7 +64,7 @@ void bullet::update(float dt)
 	Set_Y(pos.y);
 }
 
-vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+vector<std::shared_ptr<CEntity>>::iterator bullet::CollisionEvent(CEntity &other, vector<std::shared_ptr<CEntity>> & theArray)
 {
 	switch (other.ID)
 	{
@@ -79,11 +79,11 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 			
 
 			int Counter, index, bulletindex;
-			auto it = theArray.begin();
+			vector<std::shared_ptr<CEntity>>::iterator it = theArray.begin();
 			//Find the bullet and the other in the array.
 			for (it = theArray.begin(), Counter = 0; it != theArray.end();it++, Counter++)
 			{
-				CEntity *go = NULL;
+				vector<std::shared_ptr<CEntity>> go;
 				go = (*it);
 				if (go == &other)
 				{
@@ -107,7 +107,6 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 				other.~CEntity();
 				it = theArray.erase(theArray.begin() + index); //delete from array.
 				
-				
 				return it;
 			}
 			
@@ -118,31 +117,38 @@ vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntit
 	case BUILDING:
 		{
 			int Counter, bulletindex;
-			auto it = theArray.begin();
+			vector<std::shared_ptr<CEntity>>::iterator i;
+			vector<std::shared_ptr<CEntity>>::iterator it;
 			for (it = theArray.begin(), Counter = 0; it != theArray.end();it++, Counter++)
 			{
-				CEntity *go = NULL;
+				std::shared_ptr<CEntity> go= NULL;
 				go = (*it);
-				if(this == go)
+				if(static_cast<shared_ptr<CEntity>>(this) == go)
 				{
 					bulletindex = Counter;
 					break;
 				}
+				if(static_cast<shared_ptr<CEntity>>(&other) == go)
+				{
+					i = it;
+				}
 			}
+
+			theArray.erase(theArray.begin() + bulletindex);
 			this->~bullet();
-			return theArray.erase(theArray.begin() + bulletindex);
+			return i + 1;
 		}
 	default:
 		break;
 	}
-	for (auto it = theArray.begin(); it != theArray.end();it++)
-			{
-				CEntity *go = NULL;
-				go = (*it);
-				if (go == &other)
-				{
-					return it + 1;
-				}
+	for (vector<std::shared_ptr<CEntity>>::iterator it = theArray.begin(); it != theArray.end();it++)
+	{
+		std::shared_ptr<CEntity> go = NULL;
+		go = (*it);
+		if (static_cast<shared_ptr<CEntity>>(&other) == go)
+		{
+			return it + 1;
+		}
 
-			}
+	}
 }

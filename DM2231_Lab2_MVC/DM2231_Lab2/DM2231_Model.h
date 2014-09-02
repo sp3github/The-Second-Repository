@@ -34,7 +34,7 @@ public:
 	CMouse theMouseInfo;
 	UI theUI;
 
-	vector<CEntity*> ArrayofEntities;
+	vector<std::shared_ptr<CEntity>> ArrayofEntities;
 	CEntityFactory theEntityFactory;
 
 	UI * ui;//printing 
@@ -73,9 +73,6 @@ public:
 	void setZombieCount(int z);
 	int getZombieCount();
 	void UpdateLimit();
-
-
-	short level;
 
 	void DeleteVectorButHero();
 };

@@ -22,7 +22,7 @@ void CObstacle::setZombieCount(int z)
 	zombiecount = z;
 }
 
-void CObstacle::SetArray(vector<CEntity*> &theArrayofEntities)
+void CObstacle::SetArray(vector<std::shared_ptr<CEntity>> &theArrayofEntities)
 {
 	this->theArrayofEntities = &theArrayofEntities;
 }

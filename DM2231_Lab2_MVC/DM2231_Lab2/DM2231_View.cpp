@@ -104,7 +104,7 @@ BOOL DM2231_View::Draw(void)
 			theModel->theHero->GetBase(base);
 			theModel->TestMap.RenderTileMap();
 
-			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
+			for(vector<std::shared_ptr<CEntity>>::iterator it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
 			{
 				(*it)->render(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
 			}

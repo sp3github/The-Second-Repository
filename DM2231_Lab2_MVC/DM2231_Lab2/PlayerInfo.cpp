@@ -205,7 +205,7 @@ void CPlayerInfo::update(float dt)
 	}
 }
 
-vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+vector<std::shared_ptr<CEntity>>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<std::shared_ptr<CEntity>> & theArray)
 {
 	switch(other.ID)
 	{
@@ -221,11 +221,11 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 				this->hp = 100;
 			}
 
-			for(auto it = theArray.begin(); it != theArray.end();)
+			for(vector<std::shared_ptr<CEntity>>::iterator it = theArray.begin(); it != theArray.end();)
 			{
 				CEntity *go = NULL;
 				go = (*it);
-				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
+				if(go == &other)
 				{
 					go->~CEntity();
 					it = theArray.erase(it);
@@ -247,12 +247,12 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 				this->ammo = 36;
 			}
 
-			for(auto it = theArray.begin(); it != theArray.end();)
+			for(vector<std::shared_ptr<CEntity>>::iterator it = theArray.begin(); it != theArray.end();)
 			{
 				CEntity *go = NULL;
 				go = (*it);
 
-				if(go->GetX() == other.GetX() && go->GetY() == other.GetY() && go->ID == other.ID)
+				if(go == &other)
 				{
 					go->~CEntity();
 					it = theArray.erase(it);
@@ -271,7 +271,7 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 			time->setActive(true,index);
 			
 
-			for(auto it = theArray.begin(); it != theArray.end();)
+			for(vector<std::shared_ptr<CEntity>>::iterator it = theArray.begin(); it != theArray.end();)
 			{
 				CEntity *go = NULL;
 				go = (*it);
@@ -312,20 +312,12 @@ vector<CEntity*>::iterator CPlayerInfo::CollisionEvent(CEntity &other, vector<CE
 			break;
 		}
 	default:
-			for(auto it = theArray.begin(); it != theArray.end(); it++)
-			{
-				CEntity *go = NULL;
-				go = (*it);
-
-				if((*it) = this)
-					return it + 1;
-			}
 			break;
 	}
 
-	for(auto it = theArray.begin(); it != theArray.end(); it++)
+	for(vector<std::shared_ptr<CEntity>>::iterator it = theArray.begin(); it != theArray.end(); it++)
 	{
-		if((*it) == this)
+		if((*it) == &other)
 		{
 			return it + 1;
 		}

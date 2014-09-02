@@ -11,7 +11,7 @@ public:
 	CObstacle(void);
 	~CObstacle(void);
 
-	std::vector<CEntity*> * theArrayofEntities;
+	vector<std::shared_ptr<CEntity>> * theArrayofEntities;
 	CEntityFactory * theFactory;
 
 	Vector3D<float> vel;
@@ -23,6 +23,6 @@ public:
 	int getZombieCount();
 	void setZombieCount(int z);
 
-	void SetArray(vector<CEntity *> & theArrayofEntities);
+	void SetArray(vector<std::shared_ptr<CEntity>> & theArrayofEntities);
 	void SetFactory(CEntityFactory & theFactory);
 };

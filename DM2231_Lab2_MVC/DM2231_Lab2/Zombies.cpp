@@ -124,7 +124,7 @@ void CZombies::render(int mapOffset_x, int mapOffset_y)
 	glPopMatrix();
 }
 
-vector<CEntity*>::iterator  CZombies::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+vector<std::shared_ptr<CEntity>>::iterator  CZombies::CollisionEvent(CEntity &other, vector<std::shared_ptr<CEntity>> & theArray)
 {
 	switch (other.ID)
 	{
@@ -169,11 +169,11 @@ vector<CEntity*>::iterator  CZombies::CollisionEvent(CEntity &other, vector<CEnt
 	default:
 		break;
 	}
-	for (auto it = theArray.begin(); it != theArray.end(); it++)
+	for (vector<std::shared_ptr<CEntity>>::iterator it = theArray.begin(); it != theArray.end(); it++)
 	{
 		CEntity *go = NULL;
 		go = (*it);
-		if (go == this)
+		if (go == &other)
 		{
 			return it + 1;
 		}

@@ -59,10 +59,9 @@ void CEntity::render(int mapOffset_x, int mapOffset_y)
 }
 
 
- vector<CEntity*>::iterator CEntity::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+vector<std::shared_ptr<CEntity>>::iterator CEntity::CollisionEvent(CEntity &other, vector<std::shared_ptr<CEntity>> & theArray)
 {
 	return theArray.begin();
-
 }
 
 

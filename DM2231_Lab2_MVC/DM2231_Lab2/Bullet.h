@@ -17,7 +17,7 @@ public:
 	bool SetPower(int power);
 	bool SetAngle(float HeroRotation);
 
-	 vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	vector<std::shared_ptr<CEntity>>::iterator CollisionEvent(CEntity &other, vector<std::shared_ptr<CEntity>> & theArray);
 
 	bullet();
 	~bullet();

@@ -19,7 +19,7 @@ public:
 	gun();
 	~gun();
 
-	vector<CEntity*> *theArrayofEntities;
+	vector<std::shared_ptr<CEntity>> *theArrayofEntities;
 	CEntityFactory *theFactory;
 	CPlayerInfo * theHero;
 	bullet * thePointertoBullet;
@@ -57,7 +57,7 @@ public:
 	bool SetPlayer(CPlayerInfo &theHero);
 	void FireGun();
 	void ReloadGun();
-	void SetArray(vector<CEntity *> & theArrayofEntities);
+	void SetArray(vector<std::shared_ptr<CEntity>> & theArrayofEntities);
 	void SetFactory(CEntityFactory & theFactory);
 
 	void InitGun();

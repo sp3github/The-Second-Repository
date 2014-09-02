@@ -68,7 +68,7 @@ void gun::FireGun()
 		prevshot[BulletState] = currentshot[BulletState];
 	}
 
-	if (currentBullet[BulletState] <= 0)	//AUTO RELOAD
+	if (currentBullet[BulletState] <= 0)	//vector<std::shared_ptr<CEntity>>::iterator RELOAD
 	{
 		currentreload[BulletState] = static_cast<float>(timeGetTime());
 		if (reloadC == false){
@@ -148,7 +148,7 @@ void gun::InitGun()
 		currentBullet[2] = 9;
 		ReloadBullet[2] = 9;
 
-		power[2] = 3000;
+		power[2] = 10000;
 		firing = false;
 		prevshot[2] = 0;
 		currentshot[2] = 0;
@@ -163,7 +163,7 @@ void gun::InitGun()
 
 }
 
-void gun::SetArray(vector<CEntity*> & theArrayofEntities)
+void gun::SetArray(vector<std::shared_ptr<CEntity>> & theArrayofEntities)
 {
 	this->theArrayofEntities = &theArrayofEntities;
 }
