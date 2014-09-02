@@ -5,12 +5,7 @@
 #include <time.h>
 #include "MVCtime.h"
 
-enum ZombieStates
-{
-	normal,
-	fast,
-	slow
-};
+#define PI 3.142;
 
 class CZombies : public CEntity
 {
@@ -32,36 +27,32 @@ private:
 
 	const int hero_x;
 	const int hero_y;
+
+	int i;
+	bool bounce;
+	Vector3D<float> BounceDir;
+
 public:
 	CZombies(void);
 	~CZombies(void);
 	//Overloaded Constructor
+    //CZombies( unsigned int w, unsigned int a, unsigned int d, int h, int st, float spd);
 
 	int CalculateDistance(int hero_x, int hero_y);
+	void update();
 
-	bool bounce;
-	Vector3D<float> BounceDir;
 	void deceasingHealth(int num);
 	int getHealth();
-	int getZombieCount();
 	int getMoneySteal();
 	bool isDead();
 	void setStats(int health, int moneysteal);
 	
-
-
 	void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
 	void render(int mapOffset_x, int mapOffset_y);
-
-	//void update(int herox, int heroy, float dt);
-
 	void drawzombie(int x, int y);
-	void CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
 	mvcTime * Timer;
 	int TimeIndex;
-	bool Collided;
-	int zombie;
 
-	void setZombie(ZombieStates zombieState);
 };

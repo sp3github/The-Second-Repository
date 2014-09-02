@@ -3,19 +3,12 @@
 #include <vector>
 #include "Entity.h"
 #include "MVCtime.h"
-#include <string>
-#include <iostream>
-#include "Money.h"
-
-using namespace std;
 
 class CPlayerInfo : public CEntity
 {
 public:
 	CPlayerInfo(void);
 	~CPlayerInfo(void);
-	GLuint base;
-	void GetBase(const GLuint &base);
 
 	float HeroRotation;
 
@@ -45,11 +38,10 @@ public:
 	void moveMeUpDown(bool mode, float timeDiff, float movementspeed);
 	void moveMeLeftRight(bool mode, float timeDiff, float movementspeed);
 
-	void CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
-	CMoney money;
+	int ammo;
 
-	string playername;
 private:
 
 	bool heroAnimationInvert;
@@ -57,6 +49,4 @@ private:
 
 	mvcTime *time;
 	int index;
-	GLvoid printw(float x, float y, float z,const GLuint &base,const char *fmt, ...);
-
 };

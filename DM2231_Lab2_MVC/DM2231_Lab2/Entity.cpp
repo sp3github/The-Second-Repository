@@ -10,7 +10,6 @@ CEntity::CEntity(void)
 	hp = 100;
 	vel.Set(0, 0, 0);
 	pos.Set(0, 0, 0);
-	Destroy = false;
 }
 
 
@@ -44,26 +43,15 @@ void CEntity::update(int herox, int heroy, int mapOffset_x, int mapOffset_y, flo
 
 }
 
-void CEntity::update(int zombiecount)
-{
-	
-}
-
-//void CEntity::update(int herox, int heroy, float dt)
-//{
-//
-//}
-
 void CEntity::render(int mapOffset_x, int mapOffset_y)
 {
 	
 }
 
-
-void CEntity::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+ vector<CEntity*>::iterator CEntity::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
+	return theArray.end();
 }
-
 
 void CEntity::Set_Y(int pos_y)
 {

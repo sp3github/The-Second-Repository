@@ -58,26 +58,20 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 
 	else if ((go->ID == PLAYER && other->ID != BULLET) || (go->ID == BULLET && other->ID != PLAYER) || (go->ID == ZOMBIE))
 	{
-		if (go->ID == ZOMBIE)	//Check Zombies with mapoffset against others with mapoffset
+		if (go->ID == ZOMBIE && other->ID == ZOMBIE)	//forward checking for zombie
 		{
-			Vector3D<float> dir (0,0,0);
-			Vector3D<float> BDir (0,0,0);
-			if(go->vel.Magnitude()!= 0)
-				dir = go->vel.Normalized();
-			if(other->vel.Magnitude() != 0)
-				BDir = other->vel.Normalized();
 
-			Atile_left_x = go->GetX() - theMap->mapOffset_x + dir.x;
-			Atile_right_x = go->GetX() + go->tile_size - theMap->mapOffset_x + dir.x;
-			Atile_top_y = go->GetY() - theMap->mapOffset_y + dir.y;
-			Atile_bottom_y = go->GetY() + go->tile_size - theMap->mapOffset_y +dir.y;
+			Atile_left_x = go->GetX() - theMap->mapOffset_x;
+			Atile_right_x = go->GetX() + go->tile_size - theMap->mapOffset_x;
+			Atile_top_y = go->GetY() - theMap->mapOffset_y ;
+			Atile_bottom_y = go->GetY() + go->tile_size - theMap->mapOffset_y ;
 
-			Btile_left_x = other->GetX() - theMap->mapOffset_x  + BDir.x;
-			Btile_right_x = other->GetX() + other->tile_size - theMap->mapOffset_x + BDir.x;
-			Btile_top_y = other->GetY() - theMap->mapOffset_y + BDir.y;
-			Btile_bottom_y = other->GetY() + other->tile_size - theMap->mapOffset_y + BDir.y;
+			Btile_left_x = other->GetX() - theMap->mapOffset_x ;
+			Btile_right_x = other->GetX() + other->tile_size - theMap->mapOffset_x ;
+			Btile_top_y = other->GetY() - theMap->mapOffset_y;
+			Btile_bottom_y = other->GetY() + other->tile_size - theMap->mapOffset_y ;
 		}
-		else//Player collision
+		else
 		{
 			Atile_left_x = go->GetX() ;
 			Atile_right_x = go->GetX() + go->tile_size;

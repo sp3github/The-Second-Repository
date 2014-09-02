@@ -8,6 +8,10 @@
 
 int main( int argc, char **args )
 {
+	glutInit(&argc, args);
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowPosition(100,100);
+	glutInitWindowSize(800,600);
 
 	DM2231_Model* theModel = new DM2231_Model();
 	DM2231_View* theView = new DM2231_View( theModel );

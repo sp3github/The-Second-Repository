@@ -1,58 +1,5 @@
 #include "DM2231_View.h"
 
-//FROM NEHE
-GLvoid DM2231_View::BuildFont(GLvoid)								// Build Our Bitmap Font
-{
-	HFONT	font;										// Windows Font ID
-	HFONT	oldfont;									// Used For Good House Keeping
-
-	base = glGenLists(96);								// Storage For 96 Characters
-
-	font = CreateFont(-24,							// Height Of Font
-		0,								// Width Of Font
-		0,								// Angle Of Escapement
-		0,								// Orientation Angle
-		FW_BOLD,						// Font Weight
-		FALSE,							// Italic
-		FALSE,							// Underline
-		FALSE,							// Strikeout
-		ANSI_CHARSET,					// Character Set Identifier
-		OUT_TT_PRECIS,					// Output Precision
-		CLIP_DEFAULT_PRECIS,			// Clipping Precision
-		ANTIALIASED_QUALITY,			// Output Quality
-		FF_DONTCARE | DEFAULT_PITCH,		// Family And Pitch
-		"Courier New");					// Font Name
-
-	oldfont = (HFONT)SelectObject(hDC, font);           // Selects The Font We Want
-	wglUseFontBitmaps(hDC, 32, 96, base);				// Builds 96 Characters Starting At Character 32
-	SelectObject(hDC, oldfont);							// Selects The Font We Want
-	DeleteObject(font);									// Delete The Font
-}
-
-GLvoid DM2231_View::KillFont(GLvoid)									// Delete The Font List
-{
-	glDeleteLists(base, 96);							// Delete All 96 Characters
-}
-
-GLvoid DM2231_View::glPrint(const char *fmt, ...)					// Custom GL "Print" Routine
-{
-	char		text[256];								// Holds Our String
-	va_list		ap;										// Pointer To List Of Arguments
-
-	if (fmt == NULL)									// If There's No Text
-		return;											// Do Nothing
-
-	va_start(ap, fmt);									// Parses The String For Variables
-	vsprintf(text, fmt, ap);						// And Converts Symbols To Actual Numbers
-	va_end(ap);											// Results Are Stored In Text
-
-	glPushAttrib(GL_LIST_BIT);							// Pushes The Display List Bits
-	glListBase(base - 32);								// Sets The Base Character to 32
-	glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);	// Draws The Display List Text
-	glPopAttrib();										// Pops The Display List Bits
-}
-//END FROM NEHE
-
 DM2231_View::DM2231_View(DM2231_Model* theModel)
 {
 	this->theModel = theModel;
@@ -79,7 +26,6 @@ DM2231_View::DM2231_View(DM2231_Model* theModel)
 DM2231_View::~DM2231_View(void)
 {
 	this->theModel = NULL;
-	KillFont();
 }
 
 // Draw the view
@@ -92,25 +38,14 @@ BOOL DM2231_View::Draw(void)
 
 	switch(theModel->theState.theState)
 	{
-	case(theModel->theState.State::EnterName):
-	{
-
-												 break;
-	}
-	case(theModel->theState.State::storyins):
-	{
-												break;
-	}
-	case (theModel->theState.State::menu):
+	case (theModel->theState.states::menu):
 		{
-			theModel->theUI.RenderUI(theUI->STARTSCREEN, base);
-			glRasterPos3f (20,600,1);
-			glPrint(theModel->theHero->playername.c_str());
+			theModel->theUI.RenderUI(theUI->STARTSCREEN);
 			break;
 		}
-	case (theModel->theState.State::level) :
+	case (theModel->theState.states::level):
 		{
-			theModel->theHero->GetBase(base);
+			theModel->theUI.RenderUI(theUI->LEVEL);
 			theModel->TestMap.RenderTileMap();
 
 			for(auto it = theModel->ArrayofEntities.begin(); it != theModel->ArrayofEntities.end(); it++)
@@ -118,49 +53,70 @@ BOOL DM2231_View::Draw(void)
 				(*it)->render(theModel->TestMap.mapOffset_x, theModel->TestMap.mapOffset_y);
 			}
 			theModel->thegun.render();
-			theModel->theUI.RenderUI(theUI->LEVEL, base);
 			break;
 		}
-	case(theModel->theState.State::PageToLearnShop):
-	{
-													   break;
-	}
-	case (theModel->theState.State::shop) :
+	case (theModel->theState.states::shop) :
 		{
-			
-			theModel->theUI.RenderUI(theUI->SHOP, base);
-			theModel->theUI.RenderUI(theUI->LEVEL,base);
 			break;
 		}
-	case (theModel->theState.State::credit) :
+	case (theModel->theState.states::credit) :
 		{
 			// Credit page -> Menu
-			theModel->theUI.RenderUI(theUI->CREDIT, base);
+			theModel->theUI.RenderUI(theUI->CREDIT);
 			// Input Timer here
-
+			theModel->theUI.RenderUI(theUI->STARTSCREEN);
 			break;
 		}
-	case (theModel->theState.State::win) :
+	case (theModel->theState.states::win) :
 		{
-			theModel->theUI.RenderUI(theUI->WIN, base);
+			theModel->theUI.RenderUI(theUI->WIN);
 			// Input Timer here
-
+			theModel->theUI.RenderUI(theUI->CREDIT);
 			break;
 		}
-	case (theModel->theState.State::defeat) :
+	case (theModel->theState.states::defeat) :
 		{
-			theModel->theUI.RenderUI(theUI->DEFEAT, base);
+			theModel->theUI.RenderUI(theUI->DEFEAT);
 			// Input Timer here
-
+			theModel->theUI.RenderUI(theUI->CREDIT);
 			break;
 		}
-	case(theModel->theState.State::subpagelevel) :
-		{
-			theModel->theUI.RenderUI(theUI->SUBPAGE, base);
-		}
-		break;
+
 	}
 
+	//theModel->TestMap.RenderTileMap();
+
+
+
+
+
+
+	
+	//glTranslatef(-1.5f,0.0f,-6.0f); // Move Left 1.5 Units And Into The Screen 6.0
+	//glRotatef(rtri,0.0f,1.0f,0.0f); // Rotate The Triangle On The Y axis ( NEW )
+	//glBegin(GL_TRIANGLES); // Start Drawing A Triangle
+	//	glColor3f(1.0f,0.0f,0.0f); // Set Top Point Of Triangle To Red
+	//	glVertex3f( 0.0f, 1.0f, 0.0f); // First Point Of The Triangle
+	//	glColor3f(0.0f,1.0f,0.0f); // Set Left Point Of Triangle To Green
+	//	glVertex3f(-1.0f,-1.0f, 0.0f); // Second Point Of The Triangle
+	//	glColor3f(0.0f,0.0f,1.0f); // Set Right Point Of Triangle To Blue
+	//	glVertex3f( 1.0f,-1.0f, 0.0f); // Third Point Of The Triangle
+	//glEnd(); // Done Drawing The Triangle
+
+	//glLoadIdentity(); // Reset The Current Modelview Matrix
+	//glTranslatef(1.5f,0.0f,-6.0f); // Move Right 1.5 Units And Into The Screen 6.0
+	//glRotatef(rquad,1.0f,0.0f,0.0f); // Rotate The Quad On The X axis ( NEW )
+	//glColor3f(0.5f,0.5f,1.0f); // Set The Color To Blue One Time Only
+
+	//glBegin(GL_QUADS); // Draw A Quad
+	//	glVertex3f(-1.0f, 1.0f, 0.0f); // Top Left
+	//	glVertex3f( 1.0f, 1.0f, 0.0f); // Top Right
+	//	glVertex3f( 1.0f,-1.0f, 0.0f); // Bottom Right
+	//	glVertex3f(-1.0f,-1.0f, 0.0f); // Bottom Left
+	//glEnd(); // Done Drawing The Quad
+
+	//rtri+=0.2f; // Increase The Rotation Variable For The Triangle ( NEW )
+	//rquad-=0.15f; // Decrease The Rotation Variable For The Quad ( NEW )
 	theModel->theOrtho2DSetUp.SetHUD(false);
 
 	SwapBuffers(hDC); // Swap Buffers (Double Buffering)
@@ -184,7 +140,6 @@ int DM2231_View::InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	glEnable(GL_DEPTH_TEST); // Enables Depth Testing
 	glDepthFunc(GL_LEQUAL); // The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
-	BuildFont();
 	return TRUE; // Initialization Went OK
 }
 
@@ -425,23 +380,25 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	m_iWindows_Width = width; 
 	m_iWindows_Height = height;
 
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.menuTexture[0],"Images/Menu.tga"))
-		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.levelTexture[0], "Images/Level.tga"))
-		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.scoreTexture[0], "Images/Score.tga"))
-		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.subpageTexture[0], "Images/Subpage.tga"))
-		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
-		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Credit.tga"))
-		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.winTexture[0], "Images/Win.tga"))
-		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.defeatTexture[0], "Images/Defeat.tga"))
-		return false;
 
+	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.menuTexture[0],"Images/Menu.tga"))
+	//	return false;
+	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.levelTexture[0], "Images/Level.tga"))
+	//	return false;
+	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.scoreTexture[0], "Images/Score.tga"))
+	//	return false;
+	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.subpageTexture[0], "Images/Subpage.tga"))
+	//	return false;
+	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
+	//	return false;
+	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
+	//	return false;
+	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Credit.tga"))
+	//	return false;
+	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Win.tga"))
+	//	return false;
+	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.creditTexture[0], "Images/Defeat.tga"))
+	//	return false;
 
 	return TRUE; // Success
 }
@@ -525,6 +482,12 @@ LRESULT CALLBACK DM2231_View::MsgProc( HWND hWnd, // Handle For This Window
 		}
 	case WM_MOUSEWHEEL:
 		{
+			//if ((short)HIWORD(wParam) < 0)
+			// {
+			//	nZoom--;
+			// }
+			//else
+			//	nZoom++;
 			 return 1;
 		}
 
@@ -597,9 +560,3 @@ bool DM2231_View::GetKeys(char s)
 	else 
 		return false;
 }
-
-void DM2231_View::SetKeys(char g)
-{
-	keys[g] = false;
-	keys[g-32] = false;
-}	

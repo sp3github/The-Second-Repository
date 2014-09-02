@@ -4,7 +4,6 @@
 #include "DM2231_Model.h"
 #include "Mouse.h"
 
-
 class DM2231_View
 {
 public:
@@ -17,6 +16,8 @@ public:
 	BOOL CreateGLWindow(char* title, int width, int height, int bits);
 	GLvoid ReSizeGLScene(GLsizei width, GLsizei height);		// Resize And Initialize The GL Window
 	GLvoid KillGLWindow(GLvoid);
+
+
 
 private:
 	DM2231_Model* theModel;
@@ -37,12 +38,6 @@ private:
 	virtual LRESULT CALLBACK MsgProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 	static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM); // Declaration For WndProc
 
-
-	GLuint	base;				// Base Display List For The Font Set
-	GLvoid BuildFont(GLvoid);
-	GLvoid KillFont(GLvoid);
-	GLvoid glPrint(const char *fmt, ...);
-
 public:
 	// Check if the player wants to quit the game
 	bool isQuitGame(void);
@@ -54,11 +49,6 @@ public:
 	void setFullScreen(bool m_bFullScreen);
 
 	bool GetKeys(char s);
-	void SetKeys(char g);
 
 	bool LMKeyDown;
-	bool RMKeyDown;
-
-	//name
-	void PrintName(float x, float y, float z, const GLuint &base, char *fmt, ...);
 };

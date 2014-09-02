@@ -63,7 +63,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;irrklang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;irrklang.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -93,9 +93,7 @@
   <ItemGroup>
     <ClCompile Include="Ammo.cpp" />
     <ClCompile Include="Bet.cpp" />
-    <ClCompile Include="Building.cpp" />
     <ClCompile Include="bullet.cpp" />
-    <ClCompile Include="Casino.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DM2231_Controller.cpp" />
     <ClCompile Include="DM2231_Model.cpp" />
@@ -124,14 +122,11 @@
   <ItemGroup>
     <ClInclude Include="Ammo.h" />
     <ClInclude Include="Bet.h" />
-    <ClInclude Include="Building.h" />
     <ClInclude Include="bullet.h" />
-    <ClInclude Include="Casino.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="DM2231_Controller.h" />
     <ClInclude Include="DM2231_Model.h" />
     <ClInclude Include="DM2231_View.h" />
-    <ClInclude Include="EntitiesHeader.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityFactory.h" />
     <ClInclude Include="gun.h" />

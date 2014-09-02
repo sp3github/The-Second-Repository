@@ -34,6 +34,7 @@ public:
 		{
 			this->last_x = new_x;
 			this->last_y = new_y;
+			cout<<"Weird Stuff"<<endl;
 		}
 		else
 		{

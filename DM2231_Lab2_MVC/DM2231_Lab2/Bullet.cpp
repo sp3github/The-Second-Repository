@@ -36,7 +36,7 @@ void bullet::render(int mapOffset_x, int mapOffset_y)
 	glEnable(GL_BLEND);
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glColor3f(1, 0, 0);
+	glColor3f(0, 1, 0);
 
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 1); glVertex2f(0, 0);
@@ -64,35 +64,68 @@ void bullet::update(float dt)
 	Set_Y(pos.y);
 }
 
-void bullet::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+vector<CEntity*>::iterator  bullet::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	switch (other.ID)
 	{
+	case HEALTH:
+		{
+
+			break;
+		}
 	case ZOMBIE:
 		{
 			other.hp -= power * 0.01;//Effect
+			
 
-			this->Destroy = true;
+			int Counter, index, bulletindex;
+			auto it = theArray.begin();
+			//Find the bullet and the other in the array.
+			for (it = theArray.begin(), Counter = 0; it != theArray.end();it++, Counter++)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+				if (go == &other)
+				{
+					index = Counter;
+				}
+				if(go->ID == BULLET && go->GetX() == GetX() && go->GetY() == GetY())
+				{
+					bulletindex = Counter;
+				}
+			}
+
+			//delete this;//Delete the bullet
+			this->~bullet();
+			theArray.erase(theArray.begin() + bulletindex);
+			
+			index -= 1;
 
 			if(other.hp <= 0)
 			{
-				for (auto it = theArray.begin(); it != theArray.end(); it++)
-				{
-					if ((*it)->ID == PLAYER)
-					{
-						CPlayerInfo * theHero;
-						theHero = dynamic_cast<CPlayerInfo*>(*it);
-						theHero->money.AddMoney(10);
-					}
-				}
-				other.Destroy = true;
+				//delete &other;
+				other.~CEntity();
+				it = theArray.erase(theArray.begin() + index); //delete from array.
+				
+				
+				return it;
 			}
-		}
-	case BUILDING:
-		{
-			this->Destroy = true;
+			
+			it = theArray.begin() + index;
+			return it;
+			
 		}
 	default:
 		break;
 	}
+	for (auto it = theArray.begin(); it != theArray.end();it++)
+			{
+				CEntity *go = NULL;
+				go = (*it);
+				if (go == &other)
+				{
+					return it + 1;
+				}
+
+			}
 }

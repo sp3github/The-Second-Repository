@@ -6,10 +6,10 @@ class UI
 {
 private:
 	void *font_style;
-	float PlayerHP;
 public:
 	enum StateType{
-	LEVEL = 0,
+	PAUSE = 0,
+	LEVEL,
 	STARTSCREEN,
 	SUBPAGE,
 	CREDIT,
@@ -21,14 +21,11 @@ public:
 	UI(void);
 	~UI(void);
 
-	void SetHP(float currentHP, float maxHP);
+	void RenderUI(StateType States);
 
-	float GetHP(void);
+	int DetermineState(int choice);
 
-	void RenderUI(StateType States,const GLuint &base);
-
-
-	void printw (float x, float y, float z,const GLuint &base, const char* format, ...);
+	void printw (float x, float y, float z, char* format, ...);
 
 	loadTGA theTexture;
 };
