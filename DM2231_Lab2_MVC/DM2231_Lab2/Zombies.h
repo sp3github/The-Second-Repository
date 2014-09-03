@@ -56,7 +56,7 @@ public:
 	//void update(int herox, int heroy, float dt);
 
 	void drawzombie(int x, int y);
-	void CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	virtual void CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
 	mvcTime * Timer;
 	int TimeIndex;

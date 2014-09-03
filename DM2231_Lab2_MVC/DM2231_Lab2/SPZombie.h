@@ -18,7 +18,7 @@ public:
 
 	int tile_size;
 
-	string setPlayerName(string playername);
+	void setPlayerName(string playername);
 
 	void update(int herox, int heroy, int mapOffset_x, int mapOffset_y, float dt);
 	void render(int mapOffset_x, int mapOffset_y);
@@ -26,6 +26,6 @@ public:
 	int getLevel(int level);
 	void getDeathState(State theState);
 	
-	vector<CEntity*>::iterator  CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	void CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 };
 

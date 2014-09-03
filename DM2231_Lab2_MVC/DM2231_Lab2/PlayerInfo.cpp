@@ -21,7 +21,6 @@ void CPlayerInfo::Init(void)
 	tile_size = 24;
 
 	hp = 100;
-	ammo = 0;
 
 	time = mvcTime::getInstance();
 	index = time->insertNewTime(5000);
@@ -226,12 +225,12 @@ void CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 		break;
 	case AMMO:
 		{
-			this->ammo += 6;
+			//this->ammo += 6;
 
-			if(this->ammo > 36)
-			{
-				this->ammo = 36;
-			}
+			//if(this->ammo > 36)
+			//{
+			//	this->ammo = 36;
+			//}
 
 			other.Destroy = true;
 		}

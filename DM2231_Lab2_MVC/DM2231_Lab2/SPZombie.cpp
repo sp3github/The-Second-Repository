@@ -12,7 +12,7 @@ SPZombie::~SPZombie(void)
 
 }
 
-string SPZombie::setPlayerName(string playername)
+void SPZombie::setPlayerName(string playername)
 {
 	playername = zombiename;
 }
@@ -20,11 +20,6 @@ string SPZombie::setPlayerName(string playername)
 int SPZombie::getLevel(int level)
 {
 	return level;
-}
-
-void SPZombie::getDeadState(State theState)
-{
-	return theState;
 }
 
 void SPZombie::SpawnSP()
@@ -112,7 +107,7 @@ void SPZombie::update(int herox, int heroy, int mapOffset_x, int mapOffset_y, fl
 	Set_Y(pos.y);
 }
 
-vector<CEntity*>::iterator  CZombies::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+void  SPZombie::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	switch (other.ID)
 	{
@@ -147,14 +142,4 @@ vector<CEntity*>::iterator  CZombies::CollisionEvent(CEntity &other, vector<CEnt
 	default:
 		break;
 	}
-	for (auto it = theArray.begin(); it != theArray.end(); it++)
-			{
-				CEntity *go = NULL;
-				go = (*it);
-				if (go == this)
-				{
-					return it + 1;
-				}
-
-			}
 }

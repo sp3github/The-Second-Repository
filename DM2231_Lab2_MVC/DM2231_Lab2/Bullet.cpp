@@ -1,5 +1,5 @@
 #include "bullet.h"
-
+#include "PlayerInfo.h"
 
 bullet::bullet()
 {
