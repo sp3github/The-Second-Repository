@@ -517,7 +517,7 @@ LRESULT CALLBACK DM2231_View::MsgProc( HWND hWnd, // Handle For This Window
 			theModel->theMouseInfo.SetMousePos( LOWORD(lParam), HIWORD(lParam) );
 			int diffX = theModel->theMouseInfo.GetDiff_X();
 			int diffY = theModel->theMouseInfo.GetDiff_Y();
-			cout<<"MOUSE"<<theModel->theMouseInfo.MousePos<<endl;
+			//cout<<"MOUSE"<<theModel->theMouseInfo.MousePos<<endl;
 
 			RECT WindowRect;
 			GetWindowRect( hWnd, &WindowRect);

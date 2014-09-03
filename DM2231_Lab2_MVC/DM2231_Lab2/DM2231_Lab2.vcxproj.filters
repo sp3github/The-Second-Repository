@@ -91,6 +91,7 @@
     <ClCompile Include="DM2231_View.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QuadTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DM2231_Model.h">
@@ -189,6 +190,7 @@
     <ClInclude Include="SPZombie.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="QuadTree.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

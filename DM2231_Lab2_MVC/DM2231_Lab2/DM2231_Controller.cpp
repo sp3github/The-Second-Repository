@@ -79,6 +79,7 @@ BOOL DM2231_Controller::RunMainLoop(void)
 		{
 			if (ProcessInput())
 			{
+				cout<<"FPS: "<<timer->getFPS()<<endl;
 				timer->updateTime();
 				theModel->Update();
 				theView->Draw();

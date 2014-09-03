@@ -9,8 +9,6 @@ CZombies::CZombies(void)
 , hero_x(0)
 , hero_y(0)
 {
-	Set_X(rand()% 800);
-	Set_Y(rand()% 600);  
 
 	vel.Set(0.5,0.5,0.0);
 	movementspeed = 100;

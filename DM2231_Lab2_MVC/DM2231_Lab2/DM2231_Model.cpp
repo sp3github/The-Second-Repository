@@ -255,23 +255,23 @@ void DM2231_Model::DeleteVectorButHero()
 
 void DM2231_Model::Collision()
 {
-	for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
-	{
-		CEntity * go = NULL;
-		go = (*it);
-		for (auto i = ArrayofEntities.begin(); i != ArrayofEntities.end(); i++)
-		{
-			//Do collision event to all entities.
-			CEntity * other = (*i);
-			if (go != other)
-			{
-				if (!theCollision.CheckCollision(go, other, false, false, false, false)) //Checks if it has collided go with other
-				{
-					go->CollisionEvent(*other, ArrayofEntities);        //Run collision code,
-				}
-			}
-		}
-	}
+	//for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
+	//{
+	//	CEntity * go = NULL;
+	//	go = (*it);
+	//	for (auto i = ArrayofEntities.begin(); i != ArrayofEntities.end(); i++)
+	//	{
+	//		//Do collision event to all entities.
+	//		CEntity * other = (*i);
+	//		if (go != other)
+	//		{
+	//			if (!theCollision.CheckCollision(go, other, false, false, false, false)) //Checks if it has collided go with other
+	//			{
+	//				go->CollisionEvent(*other, ArrayofEntities);        //Run collision code,
+	//			}
+	//		}
+	//	}
+	//}
 	//If collision sets something to be destroyed, destroy it here.
 	for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end();)
 	{

@@ -116,6 +116,7 @@
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Ortho2D.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Slowdown.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SPZombie.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Ortho2D.h" />
     <ClInclude Include="PlayerInfo.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Slowdown.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SPZombie.h" />
