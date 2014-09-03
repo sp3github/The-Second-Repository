@@ -29,7 +29,6 @@ void SPZombie::SpawnSP()
 
 void SPZombie::render(int mapOffset_x, int mapOffset_y)
 {
-	cout << "SpecialZombie" << endl;
 
 	glPushMatrix();
 	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);

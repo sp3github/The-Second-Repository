@@ -19,11 +19,13 @@ Sound::Sound(void)
 , Score(NULL)
 , Zombie(NULL)
 {
+	InitSound();
 }
 
 
 Sound::~Sound(void)
 {
+	theSoundEngine->drop();
 }
 
 bool Sound::InitSound(void)
@@ -32,6 +34,7 @@ bool Sound::InitSound(void)
 	theSoundEngine = createIrrKlangDevice();
 		if (!theSoundEngine)
 			return false;		// Error starting up the sound engine
+	theSoundEngine->setSoundVolume(0.1f);
 }
 
 void Sound::RenderSound(SoundType Sounds)
@@ -217,7 +220,7 @@ void Sound::RenderSound(SoundType Sounds)
 		case SCORE:
 		// Plays the score page sound
 		if(Score == NULL)
-		{
+		{ 
 			Score = theSoundEngine->play2D(("Sound/Score.wav"), false, true);
 		}
 		if (Score->getIsPaused() == true)

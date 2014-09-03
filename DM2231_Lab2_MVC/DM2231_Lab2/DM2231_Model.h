@@ -37,15 +37,15 @@ public:
 	vector<CEntity*> ArrayofEntities;
 	CEntityFactory theEntityFactory;
 
-	UI * ui;//printing 
+	//UI * ui;//printing 
 
 	CPlayerInfo * theHero;
+	CZombies * theZombie;
 	CEntity * theHeroEntity;
 
-	CZombies * theZombie;
+
 
 	gun thegun;
-	Casino * theCasino;
 	Collision theCollision;
 
 	CObstacle * theObstacle;

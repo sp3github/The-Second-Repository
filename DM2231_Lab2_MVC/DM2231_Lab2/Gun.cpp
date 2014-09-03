@@ -64,8 +64,10 @@ void gun::FireGun()
 			thePointertoBullet = (dynamic_cast<bullet*> (theArrayofEntities->back()));
 			thePointertoBullet->SetAngle(theHero->HeroRotation);
 			thePointertoBullet->SetPower(power[BulletState]);
+			--totalbullet[BulletState];
 		}
 		prevshot[BulletState] = currentshot[BulletState];
+
 	}
 
 	if (currentBullet[BulletState] <= 0)	//AUTO RELOAD
@@ -78,9 +80,10 @@ void gun::FireGun()
 		if (currentreload[BulletState] - prevreload[BulletState] >= reloadtime[BulletState])
 		{
 			ReloadGun();
-			reloadC = false;;
+			reloadC = false;
 		}
 	}
+
 }
 
 void gun::ReloadGun()
@@ -118,7 +121,7 @@ void gun::InitGun()
 		reloadtime[0] = 100;
 		reloadC = false;
 
-		MilliSecondPerShot[0] = 400;
+		MilliSecondPerShot[0] = 500;
 
 		totalbullet[0] = bulletCount[0] + currentBullet[0];
 
@@ -135,7 +138,7 @@ void gun::InitGun()
 		reloadtime[1] = 100;
 		reloadC = false;
 
-		MilliSecondPerShot[1] = 150;
+		MilliSecondPerShot[1] = 50;
 
 		totalbullet[1] = bulletCount[1] + currentBullet[1];
 
@@ -155,7 +158,7 @@ void gun::InitGun()
 		reloadtime[2] = 100;
 		reloadC = false;
 
-		MilliSecondPerShot[2] = 700;
+		MilliSecondPerShot[2] = 1100;
 
 		totalbullet[2] = bulletCount[2] + currentBullet[2];
 

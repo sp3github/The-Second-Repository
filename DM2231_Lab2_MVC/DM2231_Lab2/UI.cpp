@@ -37,6 +37,7 @@ void UI::RenderUI(StateType States, const GLuint&base)
 	switch(States)
 	{
 	case ENTERNAME:
+//		theSound.RenderSound(Sound::MENU);
 		glPushMatrix();
 			glColor3f(1.0f , 1.0f, 1.0f);
 			glEnable(GL_TEXTURE_2D);
@@ -112,24 +113,30 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		glPopMatrix();
 
 		glPushMatrix();
-			glTranslatef(700.0f, 70.0f, 0.0f);
-			printf("%f", theGun->currentBullet);
+			glColor3f(1,0,0);
+			glTranslatef(650.0f, 70.0f, 0.0f);
+			printw(0,0,0,base,"PISTOL AMMO: %i", theGun->bulletCount[0] + theGun->currentBullet[0]);
+			glColor3f(1,1,1);
 		glPopMatrix();
 
 		glPushMatrix();
-			glTranslatef(710.0f, 70.0f, 0.0f);
-			printf("/");
+		glColor3f(1,0,0);
+			glTranslatef(650.0f, 140.0f, 0.0f);
+			printw(0,0,0,base,"UZI AMMO: %i",theGun->bulletCount[1] + theGun->currentBullet[1]);
+			glColor3f(1,1,1);
 		glPopMatrix();
 		
 		glPushMatrix();
-			glTranslatef(720.0f, 70.0f, 0.0f);
-			printf("%f", theGun->totalbullet);
+		glColor3f(1,0,0);
+			glTranslatef(650.0f, 210.0f, 0.0f);
+			printw(0,0,0,base,"SHOTGUN AMMO: %i",theGun->bulletCount[2] + theGun->currentBullet[2]);
+			glColor3f(1,1,1);
 		glPopMatrix();
 		
 		break;
 
 	case STARTSCREEN:
-		theSound.RenderSound(Sound::MENU);
+
 		
 		glPushMatrix();
 			glColor3f(1.0f , 1.0f, 1.0f);
@@ -237,6 +244,7 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		break;
 
 	case SHOP:
+		theSound.Level->stop();
 		theSound.RenderSound(Sound::SCORE);
 
 		glPushMatrix();

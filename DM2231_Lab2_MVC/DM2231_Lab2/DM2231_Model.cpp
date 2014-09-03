@@ -25,6 +25,8 @@ DM2231_Model::~DM2231_Model(void)
 // Update the model
 void DM2231_Model::Update(void)
 {
+	theUI.SetGun(thegun);
+
 	switch (theState.theState)
 	{
 	case State::storyins:
@@ -47,7 +49,6 @@ void DM2231_Model::Update(void)
 
 	case State::level:
 		{
-
 			theHero->HeroRotation = AnglefromHerotoMouse();
 			ConstrainHero();
 			TestMap.Update();
@@ -75,7 +76,7 @@ void DM2231_Model::Update(void)
 
 			theUI.SetHP((float)theHero->hp, 100.0f);
 
-			//Collision();
+			Collision();
 
 			if (getZombieCount() == 0)
 			{

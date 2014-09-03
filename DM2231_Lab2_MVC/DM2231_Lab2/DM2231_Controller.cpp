@@ -188,17 +188,25 @@ bool DM2231_Controller::ProcessInput(void)
 			}
 			if (theView->GetKeys('1'))
 			{
+				theModel->thegun.changestate(GunStates::pistol);
 			}
 			if (theView->GetKeys('2'))
 			{
+				theModel->thegun.changestate(GunStates::uzi);
 			}
 			if (theView->GetKeys('3'))
 			{
+				theModel->thegun.changestate(GunStates::shotgun);
 			}
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
-				theSound.RenderSound(Sound::PISTOL);
+				if(theModel->thegun.StateNow == GunStates::pistol && theModel->thegun.currentBullet[0] != 0)
+					theSound.RenderSound(Sound::PISTOL);
+				else if(theModel->thegun.StateNow == GunStates::uzi&& theModel->thegun.currentBullet[1] != 0)
+					theSound.RenderSound(Sound::UZI);
+				else if(theModel->thegun.StateNow == GunStates::shotgun&& theModel->thegun.currentBullet[2] != 0)
+					theSound.RenderSound(Sound::SHOTGUN);
 			}
 			break;
 		}
@@ -208,8 +216,24 @@ bool DM2231_Controller::ProcessInput(void)
 		}
 	case (theModel->theState.State::shop) :
 		{
-			if(theView->GetKeys('1'))
+			if(theView->GetKeys('1'))//EXIT THE SHOP
 				theModel->theState.theState = theModel->theState.level;
+
+			//BUY PISTOL AMMO
+			if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 370 && theModel->theMouseInfo.MousePos.y <= 430)
+			{
+				
+			}
+			//BUY UZI AMMO
+			if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 450 && theModel->theMouseInfo.MousePos.y <= 520)
+			{
+				
+			}
+			//BUY SHOTGUN AMMO
+			if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 450 && theModel->theMouseInfo.MousePos.y <= 520)
+			{
+				
+			}
 			break;
 		}
 	case (theModel->theState.State::PageToLearnShop):
