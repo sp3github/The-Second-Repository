@@ -126,6 +126,9 @@
     <ClCompile Include="Casino.cpp">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="SPZombie.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DM2231_Controller.h">
@@ -220,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="EntitiesHeader.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SPZombie.h">
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
