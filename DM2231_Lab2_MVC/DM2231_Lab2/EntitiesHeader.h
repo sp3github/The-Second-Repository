@@ -7,4 +7,5 @@
 #include "bullet.h"
 #include "Zombies.h"
 #include "Casino.h"
+#include "Building.h"
 

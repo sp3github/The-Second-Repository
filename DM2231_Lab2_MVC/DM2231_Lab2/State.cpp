@@ -3,7 +3,7 @@
 
 State::State(void)
 {
-	theState = states::menu;
+	theState = states::EnterName;
 }
 
 

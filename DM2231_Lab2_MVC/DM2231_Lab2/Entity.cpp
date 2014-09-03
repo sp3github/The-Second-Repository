@@ -10,6 +10,7 @@ CEntity::CEntity(void)
 	hp = 100;
 	vel.Set(0, 0, 0);
 	pos.Set(0, 0, 0);
+	Destroy = false;
 }
 
 
@@ -59,10 +60,8 @@ void CEntity::render(int mapOffset_x, int mapOffset_y)
 }
 
 
- vector<CEntity*>::iterator CEntity::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+void CEntity::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
-	return theArray.begin();
-
 }
 
 

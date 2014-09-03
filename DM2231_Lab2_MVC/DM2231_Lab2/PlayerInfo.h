@@ -5,6 +5,7 @@
 #include "MVCtime.h"
 #include <string>
 #include <iostream>
+#include "Money.h"
 
 using namespace std;
 
@@ -44,9 +45,9 @@ public:
 	void moveMeUpDown(bool mode, float timeDiff, float movementspeed);
 	void moveMeLeftRight(bool mode, float timeDiff, float movementspeed);
 
-	vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	void CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 
-	int ammo;
+	CMoney money;
 
 	string playername;
 private:

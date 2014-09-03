@@ -74,6 +74,6 @@ public:
 	int getZombieCount();
 	void UpdateLimit();
 
-	//name
-	//void PrintName(float x, float y, float z, const GLuint &base, char *fmt, ...);
+	void DeleteVectorButHero();
+	void Collision();
 };

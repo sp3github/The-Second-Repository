@@ -113,7 +113,47 @@ bool DM2231_Controller::ProcessInput(void)
 
 	switch (theModel->theState.theState)
 	{
-	case (theModel->theState.states::level):
+	case (theModel->theState.State::EnterName):
+		{
+			for(int i = 65; i < 90; i++)
+			{
+				if(theView->GetKeys(i))
+				{	
+					theModel->theHero->playername.push_back(i);
+					theView->SetKeys(i);
+				}
+
+				if (theView->GetKeys('p'))
+				{
+					theModel->theHero->playername.clear();
+				}
+			}
+			break;
+		}
+	case (theModel->theState.State::storyins):
+	{
+												 break;
+	}
+
+	case (theModel->theState.State::menu):
+		{
+			if(theView->LMKeyDown)
+			{
+				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 220 && theModel->theMouseInfo.MousePos.y <= 260)
+				{
+					theModel->theState.theState = theModel->theState.level;
+				}
+				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 270 && theModel->theMouseInfo.MousePos.y <= 310)
+				{
+					m_bContinueLoop=false;
+					return false;
+				}
+				theView->LMKeyDown = false;
+			}
+
+
+		}
+	case (theModel->theState.State::level):
 		{
 			if (theView->GetKeys('w'))
 			{
@@ -154,62 +194,29 @@ bool DM2231_Controller::ProcessInput(void)
 			}
 			break;
 		}
-	case (theModel->theState.states::menu):
-		{
-			if(theView->LMKeyDown)
-			{
-				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 220 && theModel->theMouseInfo.MousePos.y <= 260)
-				{
-					theModel->theState.theState = theModel->theState.level;
-				}
-				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 270 && theModel->theMouseInfo.MousePos.y <= 310)
-				{
-					m_bContinueLoop=false;
-					return false;
-				}
-				theView->LMKeyDown = false;
-			}
-
-			for(int i = 65; i < 90; i++)
-			{
-				if(theView->GetKeys(i))
-				{	
-
-						theModel->theHero->playername.push_back(i);
-						theView->SetKeys(i);
-				}
-
-				if (theView->GetKeys('p'))
-				{
-					theModel->theHero->playername.clear();
-				}
-			}
-
-			break;
-		}
-	case (theModel->theState.states::shop) :
+	case(theModel->theState.State::PageToLearnShop):
+	{
+													   break;
+	}
+	case (theModel->theState.State::shop) :
 		{
 			if(theView->GetKeys('1'))
 				theModel->theState.theState = theModel->theState.level;
 			break;
 		}
-	case (theModel->theState.states::credit) :
+	case (theModel->theState.State::credit) :
 		{
 			break;
 		}
-	case (theModel->theState.states::win) :
+	case (theModel->theState.State::win) :
 		{
 			break;
 		}
-	case (theModel->theState.states::defeat) :
+	case (theModel->theState.State::defeat) :
 		{
 			break;
 		}
-	case (theModel->theState.states::PageToLearnShop):
-		{
-			break;
-		}
-	case (theModel->theState.states::subpage):
+	case (theModel->theState.State::subpagelevel) :
 		{
 			break;
 		}

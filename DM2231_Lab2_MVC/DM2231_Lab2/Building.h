@@ -1,13 +1,14 @@
 #pragma once
 #include "Entity.h"
-#include "EntityFactory.h"
-#include "Obstacle.h"
 #include <vector>
 
-class Building
+class Building : public CEntity
 {
 public:
 	Building(void);
 	~Building(void);
+
+	void update(float dt);
+	void render(int mapOffset_x, int mapOffset_y);
 };
 

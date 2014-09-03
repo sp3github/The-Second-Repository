@@ -34,7 +34,7 @@
     <Filter Include="Header Files\Framework">
       <UniqueIdentifier>{eefdbf4c-c68b-4980-b922-01c133342f73}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Framework\Misc">
+    <Filter Include="Source Files\Misc">
       <UniqueIdentifier>{e73fab7a-53cf-4127-b27e-e750e2d488c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -69,9 +69,6 @@
     <ClCompile Include="bullet.cpp">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="gun.cpp">
-      <Filter>Source Files\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="Items.cpp">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
@@ -85,22 +82,22 @@
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Bet.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="Money.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="State.cpp">
-      <Filter>Source Files\Framework\Misc</Filter>
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
     <ClCompile Include="loadTGA.cpp">
       <Filter>Source Files\Framework</Filter>
@@ -128,6 +125,8 @@
     </ClCompile>
     <ClCompile Include="SPZombie.cpp">
       <Filter>Source Files\Entity</Filter>
+    <ClCompile Include="gun.cpp">
+      <Filter>Source Files\Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,9 +146,6 @@
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="EntityFactory.h">
-      <Filter>Header Files\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="gun.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Items.h">
@@ -218,14 +214,17 @@
     <ClInclude Include="Casino.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Building.h">
-      <Filter>Source Files\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="EntitiesHeader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SPZombie.h">
       <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="gun.h">
+      <Filter>Header Files\Misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

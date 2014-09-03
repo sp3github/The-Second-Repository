@@ -92,14 +92,23 @@ BOOL DM2231_View::Draw(void)
 
 	switch(theModel->theState.theState)
 	{
-	case (theModel->theState.states::menu):
+	case(theModel->theState.State::EnterName):
+	{
+
+												 break;
+	}
+	case(theModel->theState.State::storyins):
+	{
+												break;
+	}
+	case (theModel->theState.State::menu):
 		{
 			theModel->theUI.RenderUI(theUI->STARTSCREEN, base);
 			glRasterPos3f (20,600,1);
 			glPrint(theModel->theHero->playername.c_str());
 			break;
 		}
-	case (theModel->theState.states::level):
+	case (theModel->theState.State::level) :
 		{
 			theModel->theHero->GetBase(base);
 			theModel->TestMap.RenderTileMap();
@@ -112,12 +121,18 @@ BOOL DM2231_View::Draw(void)
 			theModel->theUI.RenderUI(theUI->LEVEL, base);
 			break;
 		}
-	case (theModel->theState.states::shop) :
+	case(theModel->theState.State::PageToLearnShop):
+	{
+													   break;
+	}
+	case (theModel->theState.State::shop) :
 		{
+			
 			theModel->theUI.RenderUI(theUI->SHOP, base);
+			theModel->theUI.RenderUI(theUI->LEVEL,base);
 			break;
 		}
-	case (theModel->theState.states::credit) :
+	case (theModel->theState.State::credit) :
 		{
 			// Credit page -> Menu
 			theModel->theUI.RenderUI(theUI->CREDIT, base);
@@ -125,28 +140,23 @@ BOOL DM2231_View::Draw(void)
 
 			break;
 		}
-	case (theModel->theState.states::win) :
+	case (theModel->theState.State::win) :
 		{
 			theModel->theUI.RenderUI(theUI->WIN, base);
 			// Input Timer here
 
 			break;
 		}
-	case (theModel->theState.states::defeat) :
+	case (theModel->theState.State::defeat) :
 		{
 			theModel->theUI.RenderUI(theUI->DEFEAT, base);
 			// Input Timer here
 
 			break;
 		}
-	case(theModel->theState.states::subpage):
+	case(theModel->theState.State::subpagelevel) :
 		{
 			theModel->theUI.RenderUI(theUI->SUBPAGE, base);
-		}
-		break;
-	case (theModel->theState.states::PageToLearnShop):
-		{
-
 		}
 		break;
 	}

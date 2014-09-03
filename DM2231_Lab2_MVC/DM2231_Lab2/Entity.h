@@ -44,8 +44,8 @@ public:
 
 	virtual void render(int mapOffset_x, int mapOffset_y);
 
-	virtual  vector<CEntity*>::iterator CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
-
+	virtual void CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
+	bool Destroy;
 
 	int hp;
 	Vector3D<float> pos;
