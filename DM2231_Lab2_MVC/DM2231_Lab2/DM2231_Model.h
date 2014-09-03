@@ -16,6 +16,7 @@
 #include "Obstacle.h"
 #include <string>
 #include <iostream>
+#include "QuadTree.h"
 
 using namespace std;
 
@@ -77,4 +78,12 @@ public:
 
 	void DeleteVectorButHero();
 	void Collision();
+
+	QuadTree * quad;
+
+	float theMonWidth;
+	float theMonHeight;
+
+	float Wratio;
+	float Hratio;
 };

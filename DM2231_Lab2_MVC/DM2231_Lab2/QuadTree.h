@@ -1,23 +1,32 @@
 #pragma once
 #include "Entity.h"
 #include <vector>
+
+struct rect
+{
+	int x;
+	int y;
+	int height;
+	int width;
+	CEntity * theEntity;
+	rect(int x, int y, int width, int height, CEntity * theEntity = NULL)
+	{
+		this->x = x;
+		this->y = y;
+		this->width = width;
+		this->height = height;
+		this->theEntity = theEntity;
+	}
+	rect()
+	{
+
+	};
+};
+
 class QuadTree
 {
 private :
-	struct rect
-	{
-		int x;
-		int y;
-		int height;
-		int width;
-		rect(int x, int y, int width, int height)
-		{
-			this->x = x;
-			this->y = y;
-			this->width = width;
-			this->height = height;
-		}
-	};
+
 
 	int MAX_OBJECTS;
 	int MAX_LEVELS;
@@ -26,6 +35,7 @@ private :
 	vector<rect> objects;
 	rect bounds;
 	QuadTree * nodes[];
+
 
 public:
 
@@ -37,6 +47,8 @@ public:
 	void Split();	//split the quadtree
 	int GetIndex(rect pRect);	//Determine Location in quadtree -1 means object cannot completely fit within a child node and is part of the parent node
 	void insert(rect pRect);
-	vector<rect> retrive(vector<rect> returnObjects, rect pRect);
+	vector<rect> retrive(vector<rect> &returnObjects, rect pRect);
+
+
 };
 

@@ -15,11 +15,12 @@ DM2231_Controller::DM2231_Controller(DM2231_Model* theModel, DM2231_View* theVie
 , theView(NULL)
 , m_bContinueLoop(false)
 {
-
+	timer = mvcTime::getInstance();
+	timer->init();
 	this->theModel = theModel;
 	this->theView = theView;
 	Init();
-	timer = mvcTime::getInstance();
+
 }
 
 DM2231_Controller::~DM2231_Controller(void)
@@ -40,7 +41,11 @@ bool DM2231_Controller::Init(void)
 
 	theModel->SetStart(1);
 
-
+	//for (int i = 0; i < theModel->ArrayofEntities.size(); i++)
+	//{
+	//	theModel->quad->insert(rect(theModel->ArrayofEntities[i]->GetX(), theModel->ArrayofEntities[i]->GetY(), theModel->ArrayofEntities[i]->tile_size, theModel->ArrayofEntities[i]->tile_size, theModel->ArrayofEntities[i]));
+	//	//INSERT EVERYTHING INTO QUAD TREE
+	//}
 	return true;
 }
 

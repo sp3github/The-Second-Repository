@@ -3,8 +3,8 @@
 
 QuadTree::QuadTree(void)
 {
-	int MAX_OBJECTS = 10;
-	int MAX_LEVELS = 5;
+	MAX_OBJECTS = 10;
+	MAX_LEVELS = 5;
 }
 
 QuadTree::QuadTree(int pLevel, rect pBounds)
@@ -12,29 +12,62 @@ QuadTree::QuadTree(int pLevel, rect pBounds)
 	level = pLevel;
 	bounds = pBounds;
 	nodes[4] = new QuadTree;
+	for (int i = 0; i < 4; i++)
+		nodes[i] = NULL;
+	MAX_OBJECTS = 10;
+	MAX_LEVELS = 5;
 }
 
 QuadTree::~QuadTree(void)
 {
+	if (level == MAX_LEVELS)
+		return;
+	delete nodes[0];
+	delete nodes[1];
+	delete nodes[2];
+	delete nodes[3];
 }
 
 void QuadTree::clear()
 {
-	objects.clear();
+	if (level == MAX_LEVELS)
+	{
+		//for (auto i = objects.begin(); i != objects.end();)
+		//{
+		//	if (i->theEntity->movementspeed != 0)
+		//		i = objects.erase(i);
+		//	else
+		//		i++;
+		//}
+		objects.clear();
+		return;
+	}
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++)
+	{
 		if (nodes[i] != NULL)
 		{
 			nodes[i]->clear();
 			nodes[i] = NULL;
 		}
 	}
+	if (!objects.empty())
+	{
+		//for (auto i = objects.begin(); i != objects.end();)
+		//{
+		//	if (i->theEntity->movementspeed != 0)
+		//		i = objects.erase(i);
+		//	else
+		//		i++;
+		//}
+		objects.clear();
+	}
 }
 
 void QuadTree::Split()
 {
-	int subWidth = (int)(bounds.width / 2);
-	int subHeight = (int)(bounds.height / 2);
+	int subWidth = (int)(bounds.width * 0.5);
+	int subHeight = (int)(bounds.height * 0.5);
 	int x = (int)bounds.x;
 	int y = (int)bounds.y;
 
@@ -94,7 +127,7 @@ void QuadTree::insert(rect pRect)
 	
 
 	objects.push_back(pRect);
-//If there are no child nodes or the object doesn’t fit in a child node, it adds the object to the parent node.
+	//If there are no child nodes or the object doesn’t fit in a child node, it adds the object to the parent node.
 
 	if (objects.size() > MAX_OBJECTS && level < MAX_LEVELS)
 	{
@@ -105,21 +138,24 @@ void QuadTree::insert(rect pRect)
 
 		auto i = objects.begin();
 		int counter;
-		for(i = objects.begin(), counter = 0; i != objects.end(); counter++)
+		for(i = objects.begin(), counter = 0; i != objects.end();counter++)
 		{
 			int index = GetIndex(objects.at(counter));
-			if(index != -1)
+			if (index != -1)
 			{
 				nodes[index]->insert(objects.at(counter));
-				objects.erase(i);
+				i = objects.erase(i);
+				counter--;
 			}
+			else
+				i++;
 		}
 	}
 	//Once the object is added, it determines whether the node needs to split by checking if the current number of objects exceeds the max allowed objects.
 	//Splitting will cause the node to insert any object that can fit in a child node to be added to the child node; otherwise the object will stay in the parent node.
 }
 
-vector<QuadTree::rect> QuadTree::retrive(vector<rect> returnObjects, rect pRect)
+vector<rect> QuadTree::retrive(vector<rect> &returnObjects, rect pRect)
 {
 	int index = GetIndex(pRect);
 	if (index != -1 && nodes[0] != NULL)

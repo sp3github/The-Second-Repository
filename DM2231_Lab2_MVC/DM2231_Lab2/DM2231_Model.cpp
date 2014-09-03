@@ -3,7 +3,7 @@
 #define LEFT_BORDER TILE_SIZE*1
 #define BOTTOM_BORDER TILE_SIZE*1
 
-DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
+DM2231_Model::DM2231_Model(void) :theCollision(TestMap, ArrayofEntities)
 {
 	time = mvcTime::getInstance();
 
@@ -16,10 +16,19 @@ DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 	SetTimeWin = false;
 	SetTimePageToLearnShop = false;
 	SetTimeStoryIn = false;
+
+	theMonWidth = static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN));
+	theMonHeight = static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN));
+
+	Wratio = theMonWidth / 800.f;
+	Hratio = theMonHeight / 600.f;
+
+	quad = new QuadTree(0, rect(0, 0, theMonWidth, theMonHeight));
 }
 
 DM2231_Model::~DM2231_Model(void)
 {
+	//delete quad;
 }
 
 // Update the model
@@ -60,9 +69,7 @@ void DM2231_Model::Update(void)
 				{
 					if (!theCollision.CheckCollision(go, NULL, false, false, false, false, true))
 					{
-						ArrayofEntities.erase(it);
-						go->~CEntity();
-						break;
+						go->Destroy = true;
 					}
 				}
 
@@ -189,18 +196,12 @@ void DM2231_Model::UpdateLimit()
 
 float DM2231_Model::AnglefromHerotoMouse()
 {
-	float theMonWidth = static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN));
-	float theMonHeight = static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN));
-	//Width and Height of the GL screen is 800 by 600
 
 	//Mouse vector is in screen pixel, while hero vector is in GL screen position.
-
+	//Must use ratio to find the proper angle
 
 	Vector3D<float> MouseVector(theMouseInfo.MousePos);
 
-	//Conversion from GL pos to screen pos.
-	float Wratio =  theMonWidth /800.f;
-	float Hratio = theMonHeight/ 600.f ;
 
 	Vector3D<float> HeroVector(theHero->GetX() * Wratio, theHero->GetY() * Hratio);
 
@@ -255,23 +256,39 @@ void DM2231_Model::DeleteVectorButHero()
 
 void DM2231_Model::Collision()
 {
-	//for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end(); it++)
-	//{
-	//	CEntity * go = NULL;
-	//	go = (*it);
-	//	for (auto i = ArrayofEntities.begin(); i != ArrayofEntities.end(); i++)
-	//	{
-	//		//Do collision event to all entities.
-	//		CEntity * other = (*i);
-	//		if (go != other)
-	//		{
-	//			if (!theCollision.CheckCollision(go, other, false, false, false, false)) //Checks if it has collided go with other
-	//			{
-	//				go->CollisionEvent(*other, ArrayofEntities);        //Run collision code,
-	//			}
-	//		}
-	//	}
-	//}
+	quad->clear();
+	for (int i = 0; i < ArrayofEntities.size(); i++)
+	{
+		if (ArrayofEntities[i]->ID == PLAYER)
+			quad->insert(rect(ArrayofEntities[i]->GetX(), ArrayofEntities[i]->GetY(), ArrayofEntities[i]->tile_size, ArrayofEntities[i]->tile_size,ArrayofEntities[i]));
+		else
+			quad->insert(rect(ArrayofEntities[i]->GetX() - TestMap.mapOffset_x, ArrayofEntities[i]->GetY() - TestMap.mapOffset_y, ArrayofEntities[i]->tile_size, ArrayofEntities[i]->tile_size, ArrayofEntities[i]));
+	}
+	//ONLY INSERT OBJECTS THAT MOVE
+
+	vector <rect> returnObjects;
+	//temp vec to hold the returned guys.
+
+	for (int i = 0; i < ArrayofEntities.size(); i++)
+	{
+		returnObjects.clear();
+		returnObjects = quad->retrive(returnObjects, (rect(ArrayofEntities[i]->GetX(), ArrayofEntities[i]->GetY(), ArrayofEntities[i]->tile_size, ArrayofEntities[i]->tile_size, ArrayofEntities[i])));
+
+		for (int FirstCounter = 0; FirstCounter < returnObjects.size(); FirstCounter++)
+		{
+			for (int SecondCounter = 0; SecondCounter < returnObjects.size(); SecondCounter++)
+			{
+				if (returnObjects[FirstCounter].theEntity != returnObjects[SecondCounter].theEntity)
+				{
+					if (!theCollision.CheckCollision(returnObjects[FirstCounter].theEntity, returnObjects[SecondCounter].theEntity))
+					{
+						(returnObjects[FirstCounter].theEntity)->CollisionEvent(*returnObjects[SecondCounter].theEntity, ArrayofEntities);
+					}
+				}
+			}
+		}
+	}
+
 	//If collision sets something to be destroyed, destroy it here.
 	for (auto it = ArrayofEntities.begin(); it != ArrayofEntities.end();)
 	{
