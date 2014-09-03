@@ -3,7 +3,6 @@
 
 UI::UI(void)
 {
-	font_style = GLUT_BITMAP_TIMES_ROMAN_24;
 }
 
 
@@ -38,6 +37,8 @@ void UI::RenderUI(StateType States, const GLuint&base)
 	switch(States)
 	{
 	case LEVEL:
+		theSound.RenderSound(Sound::LEVEL);
+
 		glPushMatrix();
 			glColor3f(1.0f, 0.0f, 0.0f);
 			printw(26.0f, 86.0f, 0.0f, base,"Hp: ");
@@ -71,10 +72,27 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		glEnd();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(700.0f, 70.0f, 0.0f);
+			printf("%f", theGun->currentBullet);
+		glPopMatrix();
+
+		glPushMatrix();
+			glTranslatef(710.0f, 70.0f, 0.0f);
+			printf("/");
+		glPopMatrix();
+		
+		glPushMatrix();
+			glTranslatef(720.0f, 70.0f, 0.0f);
+			printf("%f", theGun->totalbullet);
+		glPopMatrix();
 		
 		break;
 
 	case STARTSCREEN:
+		theSound.RenderSound(Sound::MENU);
+		
 		glPushMatrix();
 			glColor3f(1.0f , 1.0f, 1.0f);
 			glEnable(GL_TEXTURE_2D);
@@ -115,6 +133,8 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		break;
 
 	case CREDIT:
+		theSound.RenderSound(Sound::SUBPAGE);
+		
 		glPushMatrix();
 			glColor3f(1.0f , 1.0f, 1.0f);
 			glEnable(GL_TEXTURE_2D);
@@ -135,6 +155,8 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		break;
 
 	case WIN:
+		theSound.RenderSound(Sound::SUBPAGE);
+
 		glPushMatrix();
 			glColor3f(1.0f , 1.0f, 1.0f);
 			glEnable(GL_TEXTURE_2D);
@@ -155,6 +177,8 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		break;
 
 	case DEFEAT:
+		theSound.RenderSound(Sound::SUBPAGE);
+
 		glPushMatrix();
 			glColor3f(1.0f , 1.0f, 1.0f);
 			glEnable(GL_TEXTURE_2D);
@@ -172,10 +196,11 @@ void UI::RenderUI(StateType States, const GLuint&base)
 			glDisable(GL_TEXTURE_2D);
 		glColor3f(0.0f , 0.0f ,0.0f);
 		glPopMatrix();
-
 		break;
 
 	case SHOP:
+		theSound.RenderSound(Sound::SCORE);
+
 		glPushMatrix();
 			glColor3f(1.0f , 1.0f, 1.0f);
 			glEnable(GL_TEXTURE_2D);
@@ -208,4 +233,9 @@ void UI::SetHP(float currentHP, float maxHP)
 float UI::GetHP(void)
 {
 	return PlayerHP;
+}
+
+void UI::SetGun(gun &theGun)
+{
+	this->theGun = &theGun;
 }

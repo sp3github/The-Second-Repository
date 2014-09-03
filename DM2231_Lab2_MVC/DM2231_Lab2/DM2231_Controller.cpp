@@ -150,8 +150,6 @@ bool DM2231_Controller::ProcessInput(void)
 				}
 				theView->LMKeyDown = false;
 			}
-
-
 		}
 	case (theModel->theState.State::level):
 		{
@@ -177,20 +175,18 @@ bool DM2231_Controller::ProcessInput(void)
 			}
 			if (theView->GetKeys('1'))
 			{
-				theModel->thegun.changestate(pistol);
 			}
 			if (theView->GetKeys('2'))
 			{
-				theModel->thegun.changestate(uzi);
 			}
 			if (theView->GetKeys('3'))
 			{
-				theModel->thegun.changestate(shotgun);
 			}
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
-				
+				theModel->thegun.changestate(pistol);
+				theSound.RenderSound(Sound::PISTOL);
 			}
 			break;
 		}

@@ -54,5 +54,5 @@ public:
 	/*
 		Function to play the sound
 	*/
-	void PlaySound (SoundType Sounds);
+	void RenderSound (SoundType Sounds);
 };

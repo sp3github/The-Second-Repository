@@ -55,7 +55,7 @@ void DM2231_Model::Update(void)
 
 				go->update(time->getDelta());
 			}
-			theUI.SetHP(theHero->hp, 100);
+			theUI.SetHP((float)theHero->hp, 100.0f);
 
 			Collision();
 

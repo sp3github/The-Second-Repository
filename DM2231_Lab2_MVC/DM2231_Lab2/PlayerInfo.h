@@ -19,7 +19,7 @@ public:
 
 	float HeroRotation;
 
-	TextureImage HeroTexture[3];
+	TextureImage heroTexture[1];
 
 	// Render the Hero onto the screen
 	void render(int mapOffset_x, int mapOffset_y);
