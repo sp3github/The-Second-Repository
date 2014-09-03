@@ -70,7 +70,7 @@ void gun::FireGun()
 
 	if (currentBullet[BulletState] <= 0)	//AUTO RELOAD
 	{
-		currentreload[BulletState] = static_cast<float>(timeGetTime());
+		currentreload[BulletState] = timeGetTime();
 		if (reloadC == false){
 			prevreload[BulletState] = currentreload[BulletState];
 			reloadC = true;
@@ -121,8 +121,6 @@ void gun::InitGun()
 		MilliSecondPerShot[0] = 400;
 
 		totalbullet[0] = bulletCount[0] + currentBullet[0];
-
-
 
 		bulletCount[1] = 60;
 		currentBullet[1] = 30;

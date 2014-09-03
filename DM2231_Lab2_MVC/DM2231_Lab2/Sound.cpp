@@ -34,7 +34,7 @@ bool Sound::InitSound(void)
 			return false;		// Error starting up the sound engine
 }
 
-void Sound::PlaySound(SoundType Sounds)
+void Sound::RenderSound(SoundType Sounds)
 {
 	switch(Sounds)
 	{

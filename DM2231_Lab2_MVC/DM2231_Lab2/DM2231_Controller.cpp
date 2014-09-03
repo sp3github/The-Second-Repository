@@ -188,19 +188,17 @@ bool DM2231_Controller::ProcessInput(void)
 			}
 			if (theView->GetKeys('1'))
 			{
-				theModel->thegun.changestate(pistol);
 			}
 			if (theView->GetKeys('2'))
 			{
-				theModel->thegun.changestate(uzi);
 			}
 			if (theView->GetKeys('3'))
 			{
-				theModel->thegun.changestate(shotgun);
 			}
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
+				theSound.RenderSound(Sound::PISTOL);
 			}
 			break;
 		}

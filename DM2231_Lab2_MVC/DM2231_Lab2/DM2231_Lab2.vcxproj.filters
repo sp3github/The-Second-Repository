@@ -1,74 +1,225 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Ammo.cpp" />
-    <ClCompile Include="Bet.cpp" />
-    <ClCompile Include="Building.cpp" />
-    <ClCompile Include="bullet.cpp" />
-    <ClCompile Include="Casino.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="DM2231_Controller.cpp" />
-    <ClCompile Include="DM2231_Model.cpp" />
-    <ClCompile Include="DM2231_View.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="EntityFactory.cpp" />
-    <ClCompile Include="gun.cpp" />
-    <ClCompile Include="Health.cpp" />
-    <ClCompile Include="Items.cpp" />
-    <ClCompile Include="LoadResources.cpp" />
-    <ClCompile Include="loadTGA.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Money.cpp" />
-    <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="MVCtime.cpp" />
-    <ClCompile Include="Obstacle.cpp" />
-    <ClCompile Include="Ortho2D.cpp" />
-    <ClCompile Include="PlayerInfo.cpp" />
-    <ClCompile Include="Slowdown.cpp" />
-    <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="SPZombie.cpp" />
-    <ClCompile Include="State.cpp" />
-    <ClCompile Include="UI.cpp" />
-    <ClCompile Include="Zombies.cpp" />
+    <ClCompile Include="Ammo.cpp">
+      <Filter>Source Files\Entity\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Health.cpp">
+      <Filter>Source Files\Entity\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Slowdown.cpp">
+      <Filter>Source Files\Entity\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Casino.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityFactory.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="gun.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Items.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerInfo.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombies.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="SPZombie.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadResources.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="loadTGA.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="MVCtime.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Ortho2D.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Bet.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Money.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="DM2231_Controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DM2231_Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DM2231_View.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ammo.h" />
-    <ClInclude Include="Bet.h" />
-    <ClInclude Include="Building.h" />
-    <ClInclude Include="bullet.h" />
-    <ClInclude Include="Casino.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="DM2231_Controller.h" />
-    <ClInclude Include="DM2231_Model.h" />
-    <ClInclude Include="DM2231_View.h" />
-    <ClInclude Include="EntitiesHeader.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="EntityFactory.h" />
-    <ClInclude Include="gun.h" />
-    <ClInclude Include="Header.h" />
-    <ClInclude Include="Health.h" />
-    <ClInclude Include="Items.h" />
-    <ClInclude Include="LoadResources.h" />
-    <ClInclude Include="loadTGA.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="Money.h" />
-    <ClInclude Include="Mouse.h" />
-    <ClInclude Include="MVCtime.h" />
-    <ClInclude Include="Obstacle.h" />
-    <ClInclude Include="Ortho2D.h" />
-    <ClInclude Include="PlayerInfo.h" />
-    <ClInclude Include="Slowdown.h" />
-    <ClInclude Include="Sound.h" />
-    <ClInclude Include="SPZombie.h" />
-    <ClInclude Include="State.h" />
-    <ClInclude Include="UI.h" />
-    <ClInclude Include="vector3D.h" />
-    <ClInclude Include="Zombies.h" />
+    <ClInclude Include="DM2231_Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DM2231_Controller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DM2231_View.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntitiesHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Casino.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityFactory.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="gun.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerInfo.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombies.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Ammo.h">
+      <Filter>Header Files\Entity\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Health.h">
+      <Filter>Header Files\Entity\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Slowdown.h">
+      <Filter>Header Files\Entity\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Header.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadResources.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="loadTGA.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="MVCtime.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Ortho2D.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="vector3D.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Bet.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Money.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="SPZombie.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="NewFilter1">
+    <Filter Include="Header Files">
       <UniqueIdentifier>{79268291-ce95-4c3a-810a-4b45115874af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2adfe991-8d3a-494d-bbdc-a9dca3ebc61a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity">
+      <UniqueIdentifier>{25f88dc3-f360-4f43-a470-867befe1b8f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Framework">
+      <UniqueIdentifier>{f48a03ce-a5d3-451e-b592-6d487fb8fc8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Misc">
+      <UniqueIdentifier>{0d628b64-c9c0-4889-bb3d-b757604dbfb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity\Item">
+      <UniqueIdentifier>{868bdc37-f36e-469e-acc6-3961930647f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity">
+      <UniqueIdentifier>{19cc1cf0-8d1e-45bf-a4f8-d06cb1a946ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework">
+      <UniqueIdentifier>{ff27f26a-803c-4954-9444-222e64b085b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc">
+      <UniqueIdentifier>{9a87bd9f-09c9-42fd-9e6c-43ac8ba5ac3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Item">
+      <UniqueIdentifier>{34574d2d-8548-4826-821d-e70a2518b4d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

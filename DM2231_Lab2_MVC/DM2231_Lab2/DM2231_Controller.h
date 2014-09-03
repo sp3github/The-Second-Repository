@@ -7,6 +7,7 @@
 #include "loadTGA.h"
 #include "Header.h"
 #include "MVCtime.h"
+#include "Sound.h"
 
 class DM2231_Controller 
 {
@@ -29,6 +30,8 @@ public:
 	DM2231_View* theView;
 
 	mvcTime * timer;
+
+	Sound theSound;
 
 protected:
 	HWND handle;                                            // window handle to map window to controller
