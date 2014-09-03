@@ -56,7 +56,7 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 		return WallCollision(Atile_left_x, Atile_right_x, Atile_top_y, Atile_bottom_y);
 	}
 
-	else if ((go->ID == PLAYER && other->ID != BULLET) || (go->ID == BULLET && other->ID != PLAYER) || (go->ID == ZOMBIE))
+	else if ((go->ID == PLAYER && other->ID != BULLET) || (go->ID == BULLET && other->ID != PLAYER) || (go->ID == ZOMBIE) )
 	{
 		if (go->ID == ZOMBIE)	//Check Zombies with mapoffset against others with mapoffset
 		{
@@ -131,10 +131,10 @@ bool Collision::Collider(int x, int y)
 		return true;
 	if( x < 0 || y < 0)
 		return true;
-	if(theMap->theScreenMap[(y + theMap->mapOffset_y) / TILE_SIZE][(x + theMap->mapOffset_x) / TILE_SIZE] == 1)
+	int MapArea = theMap->theScreenMap[(y + theMap->mapOffset_y) / TILE_SIZE][(x + theMap->mapOffset_x) / TILE_SIZE];
+	if(MapArea == 1 || MapArea == 10)
 	{
 		return true;
 	}
-
 	return false;
 }

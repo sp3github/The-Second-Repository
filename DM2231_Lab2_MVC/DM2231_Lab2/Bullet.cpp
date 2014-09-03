@@ -72,6 +72,7 @@ void bullet::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 		{
 			other.hp -= power * 0.01;//Effect
 
+
 			this->Destroy = true;
 
 			if(other.hp <= 0)

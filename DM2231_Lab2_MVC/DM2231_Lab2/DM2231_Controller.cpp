@@ -53,7 +53,10 @@ BOOL DM2231_Controller::RunMainLoop(void)
 	BOOL done=FALSE; // Bool Variable To Exit Loop
 
 	// Create Our OpenGL Window
-	if (!theView->CreateGLWindow("OPENGL GAME",800,600,16))
+	int theMonWidth = GetSystemMetrics(SM_CXFULLSCREEN) - 0.01 * GetSystemMetrics(SM_CXFULLSCREEN);
+	int theMonHeight = GetSystemMetrics(SM_CYFULLSCREEN) - 0.01 * GetSystemMetrics(SM_CYFULLSCREEN);
+
+	if (!theView->CreateGLWindow("OPENGL GAME",theMonWidth,theMonHeight,16))
 	{
 		return false;									// Quit If Window Was Not Created
 	}
@@ -123,38 +126,46 @@ bool DM2231_Controller::ProcessInput(void)
 					theView->SetKeys(i);
 				}
 
-				if (theView->GetKeys('p'))
+				if (theView->GetBackspace())
 				{
-					theModel->theHero->playername.clear();
+					if(theModel->theHero->playername.size() != 0)
+					{
+						theModel->theHero->playername.pop_back();
+						theView->SetBackspace(false);
+					}
+				}
+			}
+			if(theView->GetEnter())
+			{
+				if(theModel->theHero->playername.size() != 0)
+				{
+					theModel->theState.theState = theModel->theState.State::menu;
+					theView->SetEnter(false);
 				}
 			}
 			break;
 		}
-	case (theModel->theState.State::storyins):
-	{
-												 break;
-	}
-
 	case (theModel->theState.State::menu):
 		{
 			if(theView->LMKeyDown)
 			{
-				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 220 && theModel->theMouseInfo.MousePos.y <= 260)
+				//PLAY BUTTON
+				if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 370 && theModel->theMouseInfo.MousePos.y <= 430)
 				{
-					theModel->theState.theState = theModel->theState.level;
+					theModel->theState.theState = theModel->theState.storyins;
 				}
-				if(theModel->theMouseInfo.MousePos.x >= 350 && theModel->theMouseInfo.MousePos.x <= 450 && theModel->theMouseInfo.MousePos.y >= 270 && theModel->theMouseInfo.MousePos.y <= 310)
+				//EXIT BUTTON
+				if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 450 && theModel->theMouseInfo.MousePos.y <= 520)
 				{
 					m_bContinueLoop=false;
 					return false;
 				}
 				theView->LMKeyDown = false;
 			}
-
-
 		}
 	case (theModel->theState.State::level):
 		{
+			//INPUT CONTROLS
 			if (theView->GetKeys('w'))
 			{
 				if(theModel->theCollision.CheckCollision(theModel->theHeroEntity,NULL,true))
@@ -190,18 +201,21 @@ bool DM2231_Controller::ProcessInput(void)
 			if(theView->LMKeyDown)
 			{
 				theModel->thegun.FireGun();
-				
 			}
 			break;
 		}
-	case(theModel->theState.State::PageToLearnShop):
-	{
-													   break;
-	}
+	case (theModel->theState.State::storyins):
+		{
+			break;
+		}
 	case (theModel->theState.State::shop) :
 		{
 			if(theView->GetKeys('1'))
 				theModel->theState.theState = theModel->theState.level;
+			break;
+		}
+	case (theModel->theState.State::PageToLearnShop):
+		{
 			break;
 		}
 	case (theModel->theState.State::credit) :

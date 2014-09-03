@@ -5,6 +5,7 @@ Building::Building(void)
 {
 	tile_size = 24;
 	vel.Set(0,0,0);
+	movementspeed = 0;
 }
 
 

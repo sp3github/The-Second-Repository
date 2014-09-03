@@ -14,6 +14,7 @@ enum Entity{
  OBSTACLE,
  CASINO,
  BUILDING,
+ SPZOMBIE
 };
 
 

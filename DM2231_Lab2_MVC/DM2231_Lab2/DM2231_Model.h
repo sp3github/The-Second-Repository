@@ -62,6 +62,7 @@ public:
 	bool SetTimeCredit;
 	bool SetTimeWin;
 	bool SetTimePageToLearnShop;
+	bool SetTimeStoryIn;
 
 	void SetStart(int level);
 

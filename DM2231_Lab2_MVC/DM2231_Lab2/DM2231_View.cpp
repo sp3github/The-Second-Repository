@@ -94,18 +94,20 @@ BOOL DM2231_View::Draw(void)
 	{
 	case(theModel->theState.State::EnterName):
 	{
-
-												 break;
+		theModel->theUI.RenderUI(theUI->ENTERNAME, base);
+		glRasterPos3f (250,300,1);
+		glPrint(theModel->theHero->playername.c_str());
+		break;
 	}
 	case(theModel->theState.State::storyins):
-	{
-												break;
-	}
+		{
+			theModel->theUI.RenderUI(theUI->STORYIN, base);
+			break;
+		}
 	case (theModel->theState.State::menu):
 		{
 			theModel->theUI.RenderUI(theUI->STARTSCREEN, base);
-			glRasterPos3f (20,600,1);
-			glPrint(theModel->theHero->playername.c_str());
+
 			break;
 		}
 	case (theModel->theState.State::level) :
@@ -122,12 +124,13 @@ BOOL DM2231_View::Draw(void)
 			break;
 		}
 	case(theModel->theState.State::PageToLearnShop):
-	{
-													   break;
-	}
+		{
+			theModel->theUI.RenderUI(theUI->SUBSHOP, base);
+			break;
+		}
 	case (theModel->theState.State::shop) :
 		{
-			
+
 			theModel->theUI.RenderUI(theUI->SHOP, base);
 			theModel->theUI.RenderUI(theUI->LEVEL,base);
 			break;
@@ -243,7 +246,6 @@ GLvoid DM2231_View::KillGLWindow(GLvoid) // Properly Kill The Window
 		MessageBox(NULL,"Could Not Release hWnd.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
 		hWnd=NULL; // Set hWnd To NULL
 	}
-
 	if (!UnregisterClass("OpenGL",hInstance)) // Are We Able To Unregister Class
 	{
 		MessageBox(NULL,"Could Not Unregister Class.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
@@ -412,6 +414,8 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	UpdateWindow(hWnd);
 	SetForegroundWindow(hWnd); // Slightly Higher Priority
 	SetFocus(hWnd); // Sets Keyboard Focus To The Window
+
+	
 	ReSizeGLScene(width, height); // Set Up Our Perspective GL Screen
 
 	if (!InitGL()) // Initialize Our Newly Created GL Window
@@ -429,8 +433,6 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.levelTexture[0], "Images/Level.tga"))
 		return false;
-	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.scoreTexture[0], "Images/Score.tga"))
-		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.subpageTexture[0], "Images/Subpage.tga"))
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.shopTexture[0], "Images/Shop.tga"))
@@ -440,6 +442,10 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.winTexture[0], "Images/Win.tga"))
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.defeatTexture[0], "Images/Defeat.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.nameTexture[0], "Images/EnterName.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.storyTexture[0], "Images/StoryInst.tga"))
 		return false;
 
 
@@ -603,3 +609,29 @@ void DM2231_View::SetKeys(char g)
 	keys[g] = false;
 	keys[g-32] = false;
 }	
+
+bool DM2231_View::GetBackspace()
+{
+	if(keys[0x08])
+		return true;
+	else 
+		return false;
+}
+
+void DM2231_View::SetBackspace(bool set)
+{
+	keys[0x08] = set;
+}
+
+bool DM2231_View::GetEnter()
+{
+	if(keys[0x0D])
+		return true;
+	else 
+		return false;
+}
+
+void DM2231_View::SetEnter(bool set)
+{
+	keys[0x0D] = set;
+}

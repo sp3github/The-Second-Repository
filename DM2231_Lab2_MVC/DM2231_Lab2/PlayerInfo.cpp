@@ -5,6 +5,7 @@
 CPlayerInfo::CPlayerInfo(void)
 {
 	Init();
+	invincible = false;
 }
 
 CPlayerInfo::~CPlayerInfo(void)
@@ -24,6 +25,7 @@ void CPlayerInfo::Init(void)
 
 	time = mvcTime::getInstance();
 	index = time->insertNewTime(5000);
+	index2 = time->insertNewTime(1000);
 	time->setActive(false,index);
 }
 
@@ -202,6 +204,11 @@ void CPlayerInfo::update(float dt)
 		time->setActive(false,index);
 
 	}
+	if(invincible)
+	{
+		if(time->testTime(index2))
+			invincible = false;
+	}
 }
 
 void CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
@@ -246,10 +253,17 @@ void CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 		break;
 	case ZOMBIE:
 		{
-			this->hp -= 5;
-			if(this->hp < 0)
-				hp = 0;
-			cout<<"HEALTH:"<<this->hp<<endl;
+			if(!invincible)
+			{
+				this->hp -= 5;
+				if(this->hp < 0)
+				{
+					hp = 0;
+				}
+				time->resetTime(index2);
+				invincible = true;
+			}
+
 
 			CZombies * zombie;
 			zombie = (dynamic_cast<CZombies*>(&other));

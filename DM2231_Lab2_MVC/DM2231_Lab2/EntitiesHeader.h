@@ -8,4 +8,4 @@
 #include "Zombies.h"
 #include "Casino.h"
 #include "Building.h"
-
+#include "SPZombie.h"

@@ -56,6 +56,12 @@ public:
 	bool GetKeys(char s);
 	void SetKeys(char g);
 
+	bool GetBackspace();
+	void SetBackspace(bool set);
+
+	bool GetEnter();
+	void SetEnter(bool set);
+
 	bool LMKeyDown;
 	bool RMKeyDown;
 

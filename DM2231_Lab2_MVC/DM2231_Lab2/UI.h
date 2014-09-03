@@ -9,13 +9,16 @@ private:
 	float PlayerHP;
 public:
 	enum StateType{
-	LEVEL = 0,
+	ENTERNAME,
+	STORYIN,
 	STARTSCREEN,
-	SUBPAGE,
+	LEVEL,
+	SUBSHOP,
+	SHOP,
 	CREDIT,
 	WIN,
 	DEFEAT,
-	SHOP
+	SUBPAGE,
 	};
 
 	UI(void);

@@ -14,8 +14,8 @@ DM2231_Model::DM2231_Model(void) :theCollision(TestMap,ArrayofEntities)
 	SetTimeDefeat = false;
 	SetTimeCredit = false;
 	SetTimeWin = false;
-
 	SetTimePageToLearnShop = false;
+	SetTimeStoryIn = false;
 }
 
 DM2231_Model::~DM2231_Model(void)
@@ -27,6 +27,23 @@ void DM2231_Model::Update(void)
 {
 	switch (theState.theState)
 	{
+	case State::storyins:
+		{
+			if (!SetTimeStoryIn)
+			{
+				time->resetTime(IndexTime);
+				SetTimeStoryIn = true;
+
+			}
+			else if (time->testTime(IndexTime))
+			{
+				TestMap.mapOffset_x = 0;
+				TestMap.mapOffset_y = 0;
+				theState.theState = theState.level;
+				SetTimeStoryIn = false;
+			}
+		}
+		break;
 
 	case State::level:
 		{
@@ -55,16 +72,16 @@ void DM2231_Model::Update(void)
 
 				go->update(time->getDelta());
 			}
+
 			theUI.SetHP(theHero->hp, 100);
 
-			Collision();
+			//Collision();
 
 			if (getZombieCount() == 0)
 			{
 				DeleteVectorButHero();
 				if (level == 3)
 				{
-
 					theState.theState = theState.win;
 				}
 				else
@@ -72,6 +89,8 @@ void DM2231_Model::Update(void)
 					level += 1;
 					SetStart(level);
 					theState.theState = theState.PageToLearnShop;
+					TestMap.mapOffset_x = 0;
+					TestMap.mapOffset_y = 0;
 				}
 			}
 			if (theHero->hp <= 0)
@@ -92,7 +111,7 @@ void DM2231_Model::Update(void)
 			{
 				TestMap.mapOffset_x = 0;
 				TestMap.mapOffset_y = 0;
-				theState.theState = theState.credit;
+				theState.theState = theState.EnterName;
 				SetTimeDefeat = false;
 			}
 			break;
@@ -169,8 +188,20 @@ void DM2231_Model::UpdateLimit()
 
 float DM2231_Model::AnglefromHerotoMouse()
 {
+	float theMonWidth = static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN));
+	float theMonHeight = static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN));
+	//Width and Height of the GL screen is 800 by 600
+
+	//Mouse vector is in screen pixel, while hero vector is in GL screen position.
+
+
 	Vector3D<float> MouseVector(theMouseInfo.MousePos);
-	Vector3D<float> HeroVector(theHero->GetX(), theHero->GetY());
+
+	//Conversion from GL pos to screen pos.
+	float Wratio =  theMonWidth /800.f;
+	float Hratio = theMonHeight/ 600.f ;
+
+	Vector3D<float> HeroVector(theHero->GetX() * Wratio, theHero->GetY() * Hratio);
 
 	float deltaY = MouseVector.y - HeroVector.y;
 	float deltaX = MouseVector.x - HeroVector.x;
@@ -202,11 +233,6 @@ void DM2231_Model::SetStart(int level)
 	thegun.SetPlayer(*theHero);
 	thegun.SetArray(ArrayofEntities);
 	thegun.SetFactory(theEntityFactory);
-
-	//for (int zombie = 0; zombie < 5 ; zombie++)
-	{
-		//ArrayofEntities.push_back(theEntityFactory.Create(ZOMBIE));
-	}
 }
 
 
@@ -216,6 +242,7 @@ void DM2231_Model::DeleteVectorButHero()
 	{
 		if((*it)->ID != PLAYER)
 		{
+			delete (*it);
 			it = ArrayofEntities.erase(it);
 		}
 		else
@@ -251,8 +278,9 @@ void DM2231_Model::Collision()
 		go = (*it);
 		if (go->Destroy)
 		{
-			go->~CEntity();
+			delete (*it);
 			it = ArrayofEntities.erase(it);
+			//it++;
 		}
 		else
 		{

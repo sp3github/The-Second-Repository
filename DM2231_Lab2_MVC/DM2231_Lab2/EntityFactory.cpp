@@ -58,6 +58,11 @@ CEntity* CEntityFactory::Create(Entity id)
 			theNewItems->ID = BUILDING;
 		}
 		break;
+	case SPZOMBIE:
+		{
+			theNewItems = new SPZombie;
+			theNewItems->ID = SPZOMBIE;
+		}
 	default:
 		{
 

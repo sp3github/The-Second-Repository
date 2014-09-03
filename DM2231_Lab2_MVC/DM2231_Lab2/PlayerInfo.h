@@ -14,6 +14,7 @@ class CPlayerInfo : public CEntity
 public:
 	CPlayerInfo(void);
 	~CPlayerInfo(void);
+	bool invincible; 
 	GLuint base;
 	void GetBase(const GLuint &base);
 
@@ -55,8 +56,9 @@ private:
 	bool heroAnimationInvert;
 	int heroAnimationCounter;
 
-	mvcTime *time;
+	mvcTime * time;
 	int index;
+	int index2;
 	GLvoid printw(float x, float y, float z,const GLuint &base,const char *fmt, ...);
 
 };
