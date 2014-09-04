@@ -46,7 +46,7 @@ void Sound::RenderSound(SoundType Sounds)
 		// Plays menu page sound
 		if(Menu == NULL)
 		{
-			Menu = theSoundEngine->play2D(("Sound/Menu.wav"), true, true);
+			Menu = theSoundEngine->play2D(("Sound/Menu.mp3"), true, true);
 		}
 		if (Menu->getIsPaused() == true)
 		{
@@ -86,7 +86,7 @@ void Sound::RenderSound(SoundType Sounds)
 		}
 		else if (Level->isFinished() == true)
 		{
-			//Level = NULL;
+			Level = NULL;
 		}
 		break;
 

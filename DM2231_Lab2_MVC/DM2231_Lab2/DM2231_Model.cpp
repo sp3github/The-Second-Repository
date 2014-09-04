@@ -26,6 +26,7 @@ DM2231_Model::DM2231_Model(void) :theCollision(TestMap, ArrayofEntities)
 	Hratio = theMonHeight / 600.f;
 
 	quad = new QuadTree(0, rect(0, 0, theMonWidth, theMonHeight));
+
 	SetStart(1);
 }
 
@@ -38,6 +39,8 @@ DM2231_Model::~DM2231_Model(void)
 void DM2231_Model::Update(void)
 {
 	theUI.SetBet(theBet);
+	theUI.SetGun(thegun);
+	theUI.SetPlayer(*theHero);
 
 	switch (theState.theState)
 	{
@@ -62,8 +65,7 @@ void DM2231_Model::Update(void)
 	case State::level:
 		{
 
-			theUI.SetGun(thegun);
-			theUI.SetPlayer(*theHero);
+
 
 
 			theHero->HeroRotation = AnglefromHerotoMouse();

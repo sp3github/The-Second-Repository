@@ -37,7 +37,7 @@ void UI::RenderUI(StateType States, const GLuint&base)
 	switch(States)
 	{
 	case ENTERNAME:
-//		theSound.RenderSound(Sound::MENU);
+		theSound.RenderSound(Sound::MENU);
 		glPushMatrix();
 			glColor3f(1.0f , 1.0f, 1.0f);
 			glEnable(GL_TEXTURE_2D);

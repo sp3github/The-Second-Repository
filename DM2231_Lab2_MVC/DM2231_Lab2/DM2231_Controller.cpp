@@ -162,7 +162,7 @@ bool DM2231_Controller::ProcessInput(void)
 				}
 				//EXIT BUTTON
 				if((theModel->theMouseInfo.MousePos.x >= 350 * theModel->Wratio)&& (theModel->theMouseInfo.MousePos.x <= 450 * theModel->Wratio)
-					&& (theModel->theMouseInfo.MousePos.y >= 220 * theModel->Hratio ) &&( theModel->theMouseInfo.MousePos.y <= 260 * theModel->Hratio ))
+					&& (theModel->theMouseInfo.MousePos.y >= 270 * theModel->Hratio ) &&( theModel->theMouseInfo.MousePos.y <= 308 * theModel->Hratio ))
 				{
 					m_bContinueLoop=false;
 					return false;

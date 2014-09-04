@@ -122,7 +122,7 @@ void gun::InitGun()
 		reloadC = false;
 		movementspeed[0] = 500;
 
-		MilliSecondPerShot[0] = 500;
+		MilliSecondPerShot[0] = 350;
 
 		totalbullet[0] = bulletCount[0] + currentBullet[0];
 
