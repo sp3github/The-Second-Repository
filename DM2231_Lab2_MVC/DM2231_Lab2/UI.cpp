@@ -76,7 +76,7 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		glPopMatrix();
 		break;
 	case LEVEL:
-		theSound.RenderSound(Sound::LEVEL);
+		//theSound.RenderSound(Sound::LEVEL);
 
 		glPushMatrix();
 			glColor3f(1.0f, 0.0f, 0.0f);
@@ -244,7 +244,6 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		break;
 
 	case SHOP:
-		theSound.Level->stop();
 		theSound.RenderSound(Sound::SCORE);
 
 		glPushMatrix();
