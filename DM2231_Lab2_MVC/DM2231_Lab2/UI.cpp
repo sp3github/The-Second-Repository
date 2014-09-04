@@ -298,7 +298,24 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		glColor3f(0.0f , 0.0f ,0.0f);
 		glPopMatrix();
 		break;
-
+	case INS:
+		glPushMatrix();
+			glColor3f(1.0f , 1.0f, 1.0f);
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+			glPushMatrix();
+				glBindTexture(GL_TEXTURE_2D, theTexture.insTexture[0].texID);
+				glBegin(GL_QUADS);
+					glTexCoord2f(0,0); glVertex2f(0, 600);
+					glTexCoord2f(1,0); glVertex2f(800, 600);
+					glTexCoord2f(1,1); glVertex2f(800, 0);
+					glTexCoord2f(0,1); glVertex2f(0, 0);
+				glEnd();
+			glPopMatrix();
+			glDisable(GL_BLEND);
+			glDisable(GL_TEXTURE_2D);
+		glColor3f(0.0f , 0.0f ,0.0f);
+		glPopMatrix();
 	default:
 		break;
 	}

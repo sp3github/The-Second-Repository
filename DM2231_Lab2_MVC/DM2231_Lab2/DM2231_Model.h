@@ -66,6 +66,7 @@ public:
 	bool SetTimePageToLearnShop;
 	bool SetTimeStoryIn;
 	bool SetTimeSubPage;
+	bool SetTimeIns;
 
 	void SetStart(int level);
 

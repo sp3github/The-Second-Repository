@@ -17,6 +17,7 @@ DM2231_Model::DM2231_Model(void) :theCollision(TestMap, ArrayofEntities)
 	SetTimePageToLearnShop = false;
 	SetTimeStoryIn = false;
 	SetTimeSubPage = false;
+	SetTimeIns = false;
 
 	theMonWidth = static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN));
 	theMonHeight = static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN));
@@ -52,7 +53,7 @@ void DM2231_Model::Update(void)
 			{
 				TestMap.mapOffset_x = 0;
 				TestMap.mapOffset_y = 0;
-				theState.theState = theState.level;
+				theState.theState = theState.ins;
 				SetTimeStoryIn = false;
 			}
 		}
@@ -194,6 +195,21 @@ void DM2231_Model::Update(void)
 				theHero->money.playerMoney = 0;
 				theState.theState = theState.level;
 				SetTimeSubPage = false;
+			}
+		}
+		break;
+	case State::ins:
+		{
+			if (!SetTimeIns)
+			{
+				time->resetTime(IndexTime);
+				SetTimeIns = true;
+			}
+			else if (time->testTime(IndexTime))
+			{
+				theHero->money.playerMoney = 0;
+				theState.theState = theState.level;
+				SetTimeIns = false;
 			}
 		}
 		break;

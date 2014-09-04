@@ -21,6 +21,7 @@ public:
 	WIN,
 	DEFEAT,
 	SUBPAGE,
+	INS
 	};
 
 	UI(void);

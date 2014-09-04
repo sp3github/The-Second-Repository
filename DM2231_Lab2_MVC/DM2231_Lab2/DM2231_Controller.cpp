@@ -155,12 +155,14 @@ bool DM2231_Controller::ProcessInput(void)
 			if(theView->LMKeyDown)
 			{
 				//PLAY BUTTON
-				if((theModel->theMouseInfo.MousePos.x >= 835 * theModel->Wratio) && (theModel->theMouseInfo.MousePos.x <= 1070 * theModel->Wratio) && (theModel->theMouseInfo.MousePos.y >= 370 * theModel->Hratio )&& (theModel->theMouseInfo.MousePos.y <= 430 * theModel->Hratio))
+				if((theModel->theMouseInfo.MousePos.x >= 350 * theModel->Wratio) && (theModel->theMouseInfo.MousePos.x <= 450 * theModel->Wratio)
+					&& (theModel->theMouseInfo.MousePos.y >= 220 * theModel->Hratio )&& (theModel->theMouseInfo.MousePos.y <= 260 * theModel->Hratio))
 				{
 					theModel->theState.theState = theModel->theState.storyins;
 				}
 				//EXIT BUTTON
-				if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 450 && theModel->theMouseInfo.MousePos.y <= 520)
+				if((theModel->theMouseInfo.MousePos.x >= 350 * theModel->Wratio)&& (theModel->theMouseInfo.MousePos.x <= 450 * theModel->Wratio)
+					&& (theModel->theMouseInfo.MousePos.y >= 220 * theModel->Hratio ) &&( theModel->theMouseInfo.MousePos.y <= 260 * theModel->Hratio ))
 				{
 					m_bContinueLoop=false;
 					return false;
@@ -232,7 +234,8 @@ bool DM2231_Controller::ProcessInput(void)
 			if(theView->LMKeyDown)
 			{
 				//BUY PISTOL AMMO
-				if(theModel->theMouseInfo.MousePos.x >= 110 && theModel->theMouseInfo.MousePos.x <= 395 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
+				if((theModel->theMouseInfo.MousePos.x >= 47  * theModel->Wratio) && ( theModel->theMouseInfo.MousePos.x <= 166  * theModel->Wratio)
+					&& (theModel->theMouseInfo.MousePos.y >= 224  * theModel->Hratio) && (theModel->theMouseInfo.MousePos.y <= 294  * theModel->Hratio))
 				{
 					if((theModel->theHero->money.playerMoney - 10) >= 0)
 					{
@@ -241,7 +244,8 @@ bool DM2231_Controller::ProcessInput(void)
 					}
 				}
 				//BUY UZI AMMO
-				if(theModel->theMouseInfo.MousePos.x >= 457 && theModel->theMouseInfo.MousePos.x <= 740 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
+				if((theModel->theMouseInfo.MousePos.x >= 191  * theModel->Wratio) && ( theModel->theMouseInfo.MousePos.x <= 312  * theModel->Wratio)
+					&& (theModel->theMouseInfo.MousePos.y >= 224  * theModel->Hratio) && (theModel->theMouseInfo.MousePos.y <= 294  * theModel->Hratio))
 				{
 					if((theModel->theHero->money.playerMoney - 20) >= 0)
 					{
@@ -250,7 +254,8 @@ bool DM2231_Controller::ProcessInput(void)
 					}
 				}
 				//BUY SHOTGUN AMMO
-				if(theModel->theMouseInfo.MousePos.x >= 804 && theModel->theMouseInfo.MousePos.x <= 1088 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
+				if((theModel->theMouseInfo.MousePos.x >= 338  * theModel->Wratio) && ( theModel->theMouseInfo.MousePos.x <= 457  * theModel->Wratio)
+					&& (theModel->theMouseInfo.MousePos.y >= 224  * theModel->Hratio) && (theModel->theMouseInfo.MousePos.y <= 294  * theModel->Hratio))
 				{
 					if((theModel->theHero->money.playerMoney - 30) >= 0)
 					{

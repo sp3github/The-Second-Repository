@@ -162,6 +162,11 @@ BOOL DM2231_View::Draw(void)
 			theModel->theUI.RenderUI(theUI->SUBPAGE, base);
 		}
 		break;
+	case (theModel->theState.State::ins):
+		{
+			theModel->theUI.RenderUI(theUI->INS,base);
+			break;
+		}
 	}
 
 	theModel->theOrtho2DSetUp.SetHUD(false);
@@ -452,6 +457,8 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->dummySlow.tex, "Images/Speedup.tga"))
 		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.insTexture[0], "Images/Inst.tga"))
+		return false;
 
 	for(int i = 0; i < theModel->ArrayofEntities.size(); i++)
 	{
@@ -526,6 +533,7 @@ LRESULT CALLBACK DM2231_View::MsgProc( HWND hWnd, // Handle For This Window
 			theModel->theMouseInfo.SetMousePos( LOWORD(lParam), HIWORD(lParam) );
 			int diffX = theModel->theMouseInfo.GetDiff_X();
 			int diffY = theModel->theMouseInfo.GetDiff_Y();
+			cout<<theModel->theMouseInfo.MousePos.x / theModel->Wratio<<" : "<<theModel->theMouseInfo.MousePos.y / theModel->Hratio<<endl;
 
 			RECT WindowRect;
 			GetWindowRect( hWnd, &WindowRect);
