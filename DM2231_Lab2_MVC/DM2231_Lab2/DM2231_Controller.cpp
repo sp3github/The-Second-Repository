@@ -34,7 +34,7 @@ bool DM2231_Controller::Init(void)
 	srand(time(NULL));
 
 	// Ask The User Which Screen Mode They Prefer
-	if (MessageBox(NULL,"Would You Like To Run In Fullscreen Mode?", "Start FullScreen?",MB_YESNO|MB_ICONQUESTION)==IDNO)
+	if (MessageBox(NULL,(LPCSTR)"Would You Like To Run In Fullscreen Mode?", (LPCSTR)"Start FullScreen?",MB_YESNO|MB_ICONQUESTION)==IDNO)
 		theView->setFullScreen( false );
 	else
 		theView->setFullScreen( true );
