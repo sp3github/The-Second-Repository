@@ -39,7 +39,6 @@ bool DM2231_Controller::Init(void)
 	else
 		theView->setFullScreen( true );
 
-	theModel->SetStart(1);
 
 	//for (int i = 0; i < theModel->ArrayofEntities.size(); i++)
 	//{
@@ -84,7 +83,7 @@ BOOL DM2231_Controller::RunMainLoop(void)
 		{
 			if (ProcessInput())
 			{
-				cout<<"FPS: "<<timer->getFPS()<<endl;
+				//cout<<"FPS: "<<timer->getFPS()<<endl;
 				timer->updateTime();
 				theModel->Update();
 				theView->Draw();
@@ -226,19 +225,19 @@ bool DM2231_Controller::ProcessInput(void)
 				theModel->theState.theState = theModel->theState.level;
 
 			//BUY PISTOL AMMO
-			if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 370 && theModel->theMouseInfo.MousePos.y <= 430)
+			if(theModel->theMouseInfo.MousePos.x >= 110 && theModel->theMouseInfo.MousePos.x <= 395 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
 			{
-				
+				theModel->thegun.currentBullet[0] += 10;
 			}
 			//BUY UZI AMMO
-			if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 450 && theModel->theMouseInfo.MousePos.y <= 520)
+			if(theModel->theMouseInfo.MousePos.x >= 457 && theModel->theMouseInfo.MousePos.x <= 740 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
 			{
-				
+				theModel->thegun.currentBullet[1] += 10;
 			}
 			//BUY SHOTGUN AMMO
-			if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 450 && theModel->theMouseInfo.MousePos.y <= 520)
+			if(theModel->theMouseInfo.MousePos.x >= 804 && theModel->theMouseInfo.MousePos.x <= 1088 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
 			{
-				
+				theModel->thegun.currentBullet[2] += 10;
 			}
 			break;
 		}

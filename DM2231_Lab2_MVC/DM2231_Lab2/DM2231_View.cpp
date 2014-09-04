@@ -441,12 +441,17 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.nameTexture[0], "Images/EnterName.tga"))
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.storyTexture[0], "Images/StoryInst.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theHero->heroTexture[0], "Images/Hero.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->dummyZombie.tex, "Images/Zombie.tga"))
+		return false;
 
-	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theHero->heroTexture[0], "Images/Hero.tga"))
-	//	return false;
-	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theZombie->zombieTexture[0], "Images/Zombie.tga"))
-	//	return false;
-
+	for(int i = 0; i < theModel->ArrayofEntities.size(); i++)
+	{
+		if(theModel->ArrayofEntities[i]->ID == Entity::ZOMBIE)
+			theModel->ArrayofEntities[i]->tex = theModel->dummyZombie.tex;
+	}
 
 	return TRUE; // Success
 }
@@ -511,7 +516,7 @@ LRESULT CALLBACK DM2231_View::MsgProc( HWND hWnd, // Handle For This Window
 			theModel->theMouseInfo.SetMousePos( LOWORD(lParam), HIWORD(lParam) );
 			int diffX = theModel->theMouseInfo.GetDiff_X();
 			int diffY = theModel->theMouseInfo.GetDiff_Y();
-			//cout<<"MOUSE"<<theModel->theMouseInfo.MousePos<<endl;
+			cout<<"MOUSE"<<theModel->theMouseInfo.MousePos<<endl;
 
 			RECT WindowRect;
 			GetWindowRect( hWnd, &WindowRect);

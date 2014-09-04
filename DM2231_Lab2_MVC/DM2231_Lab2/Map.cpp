@@ -165,7 +165,7 @@ void CMap::RenderTileMap(void)
 				break;
 			glPushMatrix();
 			glTranslatef(k*TILE_SIZE-mapFineOffset_x, i*TILE_SIZE - mapFineOffset_y, 0);
-			glEnable( GL_TEXTURE_2D );
+			//glEnable( GL_TEXTURE_2D );
 			glEnable( GL_BLEND );
 			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -174,13 +174,13 @@ void CMap::RenderTileMap(void)
 				glColor3f(0,0,0);
 
 			glBegin(GL_QUADS);
-				glTexCoord2f(0,1); glVertex2f(0,0);
-				glTexCoord2f(0,0); glVertex2f(0,TILE_SIZE);
-				glTexCoord2f(1,0); glVertex2f(TILE_SIZE,TILE_SIZE);
-				glTexCoord2f(1,1); glVertex2f(TILE_SIZE,0);
+			glTexCoord2f(0,0); glVertex2f(0,0);
+			glTexCoord2f(1,0); glVertex2f(0,TILE_SIZE);
+			glTexCoord2f(1,1); glVertex2f(TILE_SIZE,TILE_SIZE);
+			glTexCoord2f(0,1); glVertex2f(TILE_SIZE,0);
 			glEnd();
 			glDisable( GL_BLEND );
-			glDisable( GL_TEXTURE_2D );
+			//glDisable( GL_TEXTURE_2D );
 			glPopMatrix();
 		}
 	}

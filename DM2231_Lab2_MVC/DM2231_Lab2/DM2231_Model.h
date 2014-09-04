@@ -69,7 +69,6 @@ public:
 
 	short level;
 
-	//zombie
 	int zombie;
 	int zombiecount;
 	void setZombieCount(int z);
@@ -86,4 +85,6 @@ public:
 
 	float Wratio;
 	float Hratio;
+
+	CZombies dummyZombie;
 };

@@ -244,7 +244,8 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		break;
 
 	case SHOP:
-		theSound.Level->stop();
+		if(theSound.Level != NULL)
+			theSound.Level->stop();
 		theSound.RenderSound(Sound::SCORE);
 
 		glPushMatrix();

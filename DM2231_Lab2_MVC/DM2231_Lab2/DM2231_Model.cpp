@@ -24,11 +24,12 @@ DM2231_Model::DM2231_Model(void) :theCollision(TestMap, ArrayofEntities)
 	Hratio = theMonHeight / 600.f;
 
 	quad = new QuadTree(0, rect(0, 0, theMonWidth, theMonHeight));
+	SetStart(1);
 }
 
 DM2231_Model::~DM2231_Model(void)
 {
-	//delete quad;
+	delete quad;
 }
 
 // Update the model
@@ -235,6 +236,12 @@ void DM2231_Model::SetStart(int level)
 	thegun.SetPlayer(*theHero);
 	thegun.SetArray(ArrayofEntities);
 	thegun.SetFactory(theEntityFactory);
+
+	for(int i = 0; i < ArrayofEntities.size(); i++)
+	{
+		if(ArrayofEntities[i]->ID == Entity::ZOMBIE)
+			ArrayofEntities[i]->tex = dummyZombie.tex;
+	}
 }
 
 
@@ -259,7 +266,7 @@ void DM2231_Model::Collision()
 	quad->clear();
 	for (int i = 0; i < ArrayofEntities.size(); i++)
 	{
-		if (ArrayofEntities[i]->ID == PLAYER)
+		if (ArrayofEntities[i]->ID == PLAYER ||ArrayofEntities[i]->ID == BULLET )
 			quad->insert(rect(ArrayofEntities[i]->GetX(), ArrayofEntities[i]->GetY(), ArrayofEntities[i]->tile_size, ArrayofEntities[i]->tile_size,ArrayofEntities[i]));
 		else
 			quad->insert(rect(ArrayofEntities[i]->GetX() - TestMap.mapOffset_x, ArrayofEntities[i]->GetY() - TestMap.mapOffset_y, ArrayofEntities[i]->tile_size, ArrayofEntities[i]->tile_size, ArrayofEntities[i]));
@@ -272,7 +279,8 @@ void DM2231_Model::Collision()
 	for (int i = 0; i < ArrayofEntities.size(); i++)
 	{
 		returnObjects.clear();
-		returnObjects = quad->retrive(returnObjects, (rect(ArrayofEntities[i]->GetX(), ArrayofEntities[i]->GetY(), ArrayofEntities[i]->tile_size, ArrayofEntities[i]->tile_size, ArrayofEntities[i])));
+		if(ArrayofEntities[i]->movementspeed != 0)
+			returnObjects = quad->retrive(returnObjects, (rect(ArrayofEntities[i]->GetX(), ArrayofEntities[i]->GetY(), ArrayofEntities[i]->tile_size, ArrayofEntities[i]->tile_size, ArrayofEntities[i])));
 
 		for (int FirstCounter = 0; FirstCounter < returnObjects.size(); FirstCounter++)
 		{

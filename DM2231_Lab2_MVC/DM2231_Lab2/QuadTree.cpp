@@ -11,7 +11,7 @@ QuadTree::QuadTree(int pLevel, rect pBounds)
 {
 	level = pLevel;
 	bounds = pBounds;
-	nodes[4] = new QuadTree;
+	nodes = new QuadTree*[4];
 	for (int i = 0; i < 4; i++)
 		nodes[i] = NULL;
 	MAX_OBJECTS = 10;
@@ -20,25 +20,26 @@ QuadTree::QuadTree(int pLevel, rect pBounds)
 
 QuadTree::~QuadTree(void)
 {
+	objects.clear();
+	drop();
+}
+
+void QuadTree::drop()
+{
 	if (level == MAX_LEVELS)
 		return;
-	delete nodes[0];
-	delete nodes[1];
-	delete nodes[2];
-	delete nodes[3];
+	for(int i = 0; i < 4; i++)
+	{
+		if(nodes[i] != NULL)
+			delete nodes[i];
+	}
+
 }
 
 void QuadTree::clear()
 {
 	if (level == MAX_LEVELS)
 	{
-		//for (auto i = objects.begin(); i != objects.end();)
-		//{
-		//	if (i->theEntity->movementspeed != 0)
-		//		i = objects.erase(i);
-		//	else
-		//		i++;
-		//}
 		objects.clear();
 		return;
 	}
@@ -53,13 +54,6 @@ void QuadTree::clear()
 	}
 	if (!objects.empty())
 	{
-		//for (auto i = objects.begin(); i != objects.end();)
-		//{
-		//	if (i->theEntity->movementspeed != 0)
-		//		i = objects.erase(i);
-		//	else
-		//		i++;
-		//}
 		objects.clear();
 	}
 }
@@ -77,7 +71,7 @@ void QuadTree::Split()
 	nodes[3] =  new QuadTree(level+1,  rect(x + subWidth, y + subHeight, subWidth, subHeight));
 }
 
-int QuadTree::GetIndex(rect pRect)
+int QuadTree::GetIndex(rect &pRect)
 {
 	int index = -1;
 	double verticalMidpoint = bounds.x + (bounds.width / 2);
@@ -110,7 +104,7 @@ int QuadTree::GetIndex(rect pRect)
 	return index;
 }
 
-void QuadTree::insert(rect pRect)
+void QuadTree::insert(rect &pRect)
 {
 	if (nodes[0] != NULL)
 	{

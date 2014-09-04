@@ -25,10 +25,10 @@ void CAmmo::render(int mapOffset_x, int mapOffset_y)
 		glColor3f(0,0.5,1);
 
 		glBegin(GL_QUADS);
-			glTexCoord2f(0, 1); glVertex2f(0, 0);
-			glTexCoord2f(0, 0); glVertex2f(0, tile_size);
-			glTexCoord2f(1, 0); glVertex2f(tile_size, tile_size);
-			glTexCoord2f(1, 1); glVertex2f(tile_size, 0);
+		glTexCoord2f(0,0); glVertex2f(0,0);
+		glTexCoord2f(1,0); glVertex2f(0,tile_size);
+		glTexCoord2f(1,1); glVertex2f(tile_size,tile_size);
+		glTexCoord2f(0,1); glVertex2f(tile_size,0);
 		glEnd();
 
 		glDisable( GL_BLEND );

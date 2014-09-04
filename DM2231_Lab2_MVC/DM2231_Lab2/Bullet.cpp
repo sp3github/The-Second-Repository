@@ -4,6 +4,7 @@
 bullet::bullet()
 {
 	tile_size = 10;
+	movementspeed = 500;
 }
 
 
@@ -22,7 +23,7 @@ bool bullet::SetAngle(float HeroRotation)
 bool bullet::SetPower(int power)
 {
 	this->power = power;
-	this->movementspeed = power;
+	//this->movementspeed = power;
 	return true;
 }
 
@@ -30,7 +31,7 @@ bool bullet::SetPower(int power)
 void bullet::render(int mapOffset_x, int mapOffset_y)
 {
 	glPushMatrix();
-	glTranslatef(GetX(), GetY(), 0);
+	glTranslatef(GetX()/* - mapOffset_x*/, GetY()/*- mapOffset_y*/, 0);
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
@@ -39,10 +40,10 @@ void bullet::render(int mapOffset_x, int mapOffset_y)
 	glColor3f(1, 0, 0);
 
 	glBegin(GL_QUADS);
-	glTexCoord2f(0, 1); glVertex2f(0, 0);
-	glTexCoord2f(0, 0); glVertex2f(0, tile_size);
-	glTexCoord2f(1, 0); glVertex2f(tile_size, tile_size);
-	glTexCoord2f(1, 1); glVertex2f(tile_size, 0);
+		glTexCoord2f(0,0); glVertex2f(0,0);
+		glTexCoord2f(1,0); glVertex2f(0,tile_size);
+		glTexCoord2f(1,1); glVertex2f(tile_size,tile_size);
+		glTexCoord2f(0,1); glVertex2f(tile_size,0);
 	glEnd();
 
 	glDisable(GL_BLEND);
@@ -58,7 +59,7 @@ void bullet::update(float dt)
 	vel.Set(cos(HeroRotationRad), sin(HeroRotationRad));
 	vel.Normalize();
 
-	pos += vel * power * dt;
+	pos += vel * movementspeed * dt;
 
 	Set_X(pos.x);
 	Set_Y(pos.y);

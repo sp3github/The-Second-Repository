@@ -71,12 +71,12 @@ void CPlayerInfo::render(int mapOffset_x, int mapOffset_y)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glColor3f(1,0,0);
-	glBindTexture(GL_TEXTURE_2D, heroTexture[1].texID);
+	glBindTexture(GL_TEXTURE_2D, heroTexture[0].texID);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.25 * heroAnimationCounter, 1); glVertex2f(0, 0);
-	glTexCoord2f(0.25 * heroAnimationCounter, 0); glVertex2f(0, tile_size);
-	glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 0); glVertex2f(tile_size, tile_size);
-	glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 1); glVertex2f(tile_size, 0);
+		glTexCoord2f(0,0); glVertex2f(0,0);
+		glTexCoord2f(1,0); glVertex2f(0,tile_size);
+		glTexCoord2f(1,1); glVertex2f(tile_size,tile_size);
+		glTexCoord2f(0,1); glVertex2f(tile_size,0);
 	glEnd();
 
 	glEnd();
