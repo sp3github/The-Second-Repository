@@ -256,7 +256,7 @@ void CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 		{
 			if(!invincible)
 			{
-				this->hp -= 10;
+				this->hp -= 50;
 				if(this->hp < 0)
 				{
 					hp = 0;
@@ -279,7 +279,7 @@ void CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 		{
 			if(!invincible)
 			{
-				this->hp -= 25;
+				this->hp -= 10;
 				if(this->hp < 0)
 				{
 					hp = 0;
