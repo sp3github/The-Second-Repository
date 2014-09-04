@@ -30,10 +30,10 @@ void gun::render()
 	glColor3f(0, 1, 0);
 
 	glBegin(GL_QUADS);
-		glTexCoord2f(0,0); glVertex2f(0,0);
-		glTexCoord2f(1,0); glVertex2f(0,tile_size);
-		glTexCoord2f(1,1); glVertex2f(tile_size,tile_size);
-		glTexCoord2f(0,1); glVertex2f(tile_size,0);
+	glTexCoord2f(0, 1); glVertex2f(0, 0);
+	glTexCoord2f(0, 0); glVertex2f(0, static_cast<float>(tile_size));
+	glTexCoord2f(1, 0); glVertex2f(static_cast<float>(tile_size), static_cast<float>(tile_size));
+	glTexCoord2f(1, 1); glVertex2f(static_cast<float>(tile_size), 0);
 	glEnd();
 
 	glDisable(GL_BLEND);
@@ -63,7 +63,7 @@ void gun::FireGun()
 			theArrayofEntities->back()->SetPos(theHero->GetX(), theHero->GetY());
 			thePointertoBullet = (dynamic_cast<bullet*> (theArrayofEntities->back()));
 			thePointertoBullet->SetAngle(theHero->HeroRotation);
-			thePointertoBullet->SetPower(power[BulletState],movementspeed[BulletState]);
+			thePointertoBullet->SetPower(power[BulletState]);
 			--totalbullet[BulletState];
 		}
 		prevshot[BulletState] = currentshot[BulletState];
@@ -120,9 +120,8 @@ void gun::InitGun()
 		prevreload[0] = 0;
 		reloadtime[0] = 100;
 		reloadC = false;
-		movementspeed[0] = 500;
 
-		MilliSecondPerShot[0] = 350;
+		MilliSecondPerShot[0] = 500;
 
 		totalbullet[0] = bulletCount[0] + currentBullet[0];
 
@@ -130,7 +129,7 @@ void gun::InitGun()
 		currentBullet[1] = 30;
 		ReloadBullet[1] = 30;
 
-		power[1] = 500;
+		power[1] = 2000;
 		firing = false;
 		prevshot[1] = 0;
 		currentshot[1] = 0;
@@ -138,7 +137,6 @@ void gun::InitGun()
 		prevreload[1] = 0;
 		reloadtime[1] = 100;
 		reloadC = false;
-		movementspeed[1] = 500;
 
 		MilliSecondPerShot[1] = 50;
 
@@ -159,7 +157,7 @@ void gun::InitGun()
 		prevreload[2] = 0;
 		reloadtime[2] = 100;
 		reloadC = false;
-		movementspeed[2] = 700;
+
 		MilliSecondPerShot[2] = 1100;
 
 		totalbullet[2] = bulletCount[2] + currentBullet[2];
@@ -196,4 +194,3 @@ void gun::changestate(GunStates theState)
 	time->resetTime(index);//have a time reference
 	time->changeLimit(index, MilliSecondPerShot[BulletState]);//reset time and change limit
 }
-

@@ -16,8 +16,6 @@ public:
 	TextureImage winTexture[1];
 	TextureImage defeatTexture[1];
 	TextureImage subpageTexture[1];
-	TextureImage gambledTexture[1];
-	TextureImage insTexture[1];
 
 	loadTGA(void);
 	~loadTGA(void);

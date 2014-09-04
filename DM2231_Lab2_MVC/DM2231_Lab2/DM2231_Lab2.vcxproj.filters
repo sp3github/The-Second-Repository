@@ -79,6 +79,9 @@
     <ClCompile Include="UI.cpp">
       <Filter>Source Files\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="DM2231_Controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -88,12 +91,7 @@
     <ClCompile Include="DM2231_View.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QuadTree.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="DM2231_Controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="QuadTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DM2231_Model.h">
@@ -145,28 +143,28 @@
       <Filter>Header Files\Entity\Item</Filter>
     </ClInclude>
     <ClInclude Include="Header.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="LoadResources.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="loadTGA.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Mouse.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="MVCtime.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Ortho2D.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="vector3D.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Bet.h">
       <Filter>Header Files\Misc</Filter>
@@ -192,9 +190,7 @@
     <ClInclude Include="SPZombie.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="QuadTree.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
+    <ClInclude Include="QuadTree.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -205,9 +201,6 @@
     </Filter>
     <Filter Include="Header Files\Entity">
       <UniqueIdentifier>{25f88dc3-f360-4f43-a470-867befe1b8f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Framework">
-      <UniqueIdentifier>{f48a03ce-a5d3-451e-b592-6d487fb8fc8f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Misc">
       <UniqueIdentifier>{0d628b64-c9c0-4889-bb3d-b757604dbfb9}</UniqueIdentifier>
@@ -227,5 +220,11 @@
     <Filter Include="Source Files\Entity\Item">
       <UniqueIdentifier>{34574d2d-8548-4826-821d-e70a2518b4d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Misc\Framework">
+      <UniqueIdentifier>{f48a03ce-a5d3-451e-b592-6d487fb8fc8f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

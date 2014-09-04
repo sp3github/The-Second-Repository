@@ -34,7 +34,7 @@ private :
 	int level;
 	vector<rect> objects;
 	rect bounds;
-	QuadTree ** nodes;
+	QuadTree * nodes[];
 
 
 public:
@@ -45,11 +45,10 @@ public:
 
 	void clear();	//clear the quadtree
 	void Split();	//split the quadtree
-	int GetIndex(rect &pRect);	//Determine Location in quadtree -1 means object cannot completely fit within a child node and is part of the parent node
-	void insert(rect &pRect);
+	int GetIndex(rect pRect);	//Determine Location in quadtree -1 means object cannot completely fit within a child node and is part of the parent node
+	void insert(rect pRect);
 	vector<rect> retrive(vector<rect> &returnObjects, rect pRect);
 
-	void drop();
 
 };
 

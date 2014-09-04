@@ -3,9 +3,17 @@
 
 SPZombie::SPZombie(void)
 {
-	tile_size = 48;
+	tile_size = 24;
+	vel.Set(0.5,0.5,0.0);
+	movementspeed = 100;
+	pos.Set(GetX(), GetY());
+	Timer = mvcTime::getInstance();
+	TimeIndex = Timer->insertNewTime(100);
+	bounce = false;
+	Collided = false;
+	
+	//zombie = 0;
 }
-
 
 SPZombie::~SPZombie(void)
 {
@@ -14,26 +22,53 @@ SPZombie::~SPZombie(void)
 
 void SPZombie::setPlayerName(string playername)
 {
-	playername = zombiename;
+	 zombiename = playername ;
+	cout <<   "Gambler's Name:" << zombiename <<  endl;
 }
 
-int SPZombie::getLevel(int level)
+void SPZombie::getLevel(short level)
 {
-	return level;
+	this->level = level;
+	cout << "Got It!!!!!!" << level << endl;
 }
 
-void SPZombie::SpawnSP()
+string SPZombie::getPlayerName()
 {
-	
+	return playername;
+}
+
+GLvoid SPZombie::printw(float x, float y, float z,const GLuint &base,const char *fmt, ...)					// Custom GL "Print" Routine
+{
+	glPushMatrix();
+	glRasterPos3f (x, y, z);
+	char		text[256];								// Holds Our String
+	va_list		ap;										// Pointer To List Of Arguments
+
+	if (fmt == NULL)									// If There's No Text
+		return;											// Do Nothing
+
+	va_start(ap, fmt);									// Parses The String For Variables
+	vsprintf(text, fmt, ap);						// And Converts Symbols To Actual Numbers
+	va_end(ap);											// Results Are Stored In Text
+
+	glPushAttrib(GL_LIST_BIT);							// Pushes The Display List Bits
+	glListBase(base - 32);								// Sets The Base Character to 32
+	glCallLists(strlen(text), GL_UNSIGNED_BYTE, text);	// Draws The Display List Text
+	glPopAttrib();										// Pops The Display List Bits
+	glPopMatrix();
+}
+
+void SPZombie::GetBase(const GLuint &base)
+{
+	this->base = base;
 }
 
 void SPZombie::render(int mapOffset_x, int mapOffset_y)
 {
-
 	glPushMatrix();
 	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
 	glEnable(GL_TEXTURE_2D);		
-	glColor3f(0,1,0);
+	glColor3f(0.5,0.5,0.5);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0,0); glVertex2f(0,0);
 	glTexCoord2f(1,1); glVertex2f(0,tile_size);
@@ -41,6 +76,12 @@ void SPZombie::render(int mapOffset_x, int mapOffset_y)
 	glTexCoord2f(0,1); glVertex2f(tile_size,0);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor3f(1,0,0);
+	glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
+ 	printw(0,0,0,base,zombiename.c_str());
 	glPopMatrix();
 }
 
@@ -110,32 +151,40 @@ void  SPZombie::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 {
 	switch (other.ID)
 	{
-
-	case ZOMBIE:
+	case SPZOMBIE:
 		{
 			if(!Collided)
 			{
-				CZombies * zombie;
-				zombie = (dynamic_cast<CZombies*>(&other));
+				SPZombie * spzombie;
+				spzombie = (dynamic_cast<SPZombie*>(&other));
 
 				bounce = true;
-				zombie->bounce = true;
+				spzombie->bounce = true;
 
-				this->BounceDir = ((this->pos) - (zombie->pos)).Normalize() * movementspeed;
-				zombie->BounceDir = ((zombie->pos) - (this->pos)).Normalize() * zombie->movementspeed;
+				this->BounceDir = ((this->pos) - (spzombie->pos)).Normalize() * movementspeed;
+				spzombie->BounceDir = ((spzombie->pos) - (this->pos)).Normalize() * spzombie->movementspeed;
 
 				Timer->resetTime(TimeIndex);
-				zombie->Timer->resetTime(zombie->TimeIndex);
+				spzombie->Timer->resetTime(spzombie->TimeIndex);
 				Timer->changeLimit(TimeIndex, 50);
-				zombie->Timer->changeLimit(zombie->TimeIndex, 50);
+				spzombie->Timer->changeLimit(spzombie->TimeIndex, 50);
 				Collided = true;
 			}
 			break;
-
 		}
 	case PLAYER:
 		{
 			other.CollisionEvent(*this,theArray);
+			break;
+		}
+	case BUILDING:
+		{
+
+			bounce = true;
+			BounceDir = ((pos) - (Vector3D<float>(GetX(),GetY()))).Normalize() * movementspeed;
+		
+			Timer->resetTime(TimeIndex);
+			Timer->changeLimit(TimeIndex, 500);
 			break;
 		}
 	default:

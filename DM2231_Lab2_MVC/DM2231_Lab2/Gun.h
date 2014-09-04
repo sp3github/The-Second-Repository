@@ -41,7 +41,6 @@ public:
 	short int ReloadBullet[3];
 	short int power[3];
 	short int MilliSecondPerShot[3];
-	short int movementspeed[3];
 
 	float prevshot[3];
 	float currentshot[3];

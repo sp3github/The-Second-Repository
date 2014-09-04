@@ -1,7 +1,6 @@
 #include "Sound.h"
 #include <iostream>
 
-
 using namespace std;
 
 Sound::Sound(void)
@@ -46,7 +45,7 @@ void Sound::RenderSound(SoundType Sounds)
 		// Plays menu page sound
 		if(Menu == NULL)
 		{
-			Menu = theSoundEngine->play2D(("Sound/Menu.mp3"), true, true);
+			Menu = theSoundEngine->play2D(("Sound/Menu.wav"), true, true);
 		}
 		if (Menu->getIsPaused() == true)
 		{
