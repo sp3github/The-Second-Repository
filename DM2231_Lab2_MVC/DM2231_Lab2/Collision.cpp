@@ -56,9 +56,9 @@ bool Collision::CheckCollision(CEntity *go, CEntity *other, bool m_bCheckUpwards
 		return WallCollision(Atile_left_x, Atile_right_x, Atile_top_y, Atile_bottom_y);
 	}
 
-	else if ((go->ID == PLAYER && other->ID != BULLET) || (go->ID == BULLET && other->ID != PLAYER) || (go->ID == ZOMBIE) || (go->ID == SPZOMBIE))
+	else if ((go->ID == PLAYER && other->ID != BULLET) || (go->ID == BULLET && other->ID != PLAYER) || (go->ID == ZOMBIE) )
 	{
-		if (go->ID == ZOMBIE || go->ID == SPZOMBIE)	//Check Zombies with mapoffset against others with mapoffset
+		if (go->ID == ZOMBIE)	//Check Zombies with mapoffset against others with mapoffset
 		{
 			Vector3D<float> dir (0,0,0);
 			Vector3D<float> BDir (0,0,0);

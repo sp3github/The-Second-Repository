@@ -21,7 +21,7 @@ GLvoid DM2231_View::BuildFont(GLvoid)								// Build Our Bitmap Font
 		CLIP_DEFAULT_PRECIS,			// Clipping Precision
 		ANTIALIASED_QUALITY,			// Output Quality
 		FF_DONTCARE | DEFAULT_PITCH,		// Family And Pitch
-		"Courier New");					// Font Name
+		(LPCSTR)"Courier New");					// Font Name
 
 	oldfont = (HFONT)SelectObject(hDC, font);           // Selects The Font We Want
 	wglUseFontBitmaps(hDC, 32, 96, base);				// Builds 96 Characters Starting At Character 32
@@ -112,7 +112,6 @@ BOOL DM2231_View::Draw(void)
 		}
 	case (theModel->theState.State::level) :
 		{
-			theModel->spZombie.GetBase(base);
 			theModel->theHero->GetBase(base);
 			theModel->TestMap.RenderTileMap();
 
@@ -163,6 +162,11 @@ BOOL DM2231_View::Draw(void)
 			theModel->theUI.RenderUI(theUI->SUBPAGE, base);
 		}
 		break;
+	case (theModel->theState.State::ins):
+		{
+			theModel->theUI.RenderUI(theUI->INS,base);
+			break;
+		}
 	}
 
 	theModel->theOrtho2DSetUp.SetHUD(false);
@@ -220,30 +224,30 @@ GLvoid DM2231_View::KillGLWindow(GLvoid) // Properly Kill The Window
 	{
 		if (!wglMakeCurrent(NULL,NULL)) // Are We Able To Release The DC And RC Contexts?
 		{
-			MessageBox(NULL,"Release Of DC And RC Failed.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
+			MessageBox(NULL,(LPCSTR)"Release Of DC And RC Failed.",(LPCSTR)"SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
 		}
 
 		if (!wglDeleteContext(hRC)) // Are We Able To Delete The RC?
 		{
-			MessageBox(NULL,"Release Rendering Context Failed.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
+			MessageBox(NULL,(LPCSTR)"Release Rendering Context Failed.",(LPCSTR)"SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
 		}
 		hRC=NULL; // Set RC To NULL
 	}
 
 	if (hDC && !ReleaseDC(hWnd,hDC)) // Are We Able To Release The DC
 	{
-		MessageBox(NULL,"Release Device Context Failed.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
+		MessageBox(NULL,(LPCSTR)"Release Device Context Failed.",(LPCSTR)"SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
 		hDC=NULL; // Set DC To NULL
 	}
 
 	if (hWnd && !DestroyWindow(hWnd)) // Are We Able To Destroy The Window?
 	{
-		MessageBox(NULL,"Could Not Release hWnd.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
+		MessageBox(NULL,(LPCSTR)"Could Not Release hWnd.",(LPCSTR)"SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
 		hWnd=NULL; // Set hWnd To NULL
 	}
-	if (!UnregisterClass("OpenGL",hInstance)) // Are We Able To Unregister Class
+	if (!UnregisterClass((LPCSTR)"OpenGL",hInstance)) // Are We Able To Unregister Class
 	{
-		MessageBox(NULL,"Could Not Unregister Class.","SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
+		MessageBox(NULL,(LPCSTR)"Could Not Unregister Class.",(LPCSTR)"SHUTDOWN ERROR",MB_OK | MB_ICONINFORMATION);
 		hInstance=NULL; // Set hInstance To NULL
 	}
 }
@@ -277,11 +281,11 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW); // Load The Arrow Pointer
 	wc.hbrBackground = NULL; // No Background Required For GL
 	wc.lpszMenuName = NULL; // We Don't Want A Menu
-	wc.lpszClassName = "OpenGL"; // Set The Class Name
+	wc.lpszClassName = (LPCSTR)"OpenGL"; // Set The Class Name
 
 	if (!RegisterClass(&wc)) // Attempt To Register The Window Class
 	{
-		MessageBox(NULL,"Failed To Register The Window Class.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+		MessageBox(NULL,(LPCSTR)"Failed To Register The Window Class.",(LPCSTR)"ERROR",MB_OK|MB_ICONEXCLAMATION);
 		return FALSE; // Return FALSE
 	}
 
@@ -299,14 +303,14 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 		if (ChangeDisplaySettings(&dmScreenSettings,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)
 		{
 			// If The Mode Fails, Offer Two Options. Quit Or Use Windowed Mode.
-			if (MessageBox(NULL,"The Requested Fullscreen Mode Is Not Supported By\nYour Video Card. Use Windowed Mode Instead?","NeHe GL",MB_YESNO|MB_ICONEXCLAMATION)==IDYES)
+			if (MessageBox(NULL,(LPCSTR)"The Requested Fullscreen Mode Is Not Supported By\nYour Video Card. Use Windowed Mode Instead?",(LPCSTR)"NeHe GL",MB_YESNO|MB_ICONEXCLAMATION)==IDYES)
 			{
 				m_bFullScreen=false; // Windowed Mode Selected. Fullscreen = FALSE
 			}
 			else
 			{
 				// Pop Up A Message Box Letting User Know The Program Is Closing.
-				MessageBox(NULL,"Program Will Now Close.","ERROR",MB_OK|MB_ICONSTOP);
+				MessageBox(NULL,(LPCSTR)"Program Will Now Close.",(LPCSTR)"ERROR",MB_OK|MB_ICONSTOP);
 				return FALSE; // Return FALSE
 			}
 		}
@@ -328,8 +332,8 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 
 	// Create The Window
 	if (!(hWnd=CreateWindowEx( dwExStyle, // Extended Style For The Window
-		"OpenGL", // Class Name
-		title, // Window Title
+		(LPCSTR)"OpenGL", // Class Name
+		(LPCSTR)title, // Window Title
 		dwStyle | // Defined Window Style
 		WS_CLIPSIBLINGS | // Required Window Style
 		WS_CLIPCHILDREN, // Required Window Style
@@ -342,7 +346,7 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 		NULL))) // Dont Pass Anything To WM_CREATE
 	{
 		KillGLWindow(); // Reset The Display
-		MessageBox(NULL,"Window Creation Error.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+		MessageBox(NULL,(LPCSTR)"Window Creation Error.",(LPCSTR)"ERROR",MB_OK|MB_ICONEXCLAMATION);
 		return FALSE; // Return FALSE
 	}
 
@@ -371,35 +375,35 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	if (!(hDC=GetDC(hWnd))) // Did We Get A Device Context?
 	{
 		KillGLWindow(); // Reset The Display
-		MessageBox(NULL,"Can't Create A GL Device Context.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+		MessageBox(NULL,(LPCSTR)"Can't Create A GL Device Context.",(LPCSTR)"ERROR",MB_OK|MB_ICONEXCLAMATION);
 		return FALSE; // Return FALSE
 	}
 
 	if (!(PixelFormat=ChoosePixelFormat(hDC,&pfd))) // Did Windows Find A Matching Pixel Format?
 	{
 		KillGLWindow(); // Reset The Display
-		MessageBox(NULL,"Can't Find A Suitable PixelFormat.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+		MessageBox(NULL,(LPCSTR)"Can't Find A Suitable PixelFormat.",(LPCSTR)"ERROR",MB_OK|MB_ICONEXCLAMATION);
 		return FALSE; // Return FALSE
 	}
 
 	if(!SetPixelFormat(hDC,PixelFormat,&pfd)) // Are We Able To Set The Pixel Format?
 	{
 		KillGLWindow(); // Reset The Display
-		MessageBox(NULL,"Can't Set The PixelFormat.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+		MessageBox(NULL,(LPCSTR)"Can't Set The PixelFormat.",(LPCSTR)"ERROR",MB_OK|MB_ICONEXCLAMATION);
 		return FALSE; // Return FALSE
 	}
 
 	if (!(hRC=wglCreateContext(hDC))) // Are We Able To Get A Rendering Context?
 	{
 		KillGLWindow(); // Reset The Display
-		MessageBox(NULL,"Can't Create A GL Rendering Context.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+		MessageBox(NULL,(LPCSTR)"Can't Create A GL Rendering Context.",(LPCSTR)"ERROR",MB_OK|MB_ICONEXCLAMATION);
 		return FALSE; // Return FALSE
 	}
 
 	if(!wglMakeCurrent(hDC,hRC)) // Try To Activate The Rendering Context
 	{
 		KillGLWindow(); // Reset The Display
-		MessageBox(NULL,"Can't Activate The GL Rendering Context.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+		MessageBox(NULL,(LPCSTR)"Can't Activate The GL Rendering Context.",(LPCSTR)"ERROR",MB_OK|MB_ICONEXCLAMATION);
 		return FALSE; // Return FALSE
 	}
 
@@ -416,7 +420,7 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	if (!InitGL()) // Initialize Our Newly Created GL Window
 	{
 		KillGLWindow(); // Reset The Display
-		MessageBox(NULL,"Initialization Failed.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+		MessageBox(NULL,(LPCSTR)"Initialization Failed.",(LPCSTR)"ERROR",MB_OK|MB_ICONEXCLAMATION);
 		return FALSE; // Return FALSE
 	}
 
@@ -442,12 +446,29 @@ BOOL DM2231_View::CreateGLWindow(char* title, int width, int height, int bits)
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.nameTexture[0], "Images/EnterName.tga"))
 		return false;
 	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.storyTexture[0], "Images/StoryInst.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theHero->heroTexture[0], "Images/Hero.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->dummyZombie.tex, "Images/Zombie.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.gambledTexture[0], "Images/Gambled.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->dummyHP.tex, "Images/Health.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->dummySlow.tex, "Images/Speedup.tga"))
+		return false;
+	if (!theModel->theUI.theTexture.LoadTGA(&theModel->theUI.theTexture.insTexture[0], "Images/Inst.tga"))
+		return false;
 
-	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theHero->heroTexture[0], "Images/Hero.tga"))
-	//	return false;
-	//if (!theModel->theUI.theTexture.LoadTGA(&theModel->theZombie->zombieTexture[0], "Images/Zombie.tga"))
-	//	return false;
-
+	for(int i = 0; i < theModel->ArrayofEntities.size(); i++)
+	{
+		if(theModel->ArrayofEntities[i]->ID == Entity::ZOMBIE)
+			theModel->ArrayofEntities[i]->tex = theModel->dummyZombie.tex;
+		else if(theModel->ArrayofEntities[i]->ID == Entity::SLOWDOWN)
+			theModel->ArrayofEntities[i]->tex = theModel->dummySlow.tex;
+		else if(theModel->ArrayofEntities[i]->ID == Entity::HEALTH)
+			theModel->ArrayofEntities[i]->tex = theModel->dummyHP.tex;
+	}
 
 	return TRUE; // Success
 }
@@ -512,7 +533,7 @@ LRESULT CALLBACK DM2231_View::MsgProc( HWND hWnd, // Handle For This Window
 			theModel->theMouseInfo.SetMousePos( LOWORD(lParam), HIWORD(lParam) );
 			int diffX = theModel->theMouseInfo.GetDiff_X();
 			int diffY = theModel->theMouseInfo.GetDiff_Y();
-			//cout<<"MOUSE"<<theModel->theMouseInfo.MousePos<<endl;
+			cout<<theModel->theMouseInfo.MousePos.x / theModel->Wratio<<" : "<<theModel->theMouseInfo.MousePos.y / theModel->Hratio<<endl;
 
 			RECT WindowRect;
 			GetWindowRect( hWnd, &WindowRect);

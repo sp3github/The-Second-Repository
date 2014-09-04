@@ -16,6 +16,8 @@ DM2231_Model::DM2231_Model(void) :theCollision(TestMap, ArrayofEntities)
 	SetTimeWin = false;
 	SetTimePageToLearnShop = false;
 	SetTimeStoryIn = false;
+	SetTimeSubPage = false;
+	SetTimeIns = false;
 
 	theMonWidth = static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN));
 	theMonHeight = static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN));
@@ -25,18 +27,20 @@ DM2231_Model::DM2231_Model(void) :theCollision(TestMap, ArrayofEntities)
 
 	quad = new QuadTree(0, rect(0, 0, theMonWidth, theMonHeight));
 
-	spZTrigger = true;
+	SetStart(1);
 }
 
 DM2231_Model::~DM2231_Model(void)
 {
-	//delete quad;
+	delete quad;
 }
 
 // Update the model
 void DM2231_Model::Update(void)
 {
+	theUI.SetBet(theBet);
 	theUI.SetGun(thegun);
+	theUI.SetPlayer(*theHero);
 
 	switch (theState.theState)
 	{
@@ -52,7 +56,7 @@ void DM2231_Model::Update(void)
 			{
 				TestMap.mapOffset_x = 0;
 				TestMap.mapOffset_y = 0;
-				theState.theState = theState.level;
+				theState.theState = theState.ins;
 				SetTimeStoryIn = false;
 			}
 		}
@@ -60,6 +64,10 @@ void DM2231_Model::Update(void)
 
 	case State::level:
 		{
+
+
+
+
 			theHero->HeroRotation = AnglefromHerotoMouse();
 			ConstrainHero();
 			TestMap.Update();
@@ -80,17 +88,13 @@ void DM2231_Model::Update(void)
 					go->update(theHero->GetX(), theHero->GetY(), TestMap.mapOffset_x, TestMap.mapOffset_y, time->getDelta());
 				}
 
-				if (go->ID == SPZOMBIE)
-				{
-					go->update(theHero->GetX(), theHero->GetY(), TestMap.mapOffset_x, TestMap.mapOffset_y, time->getDelta());
-				}
-
 				go->update(time->getDelta());
 			}
 
 			theUI.SetHP((float)theHero->hp, 100.0f);
 
 			Collision();
+
 
 			if (getZombieCount() == 0)
 			{
@@ -99,56 +103,26 @@ void DM2231_Model::Update(void)
 				{
 					theState.theState = theState.win;
 				}
-				else
+				else if( level == 1)
 				{
 					level += 1;
 					SetStart(level);
 					theState.theState = theState.PageToLearnShop;
 					TestMap.mapOffset_x = 0;
 					TestMap.mapOffset_y = 0;
-				}	
-			}
-
-		
-
-
-			
-				
-
-			if (level == spZombie.level && spZTrigger == true)
-			{
-				for (int i = 0; i <TestMap.getNumOfTiles_MapHeight(); ++i)
-				{
-					for (int j = 0; j < TestMap.getNumOfTiles_MapWidth(); ++j)
-					{
-						switch (TestMap.theScreenMap[i][j])
-						{
-
-						case 11:
-							ArrayofEntities.push_back(theEntityFactory.Create(SPZOMBIE));
-							spZTrigger = false;
-							ArrayofEntities.back()->SetPos(j * TILE_SIZE, i * TILE_SIZE);
-							break;
-						}
-					}
 				}
-				spZomb = (dynamic_cast<SPZombie*>(ArrayofEntities.back()));
-				spZomb->setPlayerName(spZombie.zombiename);
-				spZomb->GetBase(spZombie.base);
+				else
+				{
+					level += 1;
+					SetStart(level);
+					theState.theState = theState.shop;
+					TestMap.mapOffset_x = 0;
+					TestMap.mapOffset_y = 0;
+				}
 			}
-
-			if (theHero->hp == 0 )
+			if (theHero->hp <= 0)
 			{
-				
 				theState.theState = theState.defeat;
-
-					spZombie.setPlayerName(theHero->playername);
-					spZombie.getLevel(level);
-					cout << "PLAYER DIED~!!!!!!!!!!!!" << endl;
-					theHero->Init();
-					DeleteVectorButHero();
-					theHero->playername.clear();
-					spZTrigger = true;
 			}
 		}
 		break;
@@ -164,12 +138,11 @@ void DM2231_Model::Update(void)
 			{
 				TestMap.mapOffset_x = 0;
 				TestMap.mapOffset_y = 0;
-				theState.theState = theState.EnterName;
+				theState.theState = theState.credit;
 				SetTimeDefeat = false;
 			}
-			
+			break;
 		}
-		break;
 	case State::win:
 		{
 			if (!SetTimeWin)
@@ -179,12 +152,11 @@ void DM2231_Model::Update(void)
 			}
 			else if (time->testTime(IndexTime))
 			{
-				theState.theState = theState.PageToLearnShop;
+				theState.theState = theState.credit;
 				SetTimeWin = false;
 			}
-			
+			break;
 		}
-		break;
 	case State::credit:
 		{
 			if (!SetTimeCredit)
@@ -194,12 +166,11 @@ void DM2231_Model::Update(void)
 			}
 			else if (time->testTime(IndexTime))
 			{
-				theState.theState = theState.menu;
+				theState.theState = theState.EnterName;
 				SetTimeCredit = false;
 			}
-			
+			break;
 		}
-		break;
 	case State::PageToLearnShop:
 		{
 			if (!SetTimePageToLearnShop)
@@ -214,18 +185,34 @@ void DM2231_Model::Update(void)
 			}
 		}
 		break;
-	case State::EnterName:
+	case State::subpagelevel:
 		{
-			
-			//if(theHero->playername.size() != 0)
-			//{
-			//	theHero->playername.clear();
-			//	//theView->SetBackspace(false);
-			//}
-
-			DeleteVectorButHero();
-			level = 1;
-			SetStart(level);
+			if (!SetTimeSubPage)
+			{
+				time->resetTime(IndexTime);
+				SetTimeSubPage = true;
+			}
+			else if (time->testTime(IndexTime))
+			{
+				theHero->money.playerMoney = 0;
+				theState.theState = theState.level;
+				SetTimeSubPage = false;
+			}
+		}
+		break;
+	case State::ins:
+		{
+			if (!SetTimeIns)
+			{
+				time->resetTime(IndexTime);
+				SetTimeIns = true;
+			}
+			else if (time->testTime(IndexTime))
+			{
+				theHero->money.playerMoney = 0;
+				theState.theState = theState.level;
+				SetTimeIns = false;
+			}
 		}
 		break;
 	default:
@@ -297,6 +284,18 @@ void DM2231_Model::SetStart(int level)
 	thegun.SetPlayer(*theHero);
 	thegun.SetArray(ArrayofEntities);
 	thegun.SetFactory(theEntityFactory);
+
+	for(int i = 0; i < ArrayofEntities.size(); i++)
+	{
+		if(ArrayofEntities[i]->ID == Entity::ZOMBIE)
+			ArrayofEntities[i]->tex = dummyZombie.tex;
+		else if(ArrayofEntities[i]->ID == Entity::SLOWDOWN)
+			ArrayofEntities[i]->tex = dummySlow.tex;
+		else if(ArrayofEntities[i]->ID == Entity::HEALTH)
+			ArrayofEntities[i]->tex =dummyHP.tex;
+	}
+
+
 }
 
 
@@ -321,7 +320,7 @@ void DM2231_Model::Collision()
 	quad->clear();
 	for (int i = 0; i < ArrayofEntities.size(); i++)
 	{
-		if (ArrayofEntities[i]->ID == PLAYER)
+		if (ArrayofEntities[i]->ID == PLAYER ||ArrayofEntities[i]->ID == BULLET )
 			quad->insert(rect(ArrayofEntities[i]->GetX(), ArrayofEntities[i]->GetY(), ArrayofEntities[i]->tile_size, ArrayofEntities[i]->tile_size,ArrayofEntities[i]));
 		else
 			quad->insert(rect(ArrayofEntities[i]->GetX() - TestMap.mapOffset_x, ArrayofEntities[i]->GetY() - TestMap.mapOffset_y, ArrayofEntities[i]->tile_size, ArrayofEntities[i]->tile_size, ArrayofEntities[i]));
@@ -334,8 +333,8 @@ void DM2231_Model::Collision()
 	for (int i = 0; i < ArrayofEntities.size(); i++)
 	{
 		returnObjects.clear();
-		if(ArrayofEntities[i]->movementspeed!=0)
-		returnObjects = quad->retrive(returnObjects, (rect(ArrayofEntities[i]->GetX(), ArrayofEntities[i]->GetY(), ArrayofEntities[i]->tile_size, ArrayofEntities[i]->tile_size, ArrayofEntities[i])));
+		if(ArrayofEntities[i]->movementspeed != 0)
+			returnObjects = quad->retrive(returnObjects, (rect(ArrayofEntities[i]->GetX(), ArrayofEntities[i]->GetY(), ArrayofEntities[i]->tile_size, ArrayofEntities[i]->tile_size, ArrayofEntities[i])));
 
 		for (int FirstCounter = 0; FirstCounter < returnObjects.size(); FirstCounter++)
 		{

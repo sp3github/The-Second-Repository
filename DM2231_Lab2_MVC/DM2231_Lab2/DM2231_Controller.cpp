@@ -34,12 +34,11 @@ bool DM2231_Controller::Init(void)
 	srand(time(NULL));
 
 	// Ask The User Which Screen Mode They Prefer
-	if (MessageBox(NULL,"Would You Like To Run In Fullscreen Mode?", "Start FullScreen?",MB_YESNO|MB_ICONQUESTION)==IDNO)
+	if (MessageBox(NULL,(LPCSTR)"Would You Like To Run In Fullscreen Mode?",(LPCSTR) "Start FullScreen?",MB_YESNO|MB_ICONQUESTION)==IDNO)
 		theView->setFullScreen( false );
 	else
 		theView->setFullScreen( true );
 
-	theModel->SetStart(1);
 
 	//for (int i = 0; i < theModel->ArrayofEntities.size(); i++)
 	//{
@@ -84,7 +83,7 @@ BOOL DM2231_Controller::RunMainLoop(void)
 		{
 			if (ProcessInput())
 			{
-				cout<<"FPS: "<<timer->getFPS()<<endl;
+				//cout<<"FPS: "<<timer->getFPS()<<endl;
 				timer->updateTime();
 				theModel->Update();
 				theView->Draw();
@@ -139,11 +138,6 @@ bool DM2231_Controller::ProcessInput(void)
 						theModel->theHero->playername.pop_back();
 						theView->SetBackspace(false);
 					}
-					else 
-					{
-						theModel->theHero->playername.clear();
-						theView->SetBackspace(false);
-					}
 				}
 			}
 			if(theView->GetEnter())
@@ -161,12 +155,14 @@ bool DM2231_Controller::ProcessInput(void)
 			if(theView->LMKeyDown)
 			{
 				//PLAY BUTTON
-				if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 370 && theModel->theMouseInfo.MousePos.y <= 430)
+				if((theModel->theMouseInfo.MousePos.x >= 350 * theModel->Wratio) && (theModel->theMouseInfo.MousePos.x <= 450 * theModel->Wratio)
+					&& (theModel->theMouseInfo.MousePos.y >= 220 * theModel->Hratio )&& (theModel->theMouseInfo.MousePos.y <= 260 * theModel->Hratio))
 				{
 					theModel->theState.theState = theModel->theState.storyins;
 				}
 				//EXIT BUTTON
-				if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 450 && theModel->theMouseInfo.MousePos.y <= 520)
+				if((theModel->theMouseInfo.MousePos.x >= 350 * theModel->Wratio)&& (theModel->theMouseInfo.MousePos.x <= 450 * theModel->Wratio)
+					&& (theModel->theMouseInfo.MousePos.y >= 270 * theModel->Hratio ) &&( theModel->theMouseInfo.MousePos.y <= 308 * theModel->Hratio ))
 				{
 					m_bContinueLoop=false;
 					return false;
@@ -227,24 +223,75 @@ bool DM2231_Controller::ProcessInput(void)
 		}
 	case (theModel->theState.State::shop) :
 		{
-			if(theView->GetKeys('1'))//EXIT THE SHOP
-				theModel->theState.theState = theModel->theState.level;
+			if(theView->GetKeys('q'))//EXIT THE SHOP
+			{
+				if(theModel->theBet.firstbet)
+					theModel->theState.theState = theModel->theState.level;
+				else
+					theModel->theState.theState = theModel->theState.subpagelevel;
+			}
 
-			//BUY PISTOL AMMO
-			if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 370 && theModel->theMouseInfo.MousePos.y <= 430)
+			if(theView->LMKeyDown)
 			{
-				
+				//BUY PISTOL AMMO
+				if((theModel->theMouseInfo.MousePos.x >= 47  * theModel->Wratio) && ( theModel->theMouseInfo.MousePos.x <= 166  * theModel->Wratio)
+					&& (theModel->theMouseInfo.MousePos.y >= 224  * theModel->Hratio) && (theModel->theMouseInfo.MousePos.y <= 294  * theModel->Hratio))
+				{
+					if((theModel->theHero->money.playerMoney - 10) >= 0)
+					{
+						theModel->theHero->money.AddMoney(-10);
+						theModel->thegun.currentBullet[0] += 10;
+					}
+				}
+				//BUY UZI AMMO
+				if((theModel->theMouseInfo.MousePos.x >= 191  * theModel->Wratio) && ( theModel->theMouseInfo.MousePos.x <= 312  * theModel->Wratio)
+					&& (theModel->theMouseInfo.MousePos.y >= 224  * theModel->Hratio) && (theModel->theMouseInfo.MousePos.y <= 294  * theModel->Hratio))
+				{
+					if((theModel->theHero->money.playerMoney - 20) >= 0)
+					{
+						theModel->theHero->money.AddMoney(-20);
+						theModel->thegun.currentBullet[1] += 10;
+					}
+				}
+				//BUY SHOTGUN AMMO
+				if((theModel->theMouseInfo.MousePos.x >= 338  * theModel->Wratio) && ( theModel->theMouseInfo.MousePos.x <= 457  * theModel->Wratio)
+					&& (theModel->theMouseInfo.MousePos.y >= 224  * theModel->Hratio) && (theModel->theMouseInfo.MousePos.y <= 294  * theModel->Hratio))
+				{
+					if((theModel->theHero->money.playerMoney - 30) >= 0)
+					{
+						theModel->theHero->money.AddMoney(-30);
+						theModel->thegun.currentBullet[2] += 10;
+					}
+				}
+				theView->LMKeyDown = false;
 			}
-			//BUY UZI AMMO
-			if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 450 && theModel->theMouseInfo.MousePos.y <= 520)
+
+			for(int i = 0x30; i < 0x3A; i++)
 			{
-				
+				if(theView->GetKeys(i))
+				{	
+					theModel->theBet.AmounttoBet.push_back(i);
+					theView->SetKeys(i);
+				}
+
+				if (theView->GetBackspace())
+				{
+					if(theModel->theBet.AmounttoBet.size() != 0)
+					{
+						theModel->theBet.AmounttoBet.pop_back();
+						theView->SetBackspace(false);
+					}
+				}
 			}
-			//BUY SHOTGUN AMMO
-			if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 450 && theModel->theMouseInfo.MousePos.y <= 520)
+			if(theView->GetEnter())
 			{
-				
+				if(atoi(theModel->theBet.AmounttoBet.c_str()) <= theModel->theHero->money.playerMoney)
+				{
+					theModel->theHero->money.playerMoney += theModel->theBet.BetEvent(atoi(theModel->theBet.AmounttoBet.c_str()));
+				}
+				theView->SetEnter(false);
 			}
+
 			break;
 		}
 	case (theModel->theState.State::PageToLearnShop):

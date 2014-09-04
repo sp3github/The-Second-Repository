@@ -17,8 +17,7 @@
 #include <string>
 #include <iostream>
 #include "QuadTree.h"
-#include "SPZombie.h"
-
+#include "Bet.h"
 
 using namespace std;
 
@@ -46,8 +45,7 @@ public:
 	CZombies * theZombie;
 	CEntity * theHeroEntity;
 
-	SPZombie spZombie;
-	SPZombie * spZomb;
+
 
 	gun thegun;
 	Collision theCollision;
@@ -67,13 +65,13 @@ public:
 	bool SetTimeWin;
 	bool SetTimePageToLearnShop;
 	bool SetTimeStoryIn;
+	bool SetTimeSubPage;
+	bool SetTimeIns;
 
 	void SetStart(int level);
 
 	short level;
 
-	//zombie
-	int zombie;
 	int zombiecount;
 	void setZombieCount(int z);
 	int getZombieCount();
@@ -90,6 +88,10 @@ public:
 	float Wratio;
 	float Hratio;
 
-	bool spZTrigger;
-	bool check1;
+	CHealth dummyHP;
+	CSlowdown dummySlow;
+	CZombies dummyZombie;
+	int PrevZombieCount;
+
+	Bet theBet;
 };

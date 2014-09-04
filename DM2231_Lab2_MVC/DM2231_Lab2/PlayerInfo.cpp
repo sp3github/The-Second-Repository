@@ -1,7 +1,6 @@
 #include "PlayerInfo.h"
 #include <iostream>
 #include "Zombies.h"
-#include "SPZombie.h"
 
 CPlayerInfo::CPlayerInfo(void)
 {
@@ -61,6 +60,7 @@ void CPlayerInfo::render(int mapOffset_x, int mapOffset_y)
 {	
 
 	glPushMatrix();
+	
 	glTranslatef(static_cast<float>(GetX()), static_cast<float>(GetY()), 0);
 	glTranslatef(static_cast<float>(tile_size * 0.5), static_cast<float>(tile_size * 0.5),0);
 	glRotatef(HeroRotation,0,0,1);
@@ -71,12 +71,12 @@ void CPlayerInfo::render(int mapOffset_x, int mapOffset_y)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glColor3f(1,0,0);
-	glBindTexture(GL_TEXTURE_2D, heroTexture[1].texID);
+	glBindTexture(GL_TEXTURE_2D, heroTexture[0].texID);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.25 * heroAnimationCounter, 1); glVertex2f(0, 0);
-	glTexCoord2f(0.25 * heroAnimationCounter, 0); glVertex2f(0, tile_size);
-	glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 0); glVertex2f(tile_size, tile_size);
-	glTexCoord2f(0.25 * heroAnimationCounter + 0.24, 1); glVertex2f(tile_size, 0);
+		glTexCoord2f(0,0); glVertex2f(0,0);
+		glTexCoord2f(1,0); glVertex2f(0,tile_size);
+		glTexCoord2f(1,1); glVertex2f(tile_size,tile_size);
+		glTexCoord2f(0,1); glVertex2f(tile_size,0);
 	glEnd();
 
 	glEnd();
@@ -245,7 +245,7 @@ void CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 		break;
 	case SLOWDOWN:
 		{
-			movementspeed = 12;
+			movementspeed = 15;
 			time->setActive(true,index);
 			
 
@@ -256,7 +256,7 @@ void CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 		{
 			if(!invincible)
 			{
-				this->hp -= 50;
+				this->hp -= 5;
 				if(this->hp < 0)
 				{
 					hp = 0;
@@ -264,6 +264,7 @@ void CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 				time->resetTime(index2);
 				invincible = true;
 			}
+
 
 			CZombies * zombie;
 			zombie = (dynamic_cast<CZombies*>(&other));
@@ -275,32 +276,9 @@ void CPlayerInfo::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
 			zombie->Timer->changeLimit(zombie->TimeIndex, 500);
 		}
 		break;
-	case SPZOMBIE:
-		{
-			if(!invincible)
-			{
-				this->hp -= 10;
-				if(this->hp < 0)
-				{
-					hp = 0;
-				}
-				time->resetTime(index2);
-				invincible = true;
-			}
-
-
-			SPZombie * spzombie;
-			spzombie = (dynamic_cast<SPZombie*>(&other));
-
-			spzombie->bounce = true;
-			spzombie->BounceDir = ((spzombie->pos) - (Vector3D<float>(GetX(),GetY()))).Normalize() * spzombie->movementspeed;
-		
-			spzombie->Timer->resetTime(spzombie->TimeIndex);
-			spzombie->Timer->changeLimit(spzombie->TimeIndex, 500);
-		}
-		break;
 	case BUILDING:
 		{
+			
 			break;
 		}
 	default:

@@ -53,5 +53,6 @@ public:
 	Vector3D<float> vel;
 
 	Entity ID;
+	TextureImage tex;
 };
 

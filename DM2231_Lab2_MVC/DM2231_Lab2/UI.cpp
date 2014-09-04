@@ -37,7 +37,7 @@ void UI::RenderUI(StateType States, const GLuint&base)
 	switch(States)
 	{
 	case ENTERNAME:
-//		theSound.RenderSound(Sound::MENU);
+		theSound.RenderSound(Sound::MENU);
 		glPushMatrix();
 			glColor3f(1.0f , 1.0f, 1.0f);
 			glEnable(GL_TEXTURE_2D);
@@ -81,6 +81,11 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		glPushMatrix();
 			glColor3f(1.0f, 0.0f, 0.0f);
 			printw(26.0f, 86.0f, 0.0f, base,"Hp: ");
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor3f(1.f,0.f,0.f);
+		printw(400,40,0,base,"Money: %.i",theHero->money.playerMoney);
 		glPopMatrix();
 
 		glPushMatrix();
@@ -163,7 +168,7 @@ void UI::RenderUI(StateType States, const GLuint&base)
 			glEnable(GL_TEXTURE_2D);
 			glEnable(GL_BLEND);
 			glPushMatrix();
-				glBindTexture(GL_TEXTURE_2D, theTexture.subpageTexture[0].texID);
+				glBindTexture(GL_TEXTURE_2D, theTexture.gambledTexture[0].texID);
 				glBegin(GL_QUADS);
 					glTexCoord2f(0,0); glVertex2f(0, 600);
 					glTexCoord2f(1,0); glVertex2f(800, 600);
@@ -244,7 +249,13 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		break;
 
 	case SHOP:
+
+		if(theSound.Level != NULL)
+			theSound.Level->stop();
+
 		theSound.RenderSound(Sound::SCORE);
+
+
 
 		glPushMatrix();
 			glColor3f(1.0f , 1.0f, 1.0f);
@@ -262,6 +273,12 @@ void UI::RenderUI(StateType States, const GLuint&base)
 			glDisable(GL_BLEND);
 			glDisable(GL_TEXTURE_2D);
 		glColor3f(0.0f , 0.0f ,0.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor3f(1,0,0);
+		glTranslatef(450,550,0);
+		printw(0,0,0,base,"Money to Risk: %i",atoi(theBet->AmounttoBet.c_str()));
 		glPopMatrix();
 		break;
 	case SUBSHOP:
@@ -283,7 +300,24 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		glColor3f(0.0f , 0.0f ,0.0f);
 		glPopMatrix();
 		break;
-
+	case INS:
+		glPushMatrix();
+			glColor3f(1.0f , 1.0f, 1.0f);
+			glEnable(GL_TEXTURE_2D);
+			glEnable(GL_BLEND);
+			glPushMatrix();
+				glBindTexture(GL_TEXTURE_2D, theTexture.insTexture[0].texID);
+				glBegin(GL_QUADS);
+					glTexCoord2f(0,0); glVertex2f(0, 600);
+					glTexCoord2f(1,0); glVertex2f(800, 600);
+					glTexCoord2f(1,1); glVertex2f(800, 0);
+					glTexCoord2f(0,1); glVertex2f(0, 0);
+				glEnd();
+			glPopMatrix();
+			glDisable(GL_BLEND);
+			glDisable(GL_TEXTURE_2D);
+		glColor3f(0.0f , 0.0f ,0.0f);
+		glPopMatrix();
 	default:
 		break;
 	}
@@ -302,4 +336,14 @@ float UI::GetHP(void)
 void UI::SetGun(gun &theGun)
 {
 	this->theGun = &theGun;
+}
+
+void UI::SetPlayer(CPlayerInfo & theHero)
+{
+	this->theHero = &theHero;
+}
+
+void UI::SetBet(Bet &theBet)
+{
+	this->theBet = &theBet;
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "../irrKlang/irrKlang.h"
-
+#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
 using namespace irrklang;
 
 class Sound
