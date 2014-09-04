@@ -91,9 +91,7 @@
     <ClCompile Include="DM2231_View.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QuadTree.cpp">
-      <Filter>Source Files\Framework</Filter>
-    </ClCompile>
+    <ClCompile Include="QuadTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DM2231_Model.h">
@@ -145,28 +143,28 @@
       <Filter>Header Files\Entity\Item</Filter>
     </ClInclude>
     <ClInclude Include="Header.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="LoadResources.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="loadTGA.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Mouse.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="MVCtime.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Ortho2D.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="vector3D.h">
-      <Filter>Header Files\Framework</Filter>
+      <Filter>Header Files\Misc\Framework</Filter>
     </ClInclude>
     <ClInclude Include="Bet.h">
       <Filter>Header Files\Misc</Filter>
@@ -192,9 +190,7 @@
     <ClInclude Include="SPZombie.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="QuadTree.h">
-      <Filter>Header Files\Framework</Filter>
-    </ClInclude>
+    <ClInclude Include="QuadTree.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -224,8 +220,11 @@
     <Filter Include="Source Files\Entity\Item">
       <UniqueIdentifier>{34574d2d-8548-4826-821d-e70a2518b4d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Framework">
+    <Filter Include="Header Files\Misc\Framework">
       <UniqueIdentifier>{f48a03ce-a5d3-451e-b592-6d487fb8fc8f}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>
