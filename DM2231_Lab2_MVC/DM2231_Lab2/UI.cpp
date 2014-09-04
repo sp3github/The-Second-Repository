@@ -250,6 +250,11 @@ void UI::RenderUI(StateType States, const GLuint&base)
 
 	case SHOP:
 
+
+		if(theSound.Level != NULL)
+			theSound.Level->stop();
+
+
 		if(theSound.Level != NULL)
 			theSound.Level->stop();
 

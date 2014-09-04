@@ -49,7 +49,6 @@ void Sound::RenderSound(SoundType Sounds)
 			Menu = theSoundEngine->play2D(("Sound/Menu.mp3"), true, true);
 
 			Menu->setVolume(100.f);
-
 		}
 		if (Menu->getIsPaused() == true)
 		{
