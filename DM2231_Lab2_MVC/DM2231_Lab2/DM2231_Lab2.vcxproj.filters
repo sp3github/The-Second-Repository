@@ -88,9 +88,11 @@
     <ClCompile Include="DM2231_View.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QuadTree.cpp" />
+    <ClCompile Include="QuadTree.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
     <ClCompile Include="DM2231_Controller.cpp">
-      <Filter>Source Files\Misc</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,7 +192,9 @@
     <ClInclude Include="SPZombie.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="QuadTree.h">
+      <Filter>Header Files\Framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

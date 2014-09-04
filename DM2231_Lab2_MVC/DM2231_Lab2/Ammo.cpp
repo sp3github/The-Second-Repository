@@ -20,9 +20,9 @@ void CAmmo::render(int mapOffset_x, int mapOffset_y)
 		glTranslatef(GetX() - mapOffset_x, GetY() - mapOffset_y, 0);
 		glEnable( GL_TEXTURE_2D );
 		glEnable( GL_BLEND );
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glColor3f(0,0.5,1);
+		//glColor3f(0,0.5,1);
 
 		glBegin(GL_QUADS);
 		glTexCoord2f(0,0); glVertex2f(0,0);

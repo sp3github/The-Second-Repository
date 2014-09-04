@@ -34,7 +34,7 @@ bool DM2231_Controller::Init(void)
 	srand(time(NULL));
 
 	// Ask The User Which Screen Mode They Prefer
-	if (MessageBox(NULL,"Would You Like To Run In Fullscreen Mode?", "Start FullScreen?",MB_YESNO|MB_ICONQUESTION)==IDNO)
+	if (MessageBox(NULL,(LPCSTR)"Would You Like To Run In Fullscreen Mode?",(LPCSTR) "Start FullScreen?",MB_YESNO|MB_ICONQUESTION)==IDNO)
 		theView->setFullScreen( false );
 	else
 		theView->setFullScreen( true );
@@ -155,7 +155,7 @@ bool DM2231_Controller::ProcessInput(void)
 			if(theView->LMKeyDown)
 			{
 				//PLAY BUTTON
-				if(theModel->theMouseInfo.MousePos.x >= 835 && theModel->theMouseInfo.MousePos.x <= 1070 && theModel->theMouseInfo.MousePos.y >= 370 && theModel->theMouseInfo.MousePos.y <= 430)
+				if((theModel->theMouseInfo.MousePos.x >= 835 * theModel->Wratio) && (theModel->theMouseInfo.MousePos.x <= 1070 * theModel->Wratio) && (theModel->theMouseInfo.MousePos.y >= 370 * theModel->Hratio )&& (theModel->theMouseInfo.MousePos.y <= 430 * theModel->Hratio))
 				{
 					theModel->theState.theState = theModel->theState.storyins;
 				}
@@ -221,24 +221,72 @@ bool DM2231_Controller::ProcessInput(void)
 		}
 	case (theModel->theState.State::shop) :
 		{
-			if(theView->GetKeys('1'))//EXIT THE SHOP
-				theModel->theState.theState = theModel->theState.level;
+			if(theView->GetKeys('q'))//EXIT THE SHOP
+			{
+				if(theModel->theBet.firstbet)
+					theModel->theState.theState = theModel->theState.level;
+				else
+					theModel->theState.theState = theModel->theState.subpagelevel;
+			}
 
-			//BUY PISTOL AMMO
-			if(theModel->theMouseInfo.MousePos.x >= 110 && theModel->theMouseInfo.MousePos.x <= 395 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
+			if(theView->LMKeyDown)
 			{
-				theModel->thegun.currentBullet[0] += 10;
+				//BUY PISTOL AMMO
+				if(theModel->theMouseInfo.MousePos.x >= 110 && theModel->theMouseInfo.MousePos.x <= 395 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
+				{
+					if((theModel->theHero->money.playerMoney - 10) >= 0)
+					{
+						theModel->theHero->money.AddMoney(-10);
+						theModel->thegun.currentBullet[0] += 10;
+					}
+				}
+				//BUY UZI AMMO
+				if(theModel->theMouseInfo.MousePos.x >= 457 && theModel->theMouseInfo.MousePos.x <= 740 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
+				{
+					if((theModel->theHero->money.playerMoney - 20) >= 0)
+					{
+						theModel->theHero->money.AddMoney(-20);
+						theModel->thegun.currentBullet[1] += 10;
+					}
+				}
+				//BUY SHOTGUN AMMO
+				if(theModel->theMouseInfo.MousePos.x >= 804 && theModel->theMouseInfo.MousePos.x <= 1088 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
+				{
+					if((theModel->theHero->money.playerMoney - 30) >= 0)
+					{
+						theModel->theHero->money.AddMoney(-30);
+						theModel->thegun.currentBullet[2] += 10;
+					}
+				}
+				theView->LMKeyDown = false;
 			}
-			//BUY UZI AMMO
-			if(theModel->theMouseInfo.MousePos.x >= 457 && theModel->theMouseInfo.MousePos.x <= 740 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
+
+			for(int i = 0x30; i < 0x3A; i++)
 			{
-				theModel->thegun.currentBullet[1] += 10;
+				if(theView->GetKeys(i))
+				{	
+					theModel->theBet.AmounttoBet.push_back(i);
+					theView->SetKeys(i);
+				}
+
+				if (theView->GetBackspace())
+				{
+					if(theModel->theBet.AmounttoBet.size() != 0)
+					{
+						theModel->theBet.AmounttoBet.pop_back();
+						theView->SetBackspace(false);
+					}
+				}
 			}
-			//BUY SHOTGUN AMMO
-			if(theModel->theMouseInfo.MousePos.x >= 804 && theModel->theMouseInfo.MousePos.x <= 1088 && theModel->theMouseInfo.MousePos.y >= 375 && theModel->theMouseInfo.MousePos.y <= 495)
+			if(theView->GetEnter())
 			{
-				theModel->thegun.currentBullet[2] += 10;
+				if(atoi(theModel->theBet.AmounttoBet.c_str()) <= theModel->theHero->money.playerMoney)
+				{
+					theModel->theHero->money.playerMoney += theModel->theBet.BetEvent(atoi(theModel->theBet.AmounttoBet.c_str()));
+				}
+				theView->SetEnter(false);
 			}
+
 			break;
 		}
 	case (theModel->theState.State::PageToLearnShop):

@@ -63,7 +63,7 @@ void gun::FireGun()
 			theArrayofEntities->back()->SetPos(theHero->GetX(), theHero->GetY());
 			thePointertoBullet = (dynamic_cast<bullet*> (theArrayofEntities->back()));
 			thePointertoBullet->SetAngle(theHero->HeroRotation);
-			thePointertoBullet->SetPower(power[BulletState]);
+			thePointertoBullet->SetPower(power[BulletState],movementspeed[BulletState]);
 			--totalbullet[BulletState];
 		}
 		prevshot[BulletState] = currentshot[BulletState];
@@ -120,6 +120,7 @@ void gun::InitGun()
 		prevreload[0] = 0;
 		reloadtime[0] = 100;
 		reloadC = false;
+		movementspeed[0] = 500;
 
 		MilliSecondPerShot[0] = 500;
 
@@ -129,7 +130,7 @@ void gun::InitGun()
 		currentBullet[1] = 30;
 		ReloadBullet[1] = 30;
 
-		power[1] = 2000;
+		power[1] = 500;
 		firing = false;
 		prevshot[1] = 0;
 		currentshot[1] = 0;
@@ -137,6 +138,7 @@ void gun::InitGun()
 		prevreload[1] = 0;
 		reloadtime[1] = 100;
 		reloadC = false;
+		movementspeed[1] = 500;
 
 		MilliSecondPerShot[1] = 50;
 
@@ -157,7 +159,7 @@ void gun::InitGun()
 		prevreload[2] = 0;
 		reloadtime[2] = 100;
 		reloadC = false;
-
+		movementspeed[2] = 700;
 		MilliSecondPerShot[2] = 1100;
 
 		totalbullet[2] = bulletCount[2] + currentBullet[2];
@@ -194,3 +196,4 @@ void gun::changestate(GunStates theState)
 	time->resetTime(index);//have a time reference
 	time->changeLimit(index, MilliSecondPerShot[BulletState]);//reset time and change limit
 }
+

@@ -2,6 +2,8 @@
 #include "loadTGA.h"
 #include "gun.h"
 #include "Sound.h"
+#include "Entity.h"
+#include "Bet.h"
 
 class UI
 {
@@ -33,11 +35,14 @@ public:
 	void printw (float x, float y, float z,const GLuint &base, const char* format, ...);
 
 	void SetGun(gun & theGun);
+	void SetPlayer(CPlayerInfo & theHero);
+	void SetBet(Bet & theBet);
 
 	loadTGA theTexture;
 
+	CPlayerInfo * theHero;
 	gun * theGun;
-
 	Sound theSound;
+	Bet * theBet;
 };
 

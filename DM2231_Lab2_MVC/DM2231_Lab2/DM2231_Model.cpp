@@ -16,6 +16,7 @@ DM2231_Model::DM2231_Model(void) :theCollision(TestMap, ArrayofEntities)
 	SetTimeWin = false;
 	SetTimePageToLearnShop = false;
 	SetTimeStoryIn = false;
+	SetTimeSubPage = false;
 
 	theMonWidth = static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CXFULLSCREEN));
 	theMonHeight = static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN)) - 0.01 * static_cast<float>(GetSystemMetrics(SM_CYFULLSCREEN));
@@ -35,7 +36,7 @@ DM2231_Model::~DM2231_Model(void)
 // Update the model
 void DM2231_Model::Update(void)
 {
-	theUI.SetGun(thegun);
+	theUI.SetBet(theBet);
 
 	switch (theState.theState)
 	{
@@ -59,6 +60,11 @@ void DM2231_Model::Update(void)
 
 	case State::level:
 		{
+
+			theUI.SetGun(thegun);
+			theUI.SetPlayer(*theHero);
+
+
 			theHero->HeroRotation = AnglefromHerotoMouse();
 			ConstrainHero();
 			TestMap.Update();
@@ -86,6 +92,7 @@ void DM2231_Model::Update(void)
 
 			Collision();
 
+
 			if (getZombieCount() == 0)
 			{
 				DeleteVectorButHero();
@@ -93,11 +100,19 @@ void DM2231_Model::Update(void)
 				{
 					theState.theState = theState.win;
 				}
-				else
+				else if( level == 1)
 				{
 					level += 1;
 					SetStart(level);
 					theState.theState = theState.PageToLearnShop;
+					TestMap.mapOffset_x = 0;
+					TestMap.mapOffset_y = 0;
+				}
+				else
+				{
+					level += 1;
+					SetStart(level);
+					theState.theState = theState.shop;
 					TestMap.mapOffset_x = 0;
 					TestMap.mapOffset_y = 0;
 				}
@@ -120,7 +135,7 @@ void DM2231_Model::Update(void)
 			{
 				TestMap.mapOffset_x = 0;
 				TestMap.mapOffset_y = 0;
-				theState.theState = theState.EnterName;
+				theState.theState = theState.credit;
 				SetTimeDefeat = false;
 			}
 			break;
@@ -134,7 +149,7 @@ void DM2231_Model::Update(void)
 			}
 			else if (time->testTime(IndexTime))
 			{
-				theState.theState = theState.PageToLearnShop;
+				theState.theState = theState.credit;
 				SetTimeWin = false;
 			}
 			break;
@@ -148,7 +163,7 @@ void DM2231_Model::Update(void)
 			}
 			else if (time->testTime(IndexTime))
 			{
-				theState.theState = theState.menu;
+				theState.theState = theState.EnterName;
 				SetTimeCredit = false;
 			}
 			break;
@@ -164,6 +179,21 @@ void DM2231_Model::Update(void)
 			{
 				theState.theState = theState.shop;
 				SetTimePageToLearnShop = false;
+			}
+		}
+		break;
+	case State::subpagelevel:
+		{
+			if (!SetTimeSubPage)
+			{
+				time->resetTime(IndexTime);
+				SetTimeSubPage = true;
+			}
+			else if (time->testTime(IndexTime))
+			{
+				theHero->money.playerMoney = 0;
+				theState.theState = theState.level;
+				SetTimeSubPage = false;
 			}
 		}
 		break;
@@ -241,7 +271,13 @@ void DM2231_Model::SetStart(int level)
 	{
 		if(ArrayofEntities[i]->ID == Entity::ZOMBIE)
 			ArrayofEntities[i]->tex = dummyZombie.tex;
+		else if(ArrayofEntities[i]->ID == Entity::SLOWDOWN)
+			ArrayofEntities[i]->tex = dummySlow.tex;
+		else if(ArrayofEntities[i]->ID == Entity::HEALTH)
+			ArrayofEntities[i]->tex =dummyHP.tex;
 	}
+
+
 }
 
 

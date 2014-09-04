@@ -32,7 +32,20 @@ void Building::render(int mapOffset_x, int mapOffset_y)
 		glTexCoord2f(1,1); glVertex2f(tile_size,tile_size);
 		glTexCoord2f(0,1); glVertex2f(tile_size,0);
 		glEnd();
-
+		glColor3f(1,1,1);
 		glDisable( GL_BLEND );
 	glPopMatrix();
+}
+
+void Building::CollisionEvent(CEntity &other, vector<CEntity*> & theArray)
+{
+	switch (other.ID)
+	{
+
+	case ZOMBIE:
+		{
+			other.CollisionEvent(*this,theArray);
+			break;
+		}
+	}
 }

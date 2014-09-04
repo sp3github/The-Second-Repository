@@ -84,6 +84,11 @@ void UI::RenderUI(StateType States, const GLuint&base)
 		glPopMatrix();
 
 		glPushMatrix();
+		glColor3f(1.f,0.f,0.f);
+		printw(400,40,0,base,"Money: %.i",theHero->money.playerMoney);
+		glPopMatrix();
+
+		glPushMatrix();
 		glBegin(GL_LINE_STRIP);
 			glColor3f(1.0f, 1.0f, 1.0f);
 			glVertex2f(170.0f, 61.0f);
@@ -163,7 +168,7 @@ void UI::RenderUI(StateType States, const GLuint&base)
 			glEnable(GL_TEXTURE_2D);
 			glEnable(GL_BLEND);
 			glPushMatrix();
-				glBindTexture(GL_TEXTURE_2D, theTexture.subpageTexture[0].texID);
+				glBindTexture(GL_TEXTURE_2D, theTexture.gambledTexture[0].texID);
 				glBegin(GL_QUADS);
 					glTexCoord2f(0,0); glVertex2f(0, 600);
 					glTexCoord2f(1,0); glVertex2f(800, 600);
@@ -248,6 +253,8 @@ void UI::RenderUI(StateType States, const GLuint&base)
 			theSound.Level->stop();
 		theSound.RenderSound(Sound::SCORE);
 
+
+
 		glPushMatrix();
 			glColor3f(1.0f , 1.0f, 1.0f);
 			glEnable(GL_TEXTURE_2D);
@@ -264,6 +271,12 @@ void UI::RenderUI(StateType States, const GLuint&base)
 			glDisable(GL_BLEND);
 			glDisable(GL_TEXTURE_2D);
 		glColor3f(0.0f , 0.0f ,0.0f);
+		glPopMatrix();
+
+		glPushMatrix();
+		glColor3f(1,0,0);
+		glTranslatef(450,550,0);
+		printw(0,0,0,base,"Money to Risk: %i",atoi(theBet->AmounttoBet.c_str()));
 		glPopMatrix();
 		break;
 	case SUBSHOP:
@@ -304,4 +317,14 @@ float UI::GetHP(void)
 void UI::SetGun(gun &theGun)
 {
 	this->theGun = &theGun;
+}
+
+void UI::SetPlayer(CPlayerInfo & theHero)
+{
+	this->theHero = &theHero;
+}
+
+void UI::SetBet(Bet &theBet)
+{
+	this->theBet = &theBet;
 }

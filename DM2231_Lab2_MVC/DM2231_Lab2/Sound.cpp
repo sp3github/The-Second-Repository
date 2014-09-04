@@ -1,6 +1,7 @@
 #include "Sound.h"
 #include <iostream>
 
+
 using namespace std;
 
 Sound::Sound(void)
@@ -85,7 +86,7 @@ void Sound::RenderSound(SoundType Sounds)
 		}
 		else if (Level->isFinished() == true)
 		{
-			Level = NULL;
+			//Level = NULL;
 		}
 		break;
 

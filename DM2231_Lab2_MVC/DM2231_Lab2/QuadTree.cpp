@@ -157,7 +157,7 @@ vector<rect> QuadTree::retrive(vector<rect> &returnObjects, rect pRect)
 		nodes[index]->retrive(returnObjects, pRect);
 	}
 
-	returnObjects.insert(returnObjects.end(),objects.begin(),objects.end());
+	 returnObjects.insert(returnObjects.end(),objects.begin(),objects.end());
 
 	return returnObjects;
 }

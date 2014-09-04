@@ -3,8 +3,8 @@
 
 State::State(void)
 {
-//	theState = states::EnterName;
-	theState = states::shop;
+	//theState = states::EnterName;
+	theState = states::level;
 }
 
 

@@ -10,5 +10,6 @@ public:
 
 	void update(float dt);
 	void render(int mapOffset_x, int mapOffset_y);
+	void CollisionEvent(CEntity &other, vector<CEntity*> & theArray);
 };
 
